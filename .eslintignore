@@ -1,0 +1,9 @@
+/.idea/
+/.github/
+/artifacts/
+/bak/
+/build/
+/dist/
+/public/
+/node_modules/
+/src-tauri/

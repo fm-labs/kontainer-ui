@@ -1,0 +1,8 @@
+@import "_variables.scss";
+@import "~bootstrap/scss/bootstrap";
+//@import '~bootstrap-dark-5/scss/bootstrap-dark';
+//@import '~bootstrap-dark-5/dist/css/bootstrap-dark.css';
+
+.modal {
+  z-index: 9000;
+}

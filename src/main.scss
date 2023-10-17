@@ -1,0 +1,68 @@
+// global imports
+@import "styles/variables";
+@import "styles/fonts";
+
+// vendor imports
+@import "styles/bootstrap";
+@import "styles/toastify";
+
+// app imports
+//@import "styles/App";
+
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.btn ~ .btn {
+  margin-left: 0.25em;
+}
+
+
+.flex-grid {
+  display: flex;
+  flex-wrap: wrap;
+
+  .info-label {
+    color: #545b64;
+    font-size: 0.9em;
+  }
+
+  > div {
+    flex: 0 0 20%;
+    max-width: 20%;
+    padding: 0 1rem;
+    margin: 0.5rem 0;
+    border-left: 1px solid #e5e8e8;
+  }
+
+  > div:nth-child(5n + 1) {
+    border-left-width: 0;
+  }
+}
+
+/** Spin **/
+@media (prefers-reduced-motion: no-preference) {
+  .spin {
+    animation: animation-spin infinite 2s linear;
+  }
+}
+@keyframes animation-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
