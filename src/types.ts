@@ -16,3 +16,9 @@ interface IDockerVolume {
   name?: string
   status?: string
 }
+
+interface IDockerNetwork {
+  id: string
+  name?: string
+  status?: string
+}
