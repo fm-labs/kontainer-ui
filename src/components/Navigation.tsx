@@ -1,13 +1,18 @@
 import React from 'react';
 import { Nav } from 'react-bootstrap';
-import { FaHome, FaServer, FaImages, FaHdd, FaRoute } from 'react-icons/fa';
-import { useLocation } from 'react-router-dom';
+import { FaHome, FaServer, FaImages, FaHdd, FaRoute, FaFolder } from 'react-icons/fa'
+import { Link, useLocation } from 'react-router-dom'
 
 const navItems = [
   {
     icon: <FaHome />,
     title: 'Home',
     link: '/'
+  },
+  {
+    icon: <FaFolder />,
+    title: 'Projects',
+    link: '/projects'
   },
   {
     icon: <FaServer />,
@@ -38,7 +43,7 @@ const Navigation = () => {
     <Nav variant="pills" defaultActiveKey="/" justify activeKey={location.pathname}>
       {navItems.map((item, index) => (
         <Nav.Item key={index}>
-          <Nav.Link href={item.link}>
+          <Nav.Link as={Link} to={item.link}>
             {item.icon}{' '}{item.title}
           </Nav.Link>
         </Nav.Item>

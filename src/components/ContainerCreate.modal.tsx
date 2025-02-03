@@ -5,7 +5,7 @@ const ContainerCreateModal = () => {
   return (
     <>
       <SimpleModal title={"Create container"} buttonLabel={"Create"}>
-        <p>Create a new container from an image</p>
+        <p>Sorry, not implemented yet :/</p>
       </SimpleModal>
     </>
   )

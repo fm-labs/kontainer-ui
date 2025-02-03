@@ -4,19 +4,17 @@ import { Alert, Button, Container, Table } from 'react-bootstrap'
 
 const NetworksPage = () => {
 
-  const data = useLoaderData() as IDockerNetwork[]
+  const data = useLoaderData() as any // IDockerNetwork[]
 
   return (
     <Container>
       <h1>Networks</h1>
-      <Alert variant={"warning"}>
-        Not implemented yet
-      </Alert>
       {data && <Table><tbody>
       {data.map((row) => <tr key={row.id}>
-        <td>{row.id}</td>
-        <td>{row?.name}</td>
-        <td>{row?.status}</td>
+        <td>{row?.Id}</td>
+        <td>{row?.Driver}</td>
+        <td>{row?.Name}</td>
+        <td>{row?.Created}</td>
       </tr>)}
       </tbody></Table>}
     </Container>

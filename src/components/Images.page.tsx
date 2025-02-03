@@ -10,9 +10,11 @@ const ImagesPage = () => {
     <Container>
       <h1>Images</h1>
       {data && <Table><tbody>
-      {data.map((row) => <tr key={row.id}>
-        <td title={row.id}>{row.id.substring(0, 32)}</td>
-        <td>{row?.tags}</td>
+      {data.map((row: any) => <tr key={row.Id}>
+        <td title={row.Id}>
+          {row.Id.substring(0, 32)}
+        </td>
+        <td>{row?.RepoTags?.map((tag) => <div key={tag}>{tag}</div>)}</td>
         <td>
           <Button size={"sm"}>New container</Button>
           <Button size={"sm"} variant={"danger"}>Remove</Button>

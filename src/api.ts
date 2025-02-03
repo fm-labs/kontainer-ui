@@ -12,9 +12,26 @@ const http = axios.create({
   xsrfHeaderName: 'X-CSRFToken',
 })
 
-const getContainers = (config?: AxiosRequestConfig) => async (): Promise<IDockerContainer[]> => {
-  const response = await http.get(`containers`, config)
+const getProjects = (config?: AxiosRequestConfig) => async (): Promise<IDockerContainer[]> => {
+  const response = await http.get(`projects`, config)
   return response.data
+}
+
+const getProject = (config?: AxiosRequestConfig) => async (id: string): Promise<IDockerContainer[]> => {
+  const response = await http.get(`project/${id}`, config)
+  return response.data
+}
+
+const startProject = (config?: AxiosRequestConfig) => async (id: string): Promise<AxiosResponse> => {
+  return await http.post(`project/start/${id}`, null, config)
+}
+
+const stopProject = (config?: AxiosRequestConfig) => async (id: string): Promise<AxiosResponse> => {
+  return await http.post(`project/stop/${id}`, null, config)
+}
+
+const removeProject = (config?: AxiosRequestConfig) => async (id: string): Promise<AxiosResponse> => {
+  return await http.post(`project/remove/${id}`, null, config)
 }
 
 const getImages = (config?: AxiosRequestConfig) => async (): Promise<IDockerImage[]> => {
@@ -27,10 +44,46 @@ const getVolumes = (config?: AxiosRequestConfig) => async (): Promise<IDockerVol
   return response.data
 }
 
+const getNetworks = (config?: AxiosRequestConfig) => async (): Promise<IDockerVolume[]> => {
+  const response = await http.get(`networks`, config)
+  return response.data
+}
+
+const getContainers = (config?: AxiosRequestConfig) => async (): Promise<IDockerContainer[]> => {
+  const response = await http.get(`containers`, config)
+  return response.data
+}
+
+const getContainer = (config?: AxiosRequestConfig) => async (id: string): Promise<IDockerContainer[]> => {
+  const response = await http.get(`container/${id}`, config)
+  return response.data
+}
+
+const startContainer = (config?: AxiosRequestConfig) => async (id: string): Promise<AxiosResponse> => {
+  return await http.post(`container/start/${id}`, null, config)
+}
+
+const stopContainer = (config?: AxiosRequestConfig) => async (id: string): Promise<AxiosResponse> => {
+  return await http.post(`container/stop/${id}`, null, config)
+}
+
+const removeContainer = (config?: AxiosRequestConfig) => async (id: string): Promise<AxiosResponse> => {
+  return await http.post(`container/remove/${id}`, null, config)
+}
 
 const api = {
+  getProjects,
+  getProject,
+  startProject,
+  stopProject,
+  removeProject,
   getContainers,
+  getContainer,
+  startContainer,
+  stopContainer,
+  removeContainer,
   getImages,
   getVolumes,
+  getNetworks,
 }
 export default api
