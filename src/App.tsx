@@ -13,7 +13,7 @@ function App() {
           <Helmet>
             <meta charSet='utf-8' />
             <meta name='color-scheme' content='light' />
-            <title>docker-http-client</title>
+            <title>kstack-ui</title>
           </Helmet>
           <RouterProvider router={router} />
           {/*<DevKitBar panels={panels} />*/}

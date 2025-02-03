@@ -6,8 +6,8 @@ import { Container } from 'react-bootstrap'
 const Home = () => {
   return (
     <Container>
-      <h1>docker-http-client</h1>
-      <p>Assumes docker-http server running on <a target={"_blank"} href={DOCKER_HTTP_BASEURL}>{DOCKER_HTTP_BASEURL}</a></p>
+      <h1>kstack-ui</h1>
+      <p>Assumes kstack-agent server running on <a target={"_blank"} href={DOCKER_HTTP_BASEURL}>{DOCKER_HTTP_BASEURL}</a></p>
     </Container>
   )
 }

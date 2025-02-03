@@ -17,7 +17,7 @@ const RoutingErrorBoundary = () => {
         <h1 className={"my-5"}>{error && error?.message && error?.message}</h1>
 
         {error?.message?.toLowerCase() === "network error" && <p>
-          Are you sure the docker-http server is running on{' '}
+          Are you sure the kstack-agent server is running on{' '}
           <a target={"_blank"} href={DOCKER_HTTP_BASEURL}>{DOCKER_HTTP_BASEURL}</a> ?
         </p>}
       </Container>

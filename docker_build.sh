@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build . -t docker-http-client
+docker build . -t kstack-ui

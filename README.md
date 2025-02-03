@@ -1,6 +1,6 @@
-# docker-http-client
+# kstack-ui
 
-Web frontend for docker-http server. Built with React and Vite.
+Web frontend for kstack-agent server. Built with React and Vite.
 
 ## Quick Start
 
@@ -18,7 +18,7 @@ Web frontend for docker-http server. Built with React and Vite.
 ### Build
 
 ```bash
-docker build . -t docker-http-client
+docker build . -t kstack-ui
 ```
 
 
@@ -28,7 +28,7 @@ docker build . -t docker-http-client
 docker run \
   --rm \
   --publish 5080:80 \
-  docker-http-client
+  kstack-ui
 ```
 
 
