@@ -1,9 +1,12 @@
 /.idea/
+/.git/
 /.github/
 /artifacts/
 /bak/
 /build/
 /dist/
+/docker/
+/docs/
 /public/
 /node_modules/
 /src-tauri/
