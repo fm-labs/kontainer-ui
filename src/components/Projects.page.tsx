@@ -5,7 +5,6 @@ import { FaPause, FaPlay, FaStop, FaTrash } from 'react-icons/fa'
 import api from '../api.ts'
 
 const ProjectsPage = () => {
-
   const loaderData = useLoaderData() as any // IDockerProject[]
   const [data, setData] = React.useState(loaderData)
 
@@ -24,14 +23,16 @@ const ProjectsPage = () => {
     api.removeProject()(id)
   }
 
-  React.useEffect(()=> {
+  React.useEffect(() => {
     console.log('ProjectsPage mounted')
-    let timer = setInterval(() => {
+    const timer = setInterval(() => {
       console.log('Refreshing projects')
-      api.getProjects()().then((data) => {
-        console.log('Projects refreshed', data)
-        setData(data);
-      })
+      api
+        .getProjects()()
+        .then((data) => {
+          console.log('Projects refreshed', data)
+          setData(data)
+        })
     }, 5000)
     return () => {
       console.log('ProjectsPage unmounted')
@@ -44,20 +45,34 @@ const ProjectsPage = () => {
       <h1>Projects</h1>
       {/*<ProjectCreateModal />*/}
       <hr />
-      {data && <Table><tbody>
-        {data.map((row: any) => {
-          return (<tr key={row?.key}>
-            <td><Link to={`/projects/${row?.key}`}>{row?.key}</Link></td>
-            <td>{row?.name}</td>
-            <td>{row?.State?.Status}</td>
-            <td>
-              <Button size={'sm'} onClick={handleProjectStartClick(row.key)}><FaPlay />{' '}Start</Button>
-              <Button size={'sm'} onClick={handleProjectStopClick(row.key)}><FaStop />{' '}Stop</Button>
-              <Button size={'sm'} onClick={handleProjectRemoveClick(row.key)} variant={'danger'}><FaTrash />{' '}</Button>
-            </td>
-          </tr>)
-        })}
-      </tbody></Table>}
+      {data && (
+        <Table>
+          <tbody>
+            {data.map((row: any) => {
+              return (
+                <tr key={row?.key}>
+                  <td>
+                    <Link to={`/projects/${row?.key}`}>{row?.key}</Link>
+                  </td>
+                  <td>{row?.name}</td>
+                  <td>{row?.State?.Status}</td>
+                  <td>
+                    <Button size={'sm'} onClick={handleProjectStartClick(row.key)}>
+                      <FaPlay /> Start
+                    </Button>
+                    <Button size={'sm'} onClick={handleProjectStopClick(row.key)}>
+                      <FaStop /> Stop
+                    </Button>
+                    <Button size={'sm'} onClick={handleProjectRemoveClick(row.key)} variant={'danger'}>
+                      <FaTrash />{' '}
+                    </Button>
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </Table>
+      )}
     </Container>
   )
 }

@@ -1,8 +1,4 @@
-import {
-  RESET,
-  SET_ERROR,
-  SET_LOADING,
-} from './ActionTypes'
+import { RESET, SET_ERROR, SET_LOADING } from './ActionTypes'
 import { IStore, IStoreAction } from './store.types.ts'
 import { initialState } from './initialStore.tsx'
 

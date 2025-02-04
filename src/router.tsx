@@ -20,30 +20,56 @@ const routes: RouteObject[] = [
     errorElement: <RoutingErrorBoundary />,
     children: [
       { index: true, element: <Home /> },
-      { path: "/containers", element: <ContainersPage />, loader: async () => {
+      {
+        path: '/containers',
+        element: <ContainersPage />,
+        loader: async () => {
           return api.getContainers()()
-        }},
-      { path: "/container/:id", element: <ContainerPage />, loader: async ({params}) => {
+        },
+      },
+      {
+        path: '/container/:id',
+        element: <ContainerPage />,
+        loader: async ({ params }) => {
           return api.getContainer()(params.id!)
-        }},
-      { path: "/images", element: <ImagesPage />, loader: async () => {
+        },
+      },
+      {
+        path: '/images',
+        element: <ImagesPage />,
+        loader: async () => {
           return api.getImages()()
-        }},
-      { path: "/volumes", element: <VolumesPage />, loader: async () => {
+        },
+      },
+      {
+        path: '/volumes',
+        element: <VolumesPage />,
+        loader: async () => {
           return api.getVolumes()()
-        }},
-      { path: "/networks", element: <NetworksPage />, loader: async () => {
+        },
+      },
+      {
+        path: '/networks',
+        element: <NetworksPage />,
+        loader: async () => {
           return api.getNetworks()()
-        }},
-      { path: "/projects", element: <ProjectsPage />, loader: async () => {
+        },
+      },
+      {
+        path: '/projects',
+        element: <ProjectsPage />,
+        loader: async () => {
           return api.getProjects()()
-        }},
-      { path: "/projects/:id",
+        },
+      },
+      {
+        path: '/projects/:id',
         element: <ProjectPage />,
-        loader: async ({params}) => {
+        loader: async ({ params }) => {
           return api.getProject()(params.id!)
-        }},
-      { path: '*', element: <PageNotFound/> },
+        },
+      },
+      { path: '*', element: <PageNotFound /> },
     ],
   },
 ]

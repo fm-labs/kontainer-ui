@@ -6,7 +6,6 @@ import api from '../api.ts'
 import ReactJson from 'react-json-view'
 
 const ContainerPage = () => {
-
   const loaderData = useLoaderData() as any // IDockerComposeContainer
   const [data, setData] = React.useState(loaderData)
 
@@ -20,14 +19,16 @@ const ContainerPage = () => {
     //api.stopContainer()(id)
   }
 
-  React.useEffect(()=> {
+  React.useEffect(() => {
     console.log('ContainerPage mounted')
-    let timer = setInterval(() => {
+    const timer = setInterval(() => {
       console.log('Refreshing containers')
-      api.getContainer()(data.Id).then((data) => {
-        console.log('Container refreshed', data)
-        setData(data);
-      })
+      api
+        .getContainer()(data.Id)
+        .then((data) => {
+          console.log('Container refreshed', data)
+          setData(data)
+        })
     }, 5000)
     return () => {
       console.log('ContainerPage unmounted')
@@ -38,9 +39,15 @@ const ContainerPage = () => {
   return (
     <Container>
       <h1>Container {data.Id || 'Untitled'}</h1>
-      <Button size={'sm'} onClick={handleContainerStartClick(data.Id)}><FaPlay />{' '}Start</Button>
-      <Button size={'sm'} onClick={handleContainerStopClick(data.Id)}><FaStop />{' '}Stop</Button>
-      <Button size={'sm'} variant={'danger'}><FaTrash />{' '}Remove</Button>
+      <Button size={'sm'} onClick={handleContainerStartClick(data.Id)}>
+        <FaPlay /> Start
+      </Button>
+      <Button size={'sm'} onClick={handleContainerStopClick(data.Id)}>
+        <FaStop /> Stop
+      </Button>
+      <Button size={'sm'} variant={'danger'}>
+        <FaTrash /> Remove
+      </Button>
       <hr />
       <ReactJson src={data} />
     </Container>

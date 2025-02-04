@@ -1,5 +1,5 @@
-import React from 'react';
-import { Nav } from 'react-bootstrap';
+import React from 'react'
+import { Nav } from 'react-bootstrap'
 import { FaHome, FaServer, FaImages, FaHdd, FaRoute, FaFolder } from 'react-icons/fa'
 import { Link, useLocation } from 'react-router-dom'
 
@@ -7,49 +7,49 @@ const navItems = [
   {
     icon: <FaHome />,
     title: 'Home',
-    link: '/'
+    link: '/',
   },
   {
     icon: <FaFolder />,
     title: 'Projects',
-    link: '/projects'
+    link: '/projects',
   },
   {
     icon: <FaServer />,
     title: 'Containers',
-    link: '/containers'
+    link: '/containers',
   },
   {
     icon: <FaImages />,
     title: 'Images',
-    link: '/images'
+    link: '/images',
   },
   {
     icon: <FaHdd />,
     title: 'Volumes',
-    link: '/volumes'
+    link: '/volumes',
   },
   {
     icon: <FaRoute />,
     title: 'Networks',
-    link: '/networks'
-  }
-];
+    link: '/networks',
+  },
+]
 
 const Navigation = () => {
-  const location = useLocation();
+  const location = useLocation()
 
   return (
-    <Nav variant="pills" defaultActiveKey="/" justify activeKey={location.pathname}>
+    <Nav variant='pills' defaultActiveKey='/' justify activeKey={location.pathname}>
       {navItems.map((item, index) => (
         <Nav.Item key={index}>
           <Nav.Link as={Link} to={item.link}>
-            {item.icon}{' '}{item.title}
+            {item.icon} {item.title}
           </Nav.Link>
         </Nav.Item>
       ))}
     </Nav>
-  );
+  )
 }
 
-export default Navigation;
+export default Navigation

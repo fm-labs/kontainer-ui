@@ -3,7 +3,6 @@ import { Container, Nav } from 'react-bootstrap'
 import Navigation from './Navigation.tsx'
 
 const LayoutHeaderBar = () => {
-
   // const navItems = [
   //   {
   //     icon: <FaHome />,
@@ -38,14 +37,12 @@ const LayoutHeaderBar = () => {
   // ];
 
   return (
-    <div className={"LayoutHeaderBar pt-3 pb-5"}>
+    <div className={'LayoutHeaderBar pt-3 pb-5'}>
       <Container>
-        <Navigation/>
+        <Navigation />
       </Container>
     </div>
   )
 }
 
 export default LayoutHeaderBar
-
-

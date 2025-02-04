@@ -1,4 +1,3 @@
-
 interface IDockerContainer {
   id: string
   name?: string
