@@ -1,8 +1,6 @@
 .idea/
 dist/
 build/
-src/assets/
-public/assets/
 
 ### Node template
 # Logs

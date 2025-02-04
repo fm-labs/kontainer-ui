@@ -47,8 +47,3 @@ docker run \
   --publish 5080:80 \
   kstack-ui
 ```
-
-
-### `yarn tauri dev`
-
-Start the Tauri development server.
