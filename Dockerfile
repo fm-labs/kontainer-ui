@@ -1,5 +1,5 @@
 ## Build stage
-FROM node:lts as build-stage
+FROM node:lts AS build-stage
 
 WORKDIR /app
 
@@ -16,17 +16,16 @@ COPY . .
 RUN yarn build
 
 ## Runtime stage
-FROM nginx:alpine as runtime-stage
+FROM nginx:alpine AS runtime-stage
 
 WORKDIR /app
 
 # Copy nginx configuration
-#COPY ./docker/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 
 # Copy from the builder stage
 COPY --from=build-stage /app/dist /var/www/html/
 
-EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
 
-#CMD ["nginx", "-g", "'daemon off;'"]
+EXPOSE 80

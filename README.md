@@ -10,13 +10,12 @@ Built with React, Typescript, and Vite.
 
 Install dependencies.
 
-
-### `yarn dev`
+### `yarn run dev`
 
 Start the development server.
 
 
-### `yarn lint`
+### `yarn run lint`
 
 Check for linting errors.
 
@@ -29,7 +28,7 @@ Use `yarn lint:dump` to dump all linting errors to eslint-report.xml
 Build the project for production.
 
 
-### `yarn docker:build`
+### `yarn run docker:build`
 
 Build the Docker image.
 
@@ -40,7 +39,7 @@ docker build . -t kstack-ui
 Run the Docker container locally.
 
 
-### `yarn docker:run`
+### `yarn run docker:run`
 
 ```bash
 docker run \
