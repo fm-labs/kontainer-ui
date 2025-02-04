@@ -1,6 +1,7 @@
 # kstack-ui
 
-Web frontend for kstack-agent server. Built with React and Vite.
+Web UI for [kstack-agent](https://github.com/fm-labs/kstack-agent). 
+Built with React, Typescript, and Vite.
 
 ## Available commands
 
