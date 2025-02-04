@@ -2,27 +2,44 @@
 
 Web frontend for kstack-agent server. Built with React and Vite.
 
-## Quick Start
-
-    
+## Available commands
 
 
-## Start locally in developer mode
+### `yarn install`
 
-    $ yarn install
-    $ yarn dev
+Install dependencies.
 
 
-## Docker
+### `yarn dev`
 
-### Build
+Start the development server.
+
+
+### `yarn lint`
+
+Check for linting errors.
+
+Use `yarn lint:fix` to fix linting errors.
+Use `yarn lint:dump` to dump all linting errors to eslint-report.xml
+
+
+### `yarn build`
+
+Build the project for production.
+
+
+### `yarn docker:build`
+
+Build the Docker image.
 
 ```bash
 docker build . -t kstack-ui
 ```
 
+Run the Docker container locally.
 
-### Run
+
+### `yarn docker:run`
 
 ```bash
 docker run \
@@ -32,8 +49,6 @@ docker run \
 ```
 
 
-## Tauri desktop app
+### `yarn tauri dev`
 
-### Launch
-
-    $ yarn tauri dev
+Start the Tauri development server.
