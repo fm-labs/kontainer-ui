@@ -12,6 +12,7 @@ import NetworksPage from './pages/docker/Networks.page.tsx'
 import ProjectsPage from './pages/docker/Projects.page.tsx'
 import ProjectPage from './pages/docker/Project.page.tsx'
 import ContainerPage from './pages/docker/Container.page.tsx'
+import PortainerTemplatesPage from './pages/portainer/PortainerTemplates.page.tsx'
 
 const routes: RouteObject[] = [
   {
@@ -69,6 +70,13 @@ const routes: RouteObject[] = [
         loader: async ({ params }) => {
           return api.getProject()(params.id!)
         },
+      },
+      {
+        path: '/templates/portainer',
+        element: <PortainerTemplatesPage />,
+        // loader: async ({ params }) => {
+        //   return api.getProject()(params.id!)
+        // },
       },
       { path: '*', element: <PageNotFound /> },
     ],

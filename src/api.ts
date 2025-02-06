@@ -100,6 +100,12 @@ const removeContainer =
     return await http.post(`container/remove/${id}`, null, config)
   }
 
+const launchPortainerTemplate =
+  (config?: AxiosRequestConfig) =>
+  async (template: any): Promise<AxiosResponse> => {
+    return await http.post(`portainer/templates/launch`, template, config)
+  }
+
 const api = {
   getProjects,
   getProject,
@@ -116,5 +122,6 @@ const api = {
   getImages,
   getVolumes,
   getNetworks,
+  launchPortainerTemplate,
 }
 export default api
