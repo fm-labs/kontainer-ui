@@ -1,8 +1,10 @@
 import React from 'react'
 import { Link, useLoaderData } from 'react-router-dom'
-import { Button, Container, Table } from 'react-bootstrap'
-import { FaPause, FaPlay, FaStop, FaTrash } from 'react-icons/fa'
-import api from '../api.ts'
+import Container from '@mui/material/Container'
+import Button from '@mui/material/Button'
+import Table from '@mui/material/Table'
+import { FaPlay, FaStop, FaTrash } from 'react-icons/fa'
+import api from '../../api.ts'
 
 const ProjectsPage = () => {
   const loaderData = useLoaderData() as any // IDockerProject[]
@@ -41,7 +43,7 @@ const ProjectsPage = () => {
   }, [])
 
   return (
-    <Container>
+    <Container maxWidth={false}>
       <h1>Projects</h1>
       {/*<ProjectCreateModal />*/}
       <hr />
@@ -57,13 +59,13 @@ const ProjectsPage = () => {
                   <td>{row?.name}</td>
                   <td>{row?.State?.Status}</td>
                   <td>
-                    <Button size={'sm'} onClick={handleProjectStartClick(row.key)}>
+                    <Button size={'small'} onClick={handleProjectStartClick(row.key)}>
                       <FaPlay /> Start
                     </Button>
-                    <Button size={'sm'} onClick={handleProjectStopClick(row.key)}>
+                    <Button size={'small'} onClick={handleProjectStopClick(row.key)}>
                       <FaStop /> Stop
                     </Button>
-                    <Button size={'sm'} onClick={handleProjectRemoveClick(row.key)} variant={'danger'}>
+                    <Button size={'small'} onClick={handleProjectRemoveClick(row.key)} color={'error'}>
                       <FaTrash />{' '}
                     </Button>
                   </td>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useRouteError } from 'react-router-dom'
-import Layout from './Layout.tsx'
-import { Container } from 'react-bootstrap'
+import Container from '@mui/material/Container'
+import Layout from '../layout/Layout.tsx'
 import { DOCKER_HTTP_BASEURL } from '../constants.ts'
 
 const RoutingErrorBoundary = () => {

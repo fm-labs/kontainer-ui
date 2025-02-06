@@ -1,7 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { DOCKER_HTTP_BASEURL } from '../constants.ts'
-import { Container } from 'react-bootstrap'
+import Container from '@mui/material/Container'
+import { DOCKER_HTTP_BASEURL } from '../../constants.ts'
 
 const Home = () => {
   return (

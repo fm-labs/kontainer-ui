@@ -1,8 +1,9 @@
 import React from 'react'
 import { useLoaderData } from 'react-router-dom'
-import { Button, Container } from 'react-bootstrap'
+import Container from '@mui/material/Container'
+import Button from '@mui/material/Button'
 import { FaPlay, FaStop, FaTrash } from 'react-icons/fa'
-import api from '../api.ts'
+import api from '../../api.ts'
 import ReactJson from 'react-json-view'
 
 const ContainerPage = () => {
@@ -39,17 +40,17 @@ const ContainerPage = () => {
   return (
     <Container>
       <h1>Container {data.Id || 'Untitled'}</h1>
-      <Button size={'sm'} onClick={handleContainerStartClick(data.Id)}>
+      <Button size={'small'} onClick={handleContainerStartClick(data.Id)}>
         <FaPlay /> Start
       </Button>
-      <Button size={'sm'} onClick={handleContainerStopClick(data.Id)}>
+      <Button size={'small'} onClick={handleContainerStopClick(data.Id)}>
         <FaStop /> Stop
       </Button>
-      <Button size={'sm'} variant={'danger'}>
+      <Button size={'small'} color={'error'}>
         <FaTrash /> Remove
       </Button>
       <hr />
-      <ReactJson src={data} />
+      <ReactJson src={data} displayDataTypes={false} displayObjectSize={false} enableClipboard={true} />
     </Container>
   )
 }

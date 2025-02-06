@@ -1,10 +1,8 @@
 // global imports
-@import "styles/variables";
-@import "styles/fonts";
+@use "styles/_fonts";
 
 // vendor imports
-@import "styles/bootstrap";
-@import "styles/toastify";
+@use "styles/_toastify";
 
 // app imports
 //@import "styles/App";
@@ -66,3 +64,11 @@ code {
   }
 }
 
+/** MUI Overrides **/
+.MuiTableCell-sizeSmall {
+  padding: 0.3rem 0.6rem !important;
+}
+
+.MuiIconButton-sizeSmall > * {
+  //font-size: 1.1rem !important;
+}

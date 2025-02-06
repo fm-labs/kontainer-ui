@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { DOCKER_HTTP_BASEURL } from './constants.ts'
+import { IDockerContainer, IDockerResourceAttrs } from './types.ts'
 
 const http = axios.create({
   baseURL: DOCKER_HTTP_BASEURL,
@@ -42,22 +43,22 @@ const removeProject =
     return await http.post(`project/remove/${id}`, null, config)
   }
 
-const getImages = (config?: AxiosRequestConfig) => async (): Promise<IDockerImage[]> => {
+const getImages = (config?: AxiosRequestConfig) => async (): Promise<IDockerResourceAttrs[]> => {
   const response = await http.get(`images`, config)
   return response.data
 }
 
-const getVolumes = (config?: AxiosRequestConfig) => async (): Promise<IDockerVolume[]> => {
+const getVolumes = (config?: AxiosRequestConfig) => async (): Promise<IDockerResourceAttrs[]> => {
   const response = await http.get(`volumes`, config)
   return response.data
 }
 
-const getNetworks = (config?: AxiosRequestConfig) => async (): Promise<IDockerVolume[]> => {
+const getNetworks = (config?: AxiosRequestConfig) => async (): Promise<IDockerResourceAttrs[]> => {
   const response = await http.get(`networks`, config)
   return response.data
 }
 
-const getContainers = (config?: AxiosRequestConfig) => async (): Promise<IDockerContainer[]> => {
+const getContainers = (config?: AxiosRequestConfig) => async (): Promise<IDockerResourceAttrs[]> => {
   const response = await http.get(`containers`, config)
   return response.data
 }
@@ -73,6 +74,18 @@ const startContainer =
   (config?: AxiosRequestConfig) =>
   async (id: string): Promise<AxiosResponse> => {
     return await http.post(`container/start/${id}`, null, config)
+  }
+
+const restartContainer =
+  (config?: AxiosRequestConfig) =>
+  async (id: string): Promise<AxiosResponse> => {
+    return await http.post(`container/start/${id}?restart=1`, null, config)
+  }
+
+const pauseContainer =
+  (config?: AxiosRequestConfig) =>
+  async (id: string): Promise<AxiosResponse> => {
+    return await http.post(`container/pause/${id}`, null, config)
   }
 
 const stopContainer =
@@ -96,6 +109,8 @@ const api = {
   getContainers,
   getContainer,
   startContainer,
+  restartContainer,
+  pauseContainer,
   stopContainer,
   removeContainer,
   getImages,

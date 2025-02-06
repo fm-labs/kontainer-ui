@@ -1,23 +1,31 @@
-interface IDockerContainer {
+export interface IDockerContainer {
   id: string
   name?: string
   status?: string
+  attrs: IDockerResourceAttrs
 }
 
-interface IDockerImage {
+export interface IDockerImage {
   id: string
   tags?: string
   labels?: string[]
+  attrs: IDockerResourceAttrs
 }
 
-interface IDockerVolume {
+export interface IDockerVolume {
   id: string
   name?: string
   status?: string
+  attrs: IDockerResourceAttrs
 }
 
-interface IDockerNetwork {
+export interface IDockerNetwork {
   id: string
   name?: string
   status?: string
+  attrs: IDockerResourceAttrs
+}
+
+export interface IDockerResourceAttrs {
+  [key: string]: any
 }

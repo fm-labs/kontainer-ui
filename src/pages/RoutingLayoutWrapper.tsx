@@ -1,6 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import Layout from './Layout.tsx'
+import Layout from '../layout/Layout.tsx'
 
 const RoutingLayoutWrapper = () => {
   return (

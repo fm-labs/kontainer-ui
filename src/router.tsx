@@ -1,17 +1,17 @@
 import React from 'react'
-import { createBrowserRouter, RouteObject } from 'react-router-dom'
-import Home from './components/Home'
-import ContainersPage from './components/Containers.page.tsx'
-import ImagesPage from './components/Images.page.tsx'
-import VolumesPage from './components/Volumes.page.tsx'
-import RoutingLayoutWrapper from './components/RoutingLayoutWrapper.tsx'
+import { createBrowserRouter, Navigate, RouteObject } from 'react-router-dom'
+import Home from './pages/docker/Home.tsx'
+import ContainersPage from './pages/docker/Containers.page.tsx'
+import ImagesPage from './pages/docker/Images.page.tsx'
+import VolumesPage from './pages/docker/Volumes.page.tsx'
+import RoutingLayoutWrapper from './pages/RoutingLayoutWrapper.tsx'
 import api from './api.ts'
-import RoutingErrorBoundary from './components/RoutingErrorBoundary.tsx'
-import PageNotFound from './components/PageNotFound.tsx'
-import NetworksPage from './components/Networks.page.tsx'
-import ProjectsPage from './components/Projects.page.tsx'
-import ProjectPage from './components/Project.page.tsx'
-import ContainerPage from './components/Container.page.tsx'
+import RoutingErrorBoundary from './pages/RoutingErrorBoundary.tsx'
+import PageNotFound from './pages/PageNotFound.tsx'
+import NetworksPage from './pages/docker/Networks.page.tsx'
+import ProjectsPage from './pages/docker/Projects.page.tsx'
+import ProjectPage from './pages/docker/Project.page.tsx'
+import ContainerPage from './pages/docker/Container.page.tsx'
 
 const routes: RouteObject[] = [
   {
@@ -19,7 +19,8 @@ const routes: RouteObject[] = [
     element: <RoutingLayoutWrapper />,
     errorElement: <RoutingErrorBoundary />,
     children: [
-      { index: true, element: <Home /> },
+      //{ index: true, element: <Home /> },
+      { index: true, element: <Navigate to={'/containers'} /> },
       {
         path: '/containers',
         element: <ContainersPage />,
