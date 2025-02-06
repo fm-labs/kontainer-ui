@@ -1,5 +1,5 @@
 import React from 'react'
-import { Badge, Chip, ChipProps } from '@mui/material'
+import { Chip, ChipProps } from '@mui/material'
 
 /**
  * ContainerState
@@ -59,59 +59,19 @@ const ContainerState = ({ state }: { state: any }) => {
     label: state?.Status,
     variant: 'outlined',
   }
-
-  let containerStateEl
   switch (state?.Status) {
     case 'running':
-      containerStateEl = <Chip {...chipProps} color='success' />
-      break
+      return <Chip {...chipProps} color='success' />
     case 'exited':
       chipProps.label = `${state?.Status} (${state?.ExitCode})`
-      containerStateEl = <Chip {...chipProps} color='error' />
-      break
+      return <Chip {...chipProps} color='error' />
     case 'created':
-      containerStateEl = <Chip {...chipProps} color='info' />
-      break
+      return <Chip {...chipProps} color='info' />
     case 'paused':
-      containerStateEl = <Chip {...chipProps} color='warning' />
-      break
-    default:
-      containerStateEl = <Chip {...chipProps} />
-      break
+      return <Chip {...chipProps} color='warning' />
   }
 
-  let healthStateEl
-  if (state?.Health?.Status) {
-    const healthChipProps: ChipProps = {
-      size: 'small',
-      label: state?.Health?.Status,
-      variant: 'outlined',
-    }
-    switch (state?.Health?.Status) {
-      case 'healthy':
-        healthStateEl = <Chip {...healthChipProps} color='success' />
-        break
-      case 'unhealthy': {
-        const failingStreak = state?.Health?.FailingStreak
-        healthStateEl = (
-          <Badge badgeContent={failingStreak}>
-            <Chip {...healthChipProps} color='error' />
-          </Badge>
-        )
-        break
-      }
-      default:
-        healthStateEl = <Chip {...healthChipProps} />
-        break
-    }
-  }
-
-  return (
-    <>
-      {containerStateEl}
-      {healthStateEl}
-    </>
-  )
+  return <Chip {...chipProps} />
 }
 
 export default ContainerState
