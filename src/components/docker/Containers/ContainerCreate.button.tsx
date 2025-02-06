@@ -10,12 +10,12 @@ const ContainerCreateButton = () => {
   }
 
   return (
-    <div>
-      <Button size={'small'} variant={'contained'} color={'primary'} onClick={handleClick}>
+    <>
+      <Button variant={'outlined'} onClick={handleClick}>
         Create Container
       </Button>
       <ContainerCreateDialog open={showDialog} onClose={() => setShowDialog(false)} />
-    </div>
+    </>
   )
 }
 

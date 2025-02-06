@@ -160,8 +160,12 @@ const ContainersTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => 
     enableColumnOrdering: true, //enable a feature for all columns
     enableGlobalFilter: false, //turn off a feature
 
-    muiTableProps: { size: 'small' }, //custom props for the MUI Table component
+    //muiTableProps: { size: 'small' }, //custom props for the MUI Table component
     //muiTableBodyCellProps: { size: 'small' }, //custom props for all MUI TableBodyCell components
+
+    initialState: {
+      density: 'compact',
+    },
   })
 
   //note: you can also pass table options as props directly to <MaterialReactTable /> instead of using useMaterialReactTable

@@ -55,6 +55,7 @@ export default function Layout({ children }: PropsWithChildren<any>) {
               flexGrow: 1,
               height: '100vh',
               overflow: 'auto',
+              paddingTop: '0.5rem',
             }}
           >
             {/*<Toolbar />*/}

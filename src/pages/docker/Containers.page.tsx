@@ -7,6 +7,9 @@ import ContainersTableGrouped from '../../components/docker/Containers/Container
 import ContainerCreateButton from '../../components/docker/Containers/ContainerCreate.button.tsx'
 import ContainersTableMaterial from '../../components/docker/Containers/ContainersTableMaterial.tsx'
 import { FormControlLabel, FormGroup, Switch } from '@mui/material'
+import Toolbar from '@mui/material/Toolbar'
+import Heading from '../../elements/Heading.tsx'
+import { Helmet } from 'react-helmet-async'
 
 const ContainersPage = () => {
   const loaderData = useLoaderData() as IDockerResourceAttrs[]
@@ -36,9 +39,17 @@ const ContainersPage = () => {
 
   return (
     <Container maxWidth={false}>
-      <h1>Containers</h1>
-      <ContainerCreateButton />
-      <hr />
+      <Helmet>
+        <title>Containers</title>
+      </Helmet>
+      <Toolbar disableGutters>
+        <Heading label={'Containers'}>
+          <div>
+            <ContainerCreateButton />
+          </div>
+        </Heading>
+      </Toolbar>
+
       <div>
         <FormGroup>
           <FormControlLabel

@@ -82,6 +82,15 @@ const ImagesTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
 
     muiTableProps: { size: 'small' }, //custom props for the MUI Table component
     //muiTableBodyCellProps: { size: 'small' }, //custom props for all MUI TableBodyCell components
+
+    // onDensityChange: (density) => {
+    //   console.log('density changed', density)
+    //   return density
+    // },
+
+    initialState: {
+      density: 'compact',
+    },
   })
 
   //note: you can also pass table options as props directly to <MaterialReactTable /> instead of using useMaterialReactTable

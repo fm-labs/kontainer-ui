@@ -22,8 +22,9 @@ code {
     monospace;
 }
 
-.btn ~ .btn {
-  margin-left: 0.25em;
+.btn ~ .btn,
+button ~ button {
+  margin-left: 0.25em !important;
 }
 
 
@@ -65,9 +66,9 @@ code {
 }
 
 /** MUI Overrides **/
-.MuiTableCell-sizeSmall {
-  padding: 0.3rem 0.6rem !important;
-}
+//.MuiTableCell-sizeSmall {
+//  padding: 0.3rem 0.6rem !important;
+//}
 
 .MuiIconButton-sizeSmall > * {
   //font-size: 1.1rem !important;
