@@ -22,18 +22,24 @@ export const ContainerPorts = ({ ports }: { ports: any }) => {
   return (
     <div>
       {Object.keys(ports).map((port) => {
+        let hostSchema = 'http'
+        let hostIp = '0.0.0.0'
+        let hostPort = port
+
         const portData = ports[port]
-        if (!portData) {
-          return (
-            <div key={port}>
-              0.0.0.0:{port} {'->'} {port}
-            </div>
-          )
+        if (portData && portData[0]) {
+          hostIp = portData[0].HostIp || hostIp
+          hostPort = portData[0].HostPort || port
         }
-        const portData0 = portData[0]
+
+        if (hostPort.endsWith('443')) {
+          hostSchema = 'https'
+        }
+
+        const url = `${hostSchema}://${hostIp}:${hostPort}`
         return (
           <div key={port}>
-            {portData0.HostIp}:{portData0.HostPort} {'->'} {port}
+            <a href={url} target={'_blank'} rel='noreferrer'>{`${hostPort}:${port}`}</a>
           </div>
         )
       })}

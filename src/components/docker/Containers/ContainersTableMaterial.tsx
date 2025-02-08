@@ -4,13 +4,10 @@ import { IDockerResourceAttrs } from '../../../types.ts'
 import moment from 'moment/moment'
 import { ContainerPorts } from './ContainerPorts.tsx'
 import IconButton from '@mui/material/IconButton'
-import EditIcon from '@mui/icons-material/Edit'
-import StopIcon from '@mui/icons-material/Stop'
-import PauseIcon from '@mui/icons-material/Pause'
-import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import { HiOutlinePlay, HiPause, HiStop, HiTrash } from 'react-icons/hi2'
 import ContainerState from './ContainerState.tsx'
 import api from '../../../api.ts'
+import { Link } from 'react-router-dom'
 
 const ContainersTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
   const handleContainerStartClick = (id: string) => () => {
@@ -33,20 +30,20 @@ const ContainersTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => 
     api.removeContainer()(id)
   }
 
-  const handleProjectStartClick = (id: string) => () => {
-    console.log('Starting project', id)
-    api.startProject()(id)
-  }
-
-  const handleProjectStopClick = (id: string) => () => {
-    console.log('Stopping project', id)
-    api.stopProject()(id)
-  }
-
-  const handleProjectRemoveClick = (id: string) => () => {
-    console.log('Removing project', id)
-    api.removeProject()(id)
-  }
+  // const handleStackStartClick = (id: string) => () => {
+  //   console.log('Starting project', id)
+  //   api.startStack()(id)
+  // }
+  //
+  // const handleStackStopClick = (id: string) => () => {
+  //   console.log('Stopping project', id)
+  //   api.stopStack()(id)
+  // }
+  //
+  // const handleStackRemoveClick = (id: string) => () => {
+  //   console.log('Removing project', id)
+  //   api.removeStack()(id)
+  // }
 
   const handleContainerLogsClick = (id: string) => () => {
     // open a new window with the logs
@@ -66,7 +63,12 @@ const ContainersTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => 
         enableHiding: false, //disable a feature for this column
         Cell: ({ cell }) => {
           const name = cell.getValue<string>()
-          return <div title={name}>{name.substring(1)}</div>
+          const id = cell.row.original?.Id
+          return (
+            <Link to={`/container/${id}`} title={name}>
+              {name.substring(1)}
+            </Link>
+          )
         },
       },
       {
@@ -156,7 +158,7 @@ const ContainersTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => 
   const table = useMaterialReactTable({
     columns,
     data, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
-    enableRowSelection: true, //enable some features
+    enableRowSelection: false, //enable some features
     enableColumnOrdering: true, //enable a feature for all columns
     enableGlobalFilter: false, //turn off a feature
 

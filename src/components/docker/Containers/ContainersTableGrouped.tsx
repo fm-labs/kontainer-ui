@@ -58,19 +58,19 @@ const ContainersTableGrouped = ({ data }: { data: IDockerResourceAttrs[] }) => {
     api.removeContainer()(id)
   }
 
-  const handleProjectStartClick = (id: string) => () => {
-    console.log('Starting project', id)
-    api.startProject()(id)
+  const handleStackStartClick = (id: string) => () => {
+    console.log('Starting stack', id)
+    api.startStack()(id)
   }
 
-  const handleProjectStopClick = (id: string) => () => {
-    console.log('Stopping project', id)
-    api.stopProject()(id)
+  const handleStackStopClick = (id: string) => () => {
+    console.log('Stopping stack', id)
+    api.stopStack()(id)
   }
 
-  const handleProjectRemoveClick = (id: string) => () => {
-    console.log('Removing project', id)
-    api.removeProject()(id)
+  const handleStackDeleteClick = (id: string) => () => {
+    console.log('Deleting stack', id)
+    api.removeStack()(id)
   }
 
   const handleContainerLogsClick = (id: string) => () => {
@@ -95,7 +95,7 @@ const ContainersTableGrouped = ({ data }: { data: IDockerResourceAttrs[] }) => {
               {composeProject !== '_' && (
                 <TableRow key={composeProject}>
                   <TableCell>
-                    <Link style={{ textDecoration: 'dashed underline' }} to={`/project/${composeProject}`}>
+                    <Link style={{ textDecoration: 'dashed underline' }} to={`/stack/${composeProject}`}>
                       {composeProject}
                     </Link>
                   </TableCell>
@@ -106,16 +106,16 @@ const ContainersTableGrouped = ({ data }: { data: IDockerResourceAttrs[] }) => {
                   <TableCell>-</TableCell>
                   <TableCell style={{ textAlign: 'right' }}>
                     {running === 0 && (
-                      <IconButton size={'small'} title={'Start'} onClick={handleProjectStartClick(composeProject)}>
+                      <IconButton size={'small'} title={'Start'} onClick={handleStackStartClick(composeProject)}>
                         <HiOutlinePlay />
                       </IconButton>
                     )}
                     {running > 0 && (
-                      <IconButton size={'small'} title={'Stop'} onClick={handleProjectStopClick(composeProject)}>
+                      <IconButton size={'small'} title={'Stop'} onClick={handleStackStopClick(composeProject)}>
                         <HiStop />
                       </IconButton>
                     )}
-                    <IconButton size={'small'} title={'Delete'} onClick={handleProjectRemoveClick(composeProject)}>
+                    <IconButton size={'small'} title={'Delete'} onClick={handleStackDeleteClick(composeProject)}>
                       <HiTrash />
                     </IconButton>
                   </TableCell>
