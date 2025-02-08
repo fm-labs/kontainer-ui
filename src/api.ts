@@ -100,10 +100,43 @@ const removeContainer =
     return await http.post(`container/remove/${id}`, null, config)
   }
 
+const runContainer =
+  (config?: AxiosRequestConfig) =>
+  async (runData: any): Promise<AxiosResponse> => {
+    return await http.post(`containers/run`, runData, config)
+  }
+
 const launchPortainerTemplate =
   (config?: AxiosRequestConfig) =>
   async (template: any): Promise<AxiosResponse> => {
     return await http.post(`portainer/templates/launch`, template, config)
+  }
+
+const getSystemInfo = (config?: AxiosRequestConfig) => async (): Promise<any> => {
+  const response = await http.get(`system/info`, config)
+  return response.data
+}
+
+const getEngineInfo = (config?: AxiosRequestConfig) => async (): Promise<any> => {
+  const response = await http.get(`engine/info`, config)
+  return response.data
+}
+
+const getEngineDf = (config?: AxiosRequestConfig) => async (): Promise<any> => {
+  const response = await http.get(`engine/df`, config)
+  return response.data
+}
+
+const getEnginePing = (config?: AxiosRequestConfig) => async (): Promise<any> => {
+  const response = await http.get(`engine/ping`, config)
+  return response.data
+}
+
+const getEngineEvents =
+  (config?: AxiosRequestConfig) =>
+  async (args: { since?: number }): Promise<any> => {
+    const response = await http.get(`engine/events?since=${args.since || ''}`, config)
+    return response.data
   }
 
 const api = {
@@ -119,9 +152,15 @@ const api = {
   pauseContainer,
   stopContainer,
   removeContainer,
+  runContainer,
   getImages,
   getVolumes,
   getNetworks,
   launchPortainerTemplate,
+  getSystemInfo,
+  getEngineInfo,
+  getEngineDf,
+  getEnginePing,
+  getEngineEvents,
 }
 export default api

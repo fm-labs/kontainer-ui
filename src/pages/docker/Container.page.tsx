@@ -20,6 +20,9 @@ import ContainerEnvVariables from '../../components/docker/Containers/ContainerE
 import ContainerNetworksView from '../../components/docker/Containers/ContainerNetworksView.tsx'
 import ContainerMounts from '../../components/docker/Containers/ContainerMounts.tsx'
 import ContainerPaths from '../../components/docker/Containers/ContainerPaths.tsx'
+import ContainerLabelsTable from '../../components/docker/Containers/ContainerLabelsTable.tsx'
+import ContainerEnvVariablesTable from '../../components/docker/Containers/ContainerEnvVariablesTable.tsx'
+import ContainerPathsTable from '../../components/docker/Containers/ContainerPathsTable.tsx'
 
 const ContainerPage = () => {
   const loaderData = useLoaderData() as any // IDockerComposeContainer
@@ -66,12 +69,12 @@ const ContainerPage = () => {
     {
       label: 'Labels',
       name: 'labels',
-      children: <ContainerLabels labels={data?.Config?.Labels} />,
+      children: <ContainerLabelsTable labels={data?.Config?.Labels} />,
     },
     {
       label: 'Environment',
       name: 'env',
-      children: <ContainerEnvVariables env={data?.Config?.Env} />,
+      children: <ContainerEnvVariablesTable env={data?.Config?.Env} />,
     },
     {
       label: 'Networks',
@@ -86,7 +89,7 @@ const ContainerPage = () => {
     {
       label: 'Paths',
       name: 'paths',
-      children: <ContainerPaths container={data} />,
+      children: <ContainerPathsTable container={data} />,
     },
     // {
     //   label: 'Logs',

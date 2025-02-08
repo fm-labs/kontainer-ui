@@ -1,18 +1,17 @@
 import React from 'react'
-import { FaFolder, FaHdd, FaHome, FaImages, FaRoute, FaServer } from 'react-icons/fa'
 import { INavigationItem } from './navigation.types.ts'
-import ViewInArIcon from '@mui/icons-material/ViewInAr'
-import FilterTiltShiftIcon from '@mui/icons-material/FilterTiltShift'
-import { HiMiniCircleStack, HiOutlineCube, HiOutlineCubeTransparent, HiOutlineServer } from 'react-icons/hi2'
-import { FaNetworkWired } from 'react-icons/fa6'
+import { HiOutlineCube, HiOutlineCubeTransparent, HiOutlineServer } from 'react-icons/hi2'
+import { FaDocker, FaNetworkWired } from 'react-icons/fa6'
+import { FaTerminal } from 'react-icons/fa6'
+import { FaHistory } from 'react-icons/fa'
 
 export const navItemsDocker: INavigationItem[] = [
-  // {
-  //   key: 'home',
-  //   icon: <FaHome />,
-  //   label: 'Home',
-  //   to: '/',
-  // },
+  {
+    key: 'dashboard',
+    icon: <FaDocker size={24} />,
+    label: 'Dashboard',
+    to: '/',
+  },
   // {
   //   key: 'compose',
   //   icon: <HiMiniSquare3Stack3D />,
@@ -42,5 +41,17 @@ export const navItemsDocker: INavigationItem[] = [
     icon: <FaNetworkWired size={24} />,
     label: 'Networks',
     to: '/networks',
+  },
+  // {
+  //   key: 'run',
+  //   icon: <FaTerminal size={24} />,
+  //   label: 'Run',
+  //   to: '/run',
+  // },
+  {
+    key: 'events',
+    icon: <FaHistory size={24} />,
+    label: 'Events',
+    to: '/events',
   },
 ]

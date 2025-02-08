@@ -3,6 +3,7 @@ import { RouterProvider } from 'react-router-dom'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import router from './router'
 import AppStore from './store/AppStore'
+import { ToastContainer } from 'react-toastify'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <RouterProvider router={router} />
           {/*<DevKitBar panels={panels} />*/}
         </HelmetProvider>
+        <ToastContainer position={'top-center'} pauseOnFocusLoss={false} pauseOnHover={false} />
       </AppStore>
     </>
   )

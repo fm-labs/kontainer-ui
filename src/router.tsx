@@ -13,6 +13,9 @@ import ProjectsPage from './pages/docker/Projects.page.tsx'
 import ProjectPage from './pages/docker/Project.page.tsx'
 import ContainerPage from './pages/docker/Container.page.tsx'
 import PortainerTemplatesPage from './pages/portainer/PortainerTemplates.page.tsx'
+import ContainerRunPage from './pages/docker/ContainerRun.page.tsx'
+import DashboardPage from './pages/docker/Dashboard.page.tsx'
+import EventsPage from './pages/docker/Events.page.tsx'
 
 const routes: RouteObject[] = [
   {
@@ -20,8 +23,7 @@ const routes: RouteObject[] = [
     element: <RoutingLayoutWrapper />,
     errorElement: <RoutingErrorBoundary />,
     children: [
-      //{ index: true, element: <Home /> },
-      { index: true, element: <Navigate to={'/containers'} /> },
+      { index: true, element: <DashboardPage /> },
       {
         path: '/containers',
         element: <ContainersPage />,
@@ -58,6 +60,13 @@ const routes: RouteObject[] = [
         },
       },
       {
+        path: '/events',
+        element: <EventsPage />,
+        loader: async () => {
+          return api.getEngineEvents()({})
+        },
+      },
+      {
         path: '/projects',
         element: <ProjectsPage />,
         loader: async () => {
@@ -74,6 +83,13 @@ const routes: RouteObject[] = [
       {
         path: '/templates/portainer',
         element: <PortainerTemplatesPage />,
+        // loader: async ({ params }) => {
+        //   return api.getProject()(params.id!)
+        // },
+      },
+      {
+        path: '/run',
+        element: <ContainerRunPage />,
         // loader: async ({ params }) => {
         //   return api.getProject()(params.id!)
         // },
