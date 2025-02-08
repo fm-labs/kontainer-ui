@@ -57,7 +57,7 @@ const NetworksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
   const table = useMaterialReactTable({
     columns,
     data, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
-    enableRowSelection: true, //enable some features
+    enableRowSelection: false, //enable some features
     enableColumnOrdering: true, //enable a feature for all columns
     enableGlobalFilter: false, //turn off a feature
 
@@ -68,6 +68,10 @@ const NetworksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
       density: 'compact',
       columnVisibility: {
         Labels: false,
+      },
+      pagination: {
+        pageSize: 15,
+        pageIndex: 0,
       },
     },
   })
