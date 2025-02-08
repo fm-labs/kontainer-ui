@@ -5,7 +5,6 @@ import VolumesTableMaterial from '../../components/docker/Volumes/VolumesTableMa
 import { Helmet } from 'react-helmet-async'
 import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../elements/Heading.tsx'
-import Button from '@mui/material/Button'
 
 const VolumesPage = () => {
   const data = useLoaderData() as any // IDockerVolume[]

@@ -8,6 +8,8 @@ import {
 } from 'material-react-table'
 import { IDockerResourceAttrs } from '../../../types.ts'
 import moment from 'moment/moment'
+import { Chip, ChipProps } from '@mui/material'
+import Typography, { TypographyProps } from '@mui/material/Typography'
 
 const VolumesTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
   const columns = React.useMemo<MRT_ColumnDef<any>[]>(
@@ -25,7 +27,24 @@ const VolumesTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
         enableHiding: true, //disable a feature for this column
         Cell: ({ cell }) => {
           const inUse = cell.getValue<boolean>()
-          return <div>{/*inUse ? 'in-use' : 'no'*/}</div>
+          const containerIds = cell.row.original?._ContainerIds
+          // const chipProps: ChipProps = {
+          //   color: inUse ? 'success' : 'warning',
+          //   size: 'small',
+          //   label: inUse ? 'in-use' : 'no',
+          // }
+          const typographyProps: TypographyProps = {
+            variant: 'caption',
+            component: 'span',
+            color: inUse ? 'success' : 'warning',
+          }
+          return (
+            <div>
+              {/*<Chip {...chipProps} />*/}
+              <Typography {...typographyProps}>{inUse ? 'Yes' : 'No'}</Typography>
+              {containerIds && containerIds.length > 0 && <> ({containerIds.length})</>}
+            </div>
+          )
         },
       },
       // {
@@ -80,7 +99,7 @@ const VolumesTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
   const table = useMaterialReactTable({
     columns,
     data, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
-    enableRowSelection: true, //enable some features
+    enableRowSelection: false, //enable some features
     enableColumnOrdering: true, //enable a feature for all columns
     enableGlobalFilter: false, //turn off a feature
 
@@ -89,6 +108,13 @@ const VolumesTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
 
     initialState: {
       density: 'compact',
+      columnVisibility: {
+        Labels: false,
+      },
+      pagination: {
+        pageSize: 20,
+        pageIndex: 0,
+      },
     },
   })
 
