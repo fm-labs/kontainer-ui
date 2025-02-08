@@ -26,7 +26,10 @@ const NavListItems = ({ items }: NavListItemsProps) => {
             target={item?.target}
           >
             <ListItemIcon>{Icon}</ListItemIcon>
-            <ListItemText primary={item.label} /*secondary={resolvedPath}*/ />
+            <ListItemText
+              slotProps={{ primary: { fontSize: '0.9rem' } }}
+              primary={item.label} /*secondary={resolvedPath}*/
+            />
           </ListItemButton>
         )
       })}

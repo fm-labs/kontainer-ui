@@ -11,36 +11,46 @@ const http = axios.create({
   xsrfCookieName: 'csrftoken',
   // `xsrfHeaderName` is the name of the http header that carries the xsrf token value
   xsrfHeaderName: 'X-CSRFToken',
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+  },
 })
 
-const getProjects = (config?: AxiosRequestConfig) => async (): Promise<IDockerContainer[]> => {
-  const response = await http.get(`projects`, config)
+const getStacks = (config?: AxiosRequestConfig) => async (): Promise<IDockerContainer[]> => {
+  const response = await http.get(`stacks`, config)
   return response.data
 }
 
-const getProject =
+const createStack =
+  (config?: AxiosRequestConfig) =>
+  async (data: any): Promise<AxiosResponse> => {
+    return await http.post(`stacks/create`, data, config)
+  }
+
+const getStack =
   (config?: AxiosRequestConfig) =>
   async (id: string): Promise<IDockerContainer[]> => {
-    const response = await http.get(`project/${id}`, config)
+    const response = await http.get(`stack/${id}`, config)
     return response.data
   }
 
-const startProject =
+const startStack =
   (config?: AxiosRequestConfig) =>
   async (id: string): Promise<AxiosResponse> => {
-    return await http.post(`project/start/${id}`, null, config)
+    return await http.post(`stack/start/${id}`, null, config)
   }
 
-const stopProject =
+const stopStack =
   (config?: AxiosRequestConfig) =>
   async (id: string): Promise<AxiosResponse> => {
-    return await http.post(`project/stop/${id}`, null, config)
+    return await http.post(`stack/stop/${id}`, null, config)
   }
 
-const removeProject =
+const removeStack =
   (config?: AxiosRequestConfig) =>
   async (id: string): Promise<AxiosResponse> => {
-    return await http.post(`project/remove/${id}`, null, config)
+    return await http.post(`stack/remove/${id}`, null, config)
   }
 
 const getImages = (config?: AxiosRequestConfig) => async (): Promise<IDockerResourceAttrs[]> => {
@@ -140,11 +150,12 @@ const getEngineEvents =
   }
 
 const api = {
-  getProjects,
-  getProject,
-  startProject,
-  stopProject,
-  removeProject,
+  getStacks,
+  createStack,
+  getStack,
+  startStack,
+  stopStack,
+  removeStack,
   getContainers,
   getContainer,
   startContainer,

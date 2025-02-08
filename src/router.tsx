@@ -1,6 +1,5 @@
 import React from 'react'
-import { createBrowserRouter, Navigate, RouteObject } from 'react-router-dom'
-import Home from './pages/docker/Home.tsx'
+import { createBrowserRouter, RouteObject } from 'react-router-dom'
 import ContainersPage from './pages/docker/Containers.page.tsx'
 import ImagesPage from './pages/docker/Images.page.tsx'
 import VolumesPage from './pages/docker/Volumes.page.tsx'
@@ -9,13 +8,14 @@ import api from './api.ts'
 import RoutingErrorBoundary from './pages/RoutingErrorBoundary.tsx'
 import PageNotFound from './pages/PageNotFound.tsx'
 import NetworksPage from './pages/docker/Networks.page.tsx'
-import ProjectsPage from './pages/docker/Projects.page.tsx'
+import StacksPage from './pages/docker/Stacks.page.tsx'
 import ProjectPage from './pages/docker/Project.page.tsx'
 import ContainerPage from './pages/docker/Container.page.tsx'
 import PortainerTemplatesPage from './pages/portainer/PortainerTemplates.page.tsx'
 import ContainerRunPage from './pages/docker/ContainerRun.page.tsx'
 import DashboardPage from './pages/docker/Dashboard.page.tsx'
 import EventsPage from './pages/docker/Events.page.tsx'
+import ContainerLaunchPage from './pages/docker/ContainerLaunch.page.tsx'
 
 const routes: RouteObject[] = [
   {
@@ -30,6 +30,10 @@ const routes: RouteObject[] = [
         loader: async () => {
           return api.getContainers()()
         },
+      },
+      {
+        path: '/containers/create',
+        element: <ContainerLaunchPage />,
       },
       {
         path: '/container/:id',
@@ -67,17 +71,17 @@ const routes: RouteObject[] = [
         },
       },
       {
-        path: '/projects',
-        element: <ProjectsPage />,
+        path: '/stacks',
+        element: <StacksPage />,
         loader: async () => {
-          return api.getProjects()()
+          return api.getStacks()()
         },
       },
       {
-        path: '/projects/:id',
+        path: '/stacks/:id',
         element: <ProjectPage />,
         loader: async ({ params }) => {
-          return api.getProject()(params.id!)
+          return api.getStack()(params.id!)
         },
       },
       {
