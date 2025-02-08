@@ -14,27 +14,27 @@ export default function CreateContainerDialog({ open, onClose }: { open: boolean
       <Dialog
         open={open}
         onClose={onClose}
-        PaperProps={{
-          component: 'form',
-          onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-            event.preventDefault()
-            const formData = new FormData(event.currentTarget)
-            const formJson = Object.fromEntries((formData as any).entries())
-            const containerName = formJson.containerName
-            console.log(containerName)
-            // api
-            //   .createContainer(containerName)
-            //   .then(() => {
-            //     console.log('container created')
-            //     toast.success('Container created')
-            //     handleClose()
-            //   })
-            //   .catch((error) => {
-            //     console.error('error creating container', error)
-            //     toast.error('Error creating container')
-            //   })
-          },
-        }}
+        // PaperProps={{
+        //   component: 'form',
+        //   onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+        //     event.preventDefault()
+        //     const formData = new FormData(event.currentTarget)
+        //     const formJson = Object.fromEntries((formData as any).entries())
+        //     const containerName = formJson.containerName
+        //     console.log(containerName)
+        //     // api
+        //     //   .createContainer(containerName)
+        //     //   .then(() => {
+        //     //     console.log('container created')
+        //     //     toast.success('Container created')
+        //     //     handleClose()
+        //     //   })
+        //     //   .catch((error) => {
+        //     //     console.error('error creating container', error)
+        //     //     toast.error('Error creating container')
+        //     //   })
+        //   },
+        // }}
       >
         <DialogTitle>Create new container</DialogTitle>
         <DialogContent>
