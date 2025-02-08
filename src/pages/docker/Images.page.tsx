@@ -6,7 +6,6 @@ import ImagesTableMaterial from '../../components/docker/Images/ImagesTableMater
 import { Helmet } from 'react-helmet-async'
 import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../elements/Heading.tsx'
-import Button from '@mui/material/Button'
 
 const ImagesPage = () => {
   const data = useLoaderData() as IDockerResourceAttrs[]
