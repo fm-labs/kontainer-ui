@@ -11,6 +11,9 @@ import NavListItems from './NavListItems.tsx'
 import { navItemsDocker } from './navigation.tsx'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import Typography from '@mui/material/Typography'
+import { getHosts } from '../hosts.ts'
+import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
+import { FaServer } from 'react-icons/fa6'
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
   '& .MuiDrawer-paper': {
@@ -43,14 +46,22 @@ interface DeveloperLayoutDrawerProps {
 }
 
 const LayoutDrawer = (props: DeveloperLayoutDrawerProps) => {
-  const [selectedHost, setSelectedHost] = React.useState('http://localhost:5000')
+  const [selectedHost, setSelectedHost] = React.useState<number>() // host id
+  const availableHosts = getHosts()
 
-  const handleHostChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedHost(e.target.value)
-    console.log('DOCKER_HTTP_BASEURL CHANGED', e.target.value)
+  const handleHostChange = (e: SelectChangeEvent) => {
+    setSelectedHost(parseInt(e.target.value))
+    console.log('HOST CHANGED', e.target.value)
+
+    const host = availableHosts.find((h) => h.id === parseInt(e.target.value))
+    if (!host) {
+      console.error('Host not found', e.target.value)
+      return
+    }
 
     // set in session storage
-    sessionStorage.setItem('DOCKER_HTTP_BASEURL', e.target.value)
+    const baseUrl = `http://${host.ip}:5000/api/`
+    sessionStorage.setItem('DOCKER_HTTP_BASEURL', baseUrl)
   }
 
   return (
@@ -63,16 +74,32 @@ const LayoutDrawer = (props: DeveloperLayoutDrawerProps) => {
           px: [1],
         }}
       >
-        {props?.open && <Typography variant={'subtitle1'}>k:stack</Typography>}
+        {/*props?.open && <Typography variant={'subtitle1'}>k:stack</Typography>*/}
+        <span style={{ display: 'inline-block', marginLeft: '1em' }}>
+          <FaServer />
+        </span>
+        {props?.open && (
+          <>
+            {/*<select value={selectedHost} onChange={handleHostChange}>
+              {availableHosts.map((host) => (
+                <option key={host.id} value={host.id}>
+                  {host.name}
+                </option>
+              ))}
+            </select>*/}
+            <Select variant={'standard'} value={selectedHost?.toString()} onChange={handleHostChange}>
+              {availableHosts.map((host) => (
+                <MenuItem key={host.id} value={host.id}>
+                  {host.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </>
+        )}
         <IconButton onClick={props?.toggleDrawer}>{props.open ? <ChevronLeftIcon /> : <ChevronRightIcon />}</IconButton>
       </Toolbar>
       <Divider />
       <List component='nav'>
-        <select defaultValue={selectedHost} onChange={handleHostChange}>
-          <option value={'http://localhost:5000'}>localhost</option>
-          <option value={'http://dev.online.amatic:5000'}>remotehost</option>
-        </select>
-
         <NavListItems items={navItemsDocker} />
         {/*<Divider sx={{ my: 1 }} />*/}
         {/*<NavListItems items={navItemsKube} />*/}
