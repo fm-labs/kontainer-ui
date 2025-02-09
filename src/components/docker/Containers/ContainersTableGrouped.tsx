@@ -7,7 +7,7 @@ import { TableCell, TableRow } from '@mui/material'
 import { HiOutlinePlay, HiPause, HiStop, HiTrash } from 'react-icons/hi2'
 import api from '../../../lib/api.ts'
 import { IDockerResourceAttrs } from '../../../types.ts'
-import { ContainerPorts } from './ContainerPorts.tsx'
+import ContainerPorts from './ContainerPorts.tsx'
 import ContainerState from './ContainerState.tsx'
 
 const ContainersTableGrouped = ({ data }: { data: IDockerResourceAttrs[] }) => {

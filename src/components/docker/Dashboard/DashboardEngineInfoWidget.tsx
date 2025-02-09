@@ -1,25 +1,26 @@
 import React from 'react'
 import api from '../../../lib/api.ts'
-import ReactJson from 'react-json-view'
 import DashboardResourcesWidget from './DashboardResourcesWidget.tsx'
 import KeyValueGrid from '../../../elements/KeyValueGrid.tsx'
 import { Paper } from '@mui/material'
+import AppIcons from '../../../elements/AppIcons.tsx'
+import JsonView from '../../../elements/JsonView.tsx'
 
 const DashboardEngineInfoWidget = () => {
-  const [systemInfo, setEngineInfo] = React.useState<any>(null)
+  const [engineInfo, setEngineInfo] = React.useState<any>(null)
 
   const kvInfo = React.useMemo(() => {
-    if (!systemInfo) return []
+    if (!engineInfo) return []
 
-    return Object.entries(systemInfo)
+    return Object.entries(engineInfo)
       .filter((entry) => typeof entry[1] !== 'object' && Array.isArray(entry[1]) === false)
       .map((entry) => {
         return {
           key: entry[0],
-          value: systemInfo[entry[0]],
+          value: engineInfo[entry[0]],
         }
       })
-  }, [systemInfo])
+  }, [engineInfo])
 
   const fetchEngineInfo = React.useCallback(() => {
     api
@@ -36,17 +37,23 @@ const DashboardEngineInfoWidget = () => {
 
   return (
     <div>
-      <div>Engine Info</div>
-      {systemInfo && <DashboardResourcesWidget systemInfo={systemInfo} />}
+      <h5>
+        <AppIcons.EnvironmentIcon /> Summary
+      </h5>
+      {engineInfo && <DashboardResourcesWidget engineInfo={engineInfo} />}
 
-      <hr />
+      <h5>
+        <AppIcons.DockerIcon /> Engine Info
+      </h5>
       <Paper sx={{ padding: 2 }}>
         <KeyValueGrid data={kvInfo} />
         {/*<KeyValueTable data={kvInfo} />*/}
       </Paper>
 
-      <hr />
-      {systemInfo ? <ReactJson src={systemInfo} /> : <div>Loading...</div>}
+      <h5>
+        <AppIcons.BugIcon /> Engine Details
+      </h5>
+      <Paper sx={{ padding: 2 }}>{engineInfo ? <JsonView src={engineInfo} /> : <div>Loading...</div>}</Paper>
     </div>
   )
 }

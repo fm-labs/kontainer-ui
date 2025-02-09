@@ -1,7 +1,8 @@
 import React from 'react'
 import api from '../../../lib/api.ts'
-import ReactJson from 'react-json-view'
-import DashboardResourcesWidget from './DashboardResourcesWidget.tsx'
+import JsonView from '../../../elements/JsonView.tsx'
+import { Paper } from '@mui/material'
+import AppIcons from '../../../elements/AppIcons.tsx'
 
 const DashboardSystemInfoWidget = () => {
   const [systemInfo, setSystemInfo] = React.useState<any>(null)
@@ -21,8 +22,10 @@ const DashboardSystemInfoWidget = () => {
 
   return (
     <div>
-      <div>System Info</div>
-      {systemInfo ? <ReactJson src={systemInfo} /> : <div>Loading...</div>}
+      <h5>
+        <AppIcons.BugIcon /> System Info
+      </h5>
+      <Paper sx={{ padding: 2 }}>{systemInfo ? <JsonView src={systemInfo} /> : <div>Loading...</div>}</Paper>
     </div>
   )
 }

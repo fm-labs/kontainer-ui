@@ -12,7 +12,7 @@ import React from 'react'
  * @param ports
  * @constructor
  */
-export const ContainerPorts = ({ ports }: { ports: any }) => {
+const ContainerPorts = ({ ports }: { ports: any }) => {
   //console.log('ContainerPorts', ports)
 
   if (!ports) {
@@ -46,3 +46,5 @@ export const ContainerPorts = ({ ports }: { ports: any }) => {
     </div>
   )
 }
+
+export default ContainerPorts

@@ -1,28 +1,23 @@
 import React from 'react'
+import moment from 'moment'
+import { Helmet } from 'react-helmet-async'
 import { useLoaderData } from 'react-router-dom'
 import Container from '@mui/material/Container'
 import Button, { ButtonProps } from '@mui/material/Button'
-import { FaPlay, FaStop, FaTrash } from 'react-icons/fa'
 import api from '../../lib/api.ts'
 import ReactJson from 'react-json-view'
-import RoutedTabs, { RoutedTabItem } from '../../elements/RoutedTabs.tsx'
-import { Helmet } from 'react-helmet-async'
 import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../elements/Heading.tsx'
-import ContainerCreateButton from '../../components/docker/Containers/ContainerCreate.button.tsx'
 import ContainerState from '../../components/docker/Containers/ContainerState.tsx'
-import { HiOutlinePlay, HiPause, HiStop, HiTrash } from 'react-icons/hi2'
-import moment from 'moment'
-import { ContainerPorts } from '../../components/docker/Containers/ContainerPorts.tsx'
+import ContainerPorts from '../../components/docker/Containers/ContainerPorts.tsx'
 import ContainerMountPoints from '../../components/docker/Containers/ContainerMountPoints.tsx'
-import ContainerLabels from '../../components/docker/Containers/ContainerLabels.tsx'
-import ContainerEnvVariables from '../../components/docker/Containers/ContainerEnvVariables.tsx'
 import ContainerNetworksView from '../../components/docker/Containers/ContainerNetworksView.tsx'
 import ContainerMounts from '../../components/docker/Containers/ContainerMounts.tsx'
-import ContainerPaths from '../../components/docker/Containers/ContainerPaths.tsx'
 import ContainerLabelsTable from '../../components/docker/Containers/ContainerLabelsTable.tsx'
 import ContainerEnvVariablesTable from '../../components/docker/Containers/ContainerEnvVariablesTable.tsx'
 import ContainerPathsTable from '../../components/docker/Containers/ContainerPathsTable.tsx'
+import RoutedTabs, { RoutedTabItem } from '../../elements/RoutedTabs.tsx'
+import AppIcons from '../../elements/AppIcons.tsx'
 
 const ContainerPage = () => {
   const loaderData = useLoaderData() as any // IDockerComposeContainer
@@ -138,21 +133,33 @@ const ContainerPage = () => {
           <div>
             <ContainerState state={data?.State} />{' '}
             {data?.State?.Status !== 'running' && (
-              <Button {...buttonProps} onClick={handleContainerStartClick(data.Id)} startIcon={<HiOutlinePlay />}>
+              <Button
+                {...buttonProps}
+                onClick={handleContainerStartClick(data.Id)}
+                startIcon={<AppIcons.ContainerStartIcon />}
+              >
                 Start
               </Button>
             )}
             {data?.State?.Status === 'running' && (
-              <Button {...buttonProps} onClick={handleContainerStartClick(data.Id)} startIcon={<HiPause />}>
+              <Button
+                {...buttonProps}
+                onClick={handleContainerStartClick(data.Id)}
+                startIcon={<AppIcons.ContainerPauseIcon />}
+              >
                 Pause
               </Button>
             )}
             {data?.State?.Status === 'running' && (
-              <Button {...buttonProps} onClick={handleContainerStopClick(data.Id)} startIcon={<HiStop />}>
+              <Button
+                {...buttonProps}
+                onClick={handleContainerStopClick(data.Id)}
+                startIcon={<AppIcons.ContainerStopIcon />}
+              >
                 Stop
               </Button>
             )}
-            <Button {...buttonProps} color={'error'} startIcon={<HiTrash />}>
+            <Button {...buttonProps} color={'error'} startIcon={<AppIcons.ContainerDeleteIcon />}>
               Remove
             </Button>
           </div>

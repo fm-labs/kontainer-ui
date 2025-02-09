@@ -1,14 +1,13 @@
 import React from 'react'
 import api from '../../lib/api.ts'
 import Grid from '@mui/material/Grid2'
-import { Avatar, Card, CardActions, CardContent, CardHeader, Chip, ChipProps, colors, Typography } from '@mui/material'
+import { Avatar, Card, CardActions, CardContent, CardHeader, Chip, ChipProps, Typography } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined'
-import ShareIcon from '@mui/icons-material/Share'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import SourceIcon from '@mui/icons-material/Source'
 import BugReportIcon from '@mui/icons-material/BugReport'
+import AppIcons from '../../elements/AppIcons.tsx'
 
 interface PortainerTemplatesViewProps {
   templateUrl: string
@@ -129,7 +128,8 @@ const PortainerTemplatesView = ({ templateUrl }: PortainerTemplatesViewProps) =>
               </CardContent>
               <CardActions disableSpacing>
                 <IconButton aria-label='Add to favorites'>
-                  <FavoriteOutlinedIcon />
+                  {/*<FavoriteOutlinedIcon />*/}
+                  <AppIcons.LikeIcon />
                 </IconButton>
                 {/*<IconButton aria-label='Share'>
                   <ShareIcon />

@@ -3,9 +3,9 @@ import Table from '@mui/material/Table'
 import { Link } from 'react-router-dom'
 import moment from 'moment/moment'
 import Button from '@mui/material/Button'
-import { FaPlay, FaStop, FaTrash } from 'react-icons/fa'
-import { ContainerPorts } from './ContainerPorts.tsx'
+import ContainerPorts from './ContainerPorts.tsx'
 import api from '../../../lib/api.ts'
+import AppIcons from '../../../elements/AppIcons.tsx'
 
 const ContainersTable = ({ data }) => {
   const handleContainerStartClick = (id: string) => () => {
@@ -48,16 +48,16 @@ const ContainersTable = ({ data }) => {
               <td>
                 {row?.State?.Status !== 'running' && (
                   <Button size={'small'} onClick={handleContainerStartClick(row.Id)}>
-                    <FaPlay />{' '}
+                    <AppIcons.ContainerStartIcon />{' '}
                   </Button>
                 )}
                 {row?.State?.Status === 'running' && (
                   <Button size={'small'} onClick={handleContainerStopClick(row.Id)}>
-                    <FaStop />{' '}
+                    <AppIcons.ContainerStopIcon />{' '}
                   </Button>
                 )}
                 <Button size={'small'} onClick={handleContainerRemoveClick(row.Id)} color={'error'}>
-                  <FaTrash />{' '}
+                  <AppIcons.ContainerDeleteIcon />{' '}
                 </Button>
               </td>
             </tr>

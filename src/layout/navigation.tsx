@@ -1,8 +1,6 @@
 import React from 'react'
 import { INavigationItem } from './navigation.types.ts'
-import { HiOutlineCube, HiOutlineCubeTransparent, HiOutlineServer } from 'react-icons/hi2'
-import { FaDocker, FaLayerGroup, FaNetworkWired } from 'react-icons/fa6'
-import { FaHistory } from 'react-icons/fa'
+import AppIcons from '../elements/AppIcons.tsx'
 
 const navIconProps = {
   size: 24,
@@ -11,37 +9,37 @@ const navIconProps = {
 export const navItemsDocker: INavigationItem[] = [
   {
     key: 'dashboard',
-    icon: <FaDocker {...navIconProps} />,
+    icon: <AppIcons.DockerIcon {...navIconProps} />,
     label: 'Dashboard',
     to: '/',
   },
   {
     key: 'containers',
-    icon: <HiOutlineCube {...navIconProps} />,
+    icon: <AppIcons.ContainerIcon {...navIconProps} />,
     label: 'Containers',
     to: '/containers',
   },
   {
     key: 'stacks',
-    icon: <FaLayerGroup {...navIconProps} />,
+    icon: <AppIcons.StackIcon {...navIconProps} />,
     label: 'Stacks',
     to: '/stacks',
   },
   {
     key: 'images',
-    icon: <HiOutlineCubeTransparent {...navIconProps} />,
+    icon: <AppIcons.ImageIcon {...navIconProps} />,
     label: 'Images',
     to: '/images',
   },
   {
     key: 'volumes',
-    icon: <HiOutlineServer {...navIconProps} />,
+    icon: <AppIcons.VolumeIcon {...navIconProps} />,
     label: 'Volumes',
     to: '/volumes',
   },
   {
     key: 'networks',
-    icon: <FaNetworkWired {...navIconProps} />,
+    icon: <AppIcons.NetworkIcon {...navIconProps} />,
     label: 'Networks',
     to: '/networks',
   },
@@ -53,7 +51,7 @@ export const navItemsDocker: INavigationItem[] = [
   // },
   {
     key: 'events',
-    icon: <FaHistory {...navIconProps} />,
+    icon: <AppIcons.EventIcon {...navIconProps} />,
     label: 'Events',
     to: '/events',
   },

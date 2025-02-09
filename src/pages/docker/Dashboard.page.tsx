@@ -6,6 +6,7 @@ import Container from '@mui/material/Container'
 import DashboardResourcesWidget from '../../components/docker/Dashboard/DashboardResourcesWidget.tsx'
 import DashboardSystemInfoWidget from '../../components/docker/Dashboard/DashboardSystemInfoWidget.tsx'
 import DashboardEngineInfoWidget from '../../components/docker/Dashboard/DashboardEngineInfoWidget.tsx'
+import DashboardOverviewWidget from '../../components/docker/Dashboard/DashboardOverviewWidget.tsx'
 
 // const DashboardGridItem = styled(Paper)(({ theme }) => ({
 //   backgroundColor: '#fff',
@@ -43,6 +44,7 @@ const DashboardPage = () => {
       </Toolbar>
 
       <div>
+        <DashboardOverviewWidget />
         <DashboardEngineInfoWidget />
         <DashboardSystemInfoWidget />
       </div>

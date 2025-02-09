@@ -1,75 +1,75 @@
 import React from 'react'
 import Grid from '@mui/material/Grid2'
-import { SiDocker } from 'react-icons/si'
-import { HiCubeTransparent, HiOutlineCube } from 'react-icons/hi2'
-import { HiDatabase } from 'react-icons/hi'
-import { FaGauge, FaLayerGroup, FaNetworkWired } from 'react-icons/fa6'
-import { Avatar, Card, CardActionArea, CardContent, CardHeader } from '@mui/material'
+import { Avatar, Card, CardContent, CardHeader } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Typography from '@mui/material/Typography'
+import AppIcons from '../../../elements/AppIcons'
 
-const DashboardResourcesWidget = ({ systemInfo: info }) => {
+const DashboardResourcesWidget = ({ engineInfo }) => {
   const resources = [
     {
       type: 'env',
       label: 'Environment',
-      icon: <FaGauge />,
+      icon: <AppIcons.EnvironmentIcon />,
       content: (
         <>
           <Typography variant='body2' color='text.secondary'>
-            {info?.OperatingSystem}
+            {engineInfo?.OperatingSystem}
           </Typography>
           <Typography variant='body2' color='text.secondary'>
-            {info?.Architecture}
+            {engineInfo?.Architecture}
           </Typography>
           <Typography variant='body2' color='text.secondary'>
-            {info?.NCPU} CPUs
+            {engineInfo?.NCPU} CPUs
           </Typography>
           <Typography variant='body2' color='text.secondary'>
-            {(info?.MemTotal / 1024 / 1024 / 1024).toFixed(2)} GB RAM
+            {(engineInfo?.MemTotal / 1024 / 1024 / 1024).toFixed(2)} GB RAM
           </Typography>
         </>
       ),
     },
     {
       type: 'containers',
-      label: `${info?.Containers} Containers`,
-      icon: <HiOutlineCube />,
+      label: `Containers (${engineInfo?.Containers})`,
+      icon: <AppIcons.ContainerIcon />,
       content: (
         <>
           <Typography variant='body2' color='text.secondary'>
-            {info?.ContainersRunning} running
+            {engineInfo?.ContainersRunning} running
           </Typography>
           <Typography variant='body2' color='text.secondary'>
-            {info?.ContainersPaused} paused
+            {engineInfo?.ContainersPaused} paused
           </Typography>
           <Typography variant='body2' color='text.secondary'>
-            {info?.ContainersStopped} stopped
+            {engineInfo?.ContainersStopped} stopped
           </Typography>
         </>
       ),
     },
     {
       type: 'stacks',
-      label: `${info?.Stacks} Stacks`,
-      icon: <FaLayerGroup />,
-      content: <></>,
+      label: `Stacks`,
+      icon: <AppIcons.StackIcon />,
+      content: <i>-</i>,
     },
     {
       type: 'images',
-      label: `${info?.Images} Images`,
-      icon: <HiCubeTransparent />,
+      label: `Images (${engineInfo?.Images})`,
+      icon: <AppIcons.ImageIcon />,
+      content: <i>-</i>,
     },
     {
       type: 'volumes',
       label: `Volumes`,
-      icon: <HiDatabase />,
+      icon: <AppIcons.VolumeIcon />,
+      content: <i>-</i>,
     },
     {
       type: 'networks',
       label: `Networks`,
-      icon: <FaNetworkWired />,
+      icon: <AppIcons.NetworkIcon />,
+      content: <i>-</i>,
     },
   ]
 

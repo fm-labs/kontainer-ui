@@ -2,8 +2,8 @@ import React from 'react'
 import { useLoaderData } from 'react-router-dom'
 import Container from '@mui/material/Container'
 import Button from '@mui/material/Button'
-import { FaPlay, FaStop, FaTrash } from 'react-icons/fa'
 import api from '../../lib/api.ts'
+import AppIcons from '../../elements/AppIcons.tsx'
 
 const ProjectPage = () => {
   const loaderData = useLoaderData() as any // IDockerComposeProject
@@ -41,13 +41,13 @@ const ProjectPage = () => {
       <h1>Project {data?.key || 'Untitled'}</h1>
       {/*<ProjectCreateModal />*/}
       <Button size={'small'} onClick={handleProjectStartClick(data.key)}>
-        <FaPlay /> Start
+        <AppIcons.ContainerStartIcon /> Start
       </Button>
       <Button size={'small'} onClick={handleProjectStopClick(data.key)}>
-        <FaStop /> Stop
+        <AppIcons.ContainerStopIcon /> Stop
       </Button>
       <Button size={'small'} color={'error'}>
-        <FaTrash /> Remove
+        <AppIcons.ContainerDeleteIcon /> Remove
       </Button>
       <hr />
       <textarea style={{ width: '100%', height: '300px' }} defaultValue={data?.data}></textarea>
