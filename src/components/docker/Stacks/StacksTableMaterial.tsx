@@ -3,7 +3,7 @@ import { MaterialReactTable, useMaterialReactTable, type MRT_ColumnDef } from 'm
 import { IDockerResourceAttrs } from '../../../types.ts'
 import IconButton from '@mui/material/IconButton'
 import { HiOutlinePlay, HiPause, HiStop, HiTrash } from 'react-icons/hi2'
-import api from '../../../api.ts'
+import api from '../../../lib/api.ts'
 import { Link } from 'react-router-dom'
 
 const StacksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {

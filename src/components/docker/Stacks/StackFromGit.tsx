@@ -1,7 +1,7 @@
 import React from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
-import api from '../../../api.ts'
+import api from '../../../lib/api.ts'
 import { toast } from 'react-toastify'
 import Typography from '@mui/material/Typography'
 

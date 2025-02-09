@@ -43,6 +43,16 @@ interface DeveloperLayoutDrawerProps {
 }
 
 const LayoutDrawer = (props: DeveloperLayoutDrawerProps) => {
+  const [selectedHost, setSelectedHost] = React.useState('http://localhost:5000')
+
+  const handleHostChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedHost(e.target.value)
+    console.log('DOCKER_HTTP_BASEURL CHANGED', e.target.value)
+
+    // set in session storage
+    sessionStorage.setItem('DOCKER_HTTP_BASEURL', e.target.value)
+  }
+
   return (
     <Drawer variant='permanent' open={props?.open}>
       <Toolbar
@@ -58,6 +68,11 @@ const LayoutDrawer = (props: DeveloperLayoutDrawerProps) => {
       </Toolbar>
       <Divider />
       <List component='nav'>
+        <select defaultValue={selectedHost} onChange={handleHostChange}>
+          <option value={'http://localhost:5000'}>localhost</option>
+          <option value={'http://dev.online.amatic:5000'}>remotehost</option>
+        </select>
+
         <NavListItems items={navItemsDocker} />
         {/*<Divider sx={{ my: 1 }} />*/}
         {/*<NavListItems items={navItemsKube} />*/}

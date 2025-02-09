@@ -1,8 +1,7 @@
 import React from 'react'
-import api from '../../../api.ts'
+import api from '../../../lib/api.ts'
 import ReactJson from 'react-json-view'
 import DashboardResourcesWidget from './DashboardResourcesWidget.tsx'
-import KeyValueTable from '../../../elements/KeyValueTable.tsx'
 import KeyValueGrid from '../../../elements/KeyValueGrid.tsx'
 import { Paper } from '@mui/material'
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import api from '../../api.ts'
+import api from '../../lib/api.ts'
 import Grid from '@mui/material/Grid2'
 import { Avatar, Card, CardActions, CardContent, CardHeader, Chip, ChipProps, colors, Typography } from '@mui/material'
 import IconButton from '@mui/material/IconButton'

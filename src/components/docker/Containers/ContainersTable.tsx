@@ -5,7 +5,7 @@ import moment from 'moment/moment'
 import Button from '@mui/material/Button'
 import { FaPlay, FaStop, FaTrash } from 'react-icons/fa'
 import { ContainerPorts } from './ContainerPorts.tsx'
-import api from '../../../api.ts'
+import api from '../../../lib/api.ts'
 
 const ContainersTable = ({ data }) => {
   const handleContainerStartClick = (id: string) => () => {

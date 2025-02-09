@@ -11,7 +11,7 @@ import StackFromScratch from './StackFromScratch.tsx'
 import StackFromGit from './StackFromGit.tsx'
 import StackFromUrl from './StackFromUrl.tsx'
 import StackFromPortainerTemplate from './StackFromPortainerTemplate.tsx'
-import api from '../../../api.ts'
+import api from '../../../lib/api.ts'
 import { toast } from 'react-toastify'
 import StackFromTemplate from './StackFromTemplate.tsx'
 

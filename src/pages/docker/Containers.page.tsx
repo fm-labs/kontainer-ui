@@ -1,7 +1,7 @@
 import React from 'react'
 import { useLoaderData } from 'react-router-dom'
 import Container from '@mui/material/Container'
-import api from '../../api.ts'
+import api from '../../lib/api.ts'
 import { IDockerResourceAttrs } from '../../types.ts'
 import ContainersTableGrouped from '../../components/docker/Containers/ContainersTableGrouped.tsx'
 import ContainerCreateButton from '../../components/docker/Containers/ContainerCreate.button.tsx'

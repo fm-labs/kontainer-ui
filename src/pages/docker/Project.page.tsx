@@ -3,7 +3,7 @@ import { useLoaderData } from 'react-router-dom'
 import Container from '@mui/material/Container'
 import Button from '@mui/material/Button'
 import { FaPlay, FaStop, FaTrash } from 'react-icons/fa'
-import api from '../../api.ts'
+import api from '../../lib/api.ts'
 
 const ProjectPage = () => {
   const loaderData = useLoaderData() as any // IDockerComposeProject
@@ -24,7 +24,7 @@ const ProjectPage = () => {
     const timer = setInterval(() => {
       console.log('Refreshing projects')
       api
-        .getProject()(data.key)
+        .getStack()(data.key)
         .then((data) => {
           console.log('Project refreshed', data)
           setData(data)

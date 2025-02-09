@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async'
 import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../elements/Heading.tsx'
 import EventsTableMaterial from '../../components/docker/Engine/EventsTableMaterial.tsx'
-import api from '../../api.ts'
+import api from '../../lib/api.ts'
 import { toast } from 'react-toastify'
 import { useLoaderData } from 'react-router-dom'
 

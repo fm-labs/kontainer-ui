@@ -1,7 +1,7 @@
 import React from 'react'
 import { useLoaderData } from 'react-router-dom'
 import Container from '@mui/material/Container'
-import api from '../../api.ts'
+import api from '../../lib/api.ts'
 import StacksTableMaterial from '../../components/docker/Stacks/StacksTableMaterial.tsx'
 import { Helmet } from 'react-helmet-async'
 import Toolbar from '@mui/material/Toolbar'

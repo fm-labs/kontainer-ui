@@ -4,7 +4,7 @@ import Container from '@mui/material/Container'
 import { Helmet } from 'react-helmet-async'
 import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../elements/Heading.tsx'
-import api from '../../api.ts'
+import api from '../../lib/api.ts'
 import { toast } from 'react-toastify'
 
 const ContainerRunPage = () => {
