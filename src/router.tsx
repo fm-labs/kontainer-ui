@@ -41,9 +41,9 @@ const routes: RouteObject[] = [
         index: true,
         //path: 'environments',
         element: <EnvironmentsPage />,
-        loader: async (args) => {
-          return api(AGENT_API_BASEURL).getEnvironments()()
-        },
+        // loader: async (args) => {
+        //   return api(AGENT_API_BASEURL).getEnvironments()()
+        // },
       },
       {
         path: 'settings',
