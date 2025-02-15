@@ -1,13 +1,14 @@
 import React from 'react'
-import api from '../../../lib/api.ts'
 import DashboardResourcesWidget from './DashboardResourcesWidget.tsx'
 import KeyValueGrid from '../../../elements/KeyValueGrid.tsx'
 import { Paper } from '@mui/material'
 import AppIcons from '../../../elements/AppIcons.tsx'
 import JsonView from '../../../elements/JsonView.tsx'
+import { useHostApi } from '../../../helper/useHostApi.ts'
 
 const DashboardEngineInfoWidget = () => {
   const [engineInfo, setEngineInfo] = React.useState<any>(null)
+  const api = useHostApi()
 
   const kvInfo = React.useMemo(() => {
     if (!engineInfo) return []

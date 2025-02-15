@@ -1,5 +1,4 @@
 import React from 'react'
-import api from '../../lib/api.ts'
 import Grid from '@mui/material/Grid2'
 import { Avatar, Card, CardActions, CardContent, CardHeader, Chip, ChipProps, Typography } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
@@ -73,10 +72,10 @@ const PortainerTemplatesView = ({ templateUrl }: PortainerTemplatesViewProps) =>
     setTemplates(data)
   }, [templateUrl])
 
-  const handleLaunchTemplate = (template: any) => {
-    console.log('launch template', template)
-    api.launchPortainerTemplate(template)
-  }
+  // const handleLaunchTemplate = (template: any) => {
+  //   console.log('launch template', template)
+  //   api.launchPortainerTemplate(template)
+  // }
 
   React.useEffect(() => {
     fetchTemplates()

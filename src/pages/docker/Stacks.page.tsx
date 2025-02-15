@@ -1,28 +1,31 @@
 import React from 'react'
 import { useLoaderData } from 'react-router-dom'
 import Container from '@mui/material/Container'
-import api from '../../lib/api.ts'
 import StacksTableMaterial from '../../components/docker/Stacks/StacksTableMaterial.tsx'
 import { Helmet } from 'react-helmet-async'
 import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../elements/Heading.tsx'
 import StacksCreateButton from '../../components/docker/Stacks/StacksCreate.button.tsx'
+import { useHostApi } from '../../helper/useHostApi.ts'
 
 const StacksPage = () => {
   const loaderData = useLoaderData() as any // IDockerStack[]
   const [data, setData] = React.useState(loaderData)
+  const api = useHostApi()
+
+  const STACKS_FETCH_INTERVAL = 15000
 
   React.useEffect(() => {
     console.log('StacksPage mounted')
     const timer = setInterval(() => {
-      console.log('Refreshing projects')
+      console.log('Refreshing stacks')
       api
         .getStacks()()
         .then((data) => {
-          console.log('Stacks refreshed', data)
           setData(data)
         })
-    }, 5000)
+    }, STACKS_FETCH_INTERVAL)
+
     return () => {
       console.log('StacksPage unmounted')
       clearInterval(timer)

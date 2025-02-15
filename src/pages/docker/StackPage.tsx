@@ -2,12 +2,13 @@ import React from 'react'
 import { useLoaderData } from 'react-router-dom'
 import Container from '@mui/material/Container'
 import Button from '@mui/material/Button'
-import api from '../../lib/api.ts'
 import AppIcons from '../../elements/AppIcons.tsx'
+import { useHostApi } from '../../helper/useHostApi.ts'
 
-const ProjectPage = () => {
+const StackPage = () => {
   const loaderData = useLoaderData() as any // IDockerComposeProject
   const [data, setData] = React.useState(loaderData)
+  const api = useHostApi()
 
   const handleProjectStartClick = (id: string) => () => {
     console.log('Starting project', id)
@@ -24,12 +25,12 @@ const ProjectPage = () => {
     const timer = setInterval(() => {
       console.log('Refreshing projects')
       api
-        .getStack()(data.key)
+        .getStack()(data.name)
         .then((data) => {
           console.log('Project refreshed', data)
           setData(data)
         })
-    }, 5000)
+    }, 10000)
     return () => {
       console.log('ProjectPage unmounted')
       clearInterval(timer)
@@ -38,21 +39,24 @@ const ProjectPage = () => {
 
   return (
     <Container>
-      <h1>Project {data?.key || 'Untitled'}</h1>
+      <h1>Project {data.name}</h1>
       {/*<ProjectCreateModal />*/}
-      <Button size={'small'} onClick={handleProjectStartClick(data.key)}>
+      <Button size={'small'} onClick={handleProjectStartClick(data.name)}>
         <AppIcons.ContainerStartIcon /> Start
       </Button>
-      <Button size={'small'} onClick={handleProjectStopClick(data.key)}>
+      <Button size={'small'} onClick={handleProjectStopClick(data.name)}>
         <AppIcons.ContainerStopIcon /> Stop
       </Button>
       <Button size={'small'} color={'error'}>
         <AppIcons.ContainerDeleteIcon /> Remove
       </Button>
       <hr />
+      <h3>Active Containers</h3>
+      <div>...</div>
+      <hr />
       <textarea style={{ width: '100%', height: '300px' }} defaultValue={data?.data}></textarea>
     </Container>
   )
 }
 
-export default ProjectPage
+export default StackPage

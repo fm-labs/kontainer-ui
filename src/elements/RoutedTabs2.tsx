@@ -3,7 +3,7 @@ import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Box from '@mui/material/Box'
 import { PropsWithChildren } from 'react'
-import { useLocation, useMatch, useNavigate } from 'react-router'
+import { useLocation } from 'react-router'
 
 interface RoutedTabPanelProps {
   children?: React.ReactNode
@@ -46,40 +46,44 @@ function RoutedTabPanel(props: RoutedTabPanelProps) {
 }
 
 export default function RoutedTabs({ items, defaultIdx }: RoutedTabsProps) {
-  const [value, setValue] = React.useState<number>(defaultIdx || 0)
+  const [tabIdx, setTabIdx] = React.useState<number>(defaultIdx || 0)
 
-  const navigate = useNavigate()
+  const history = window.history
+  //const navigate = useNavigate()
   const location = useLocation()
-  const match = useMatch(location.pathname)
-  const queryParams = new URLSearchParams(location.search)
-  const view = queryParams.get('view')
+  //const match = useMatch(location.pathname)
+  //const queryParams = new URLSearchParams(location.search)
+  //const view = queryParams.get('view')
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     //const newPath = location.pathname.replace(`/${value}$/`, newValue.toString())
     const newItem = items[newValue] || null
     if (newItem) {
+      console.log('RoutedTabPanel:changed', location, newValue)
       const newPath = location.pathname + '?view=' + newItem.name
-      console.log('RoutedTabPanel:changed', location, newValue, newPath)
-      navigate(newPath, { replace: true })
+      //   console.log('RoutedTabPanel:changed', location, newValue, newPath)
+      //   //navigate(newPath, { replace: true })
+      history.pushState({}, '', newPath)
+      setTabIdx(newValue)
     }
   }
 
-  React.useEffect(() => {
-    console.log('RoutedTabs', location, match)
-    console.log('RoutedTabPanel:useEffect', view)
-
-    if (view) {
-      const value = items.findIndex((item) => item.name === view)
-      if (value > -1) {
-        setValue(value)
-      }
-    }
-  }, [view])
+  // React.useEffect(() => {
+  //   console.log('RoutedTabs', location, match)
+  //   console.log('RoutedTabPanel:useEffect', view)
+  //
+  //   if (view) {
+  //     const value = items.findIndex((item) => item.name === view)
+  //     if (value > -1) {
+  //       setValue(value)
+  //     }
+  //   }
+  // }, [view])
 
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label={'Tabs'}>
+        <Tabs value={tabIdx} onChange={handleChange} aria-label={'Tabs'}>
           {items.map((item: RoutedTabItem, idx) => {
             return <Tab key={idx} label={item.label} {...buildTabProps(idx)} />
           })}
@@ -88,7 +92,7 @@ export default function RoutedTabs({ items, defaultIdx }: RoutedTabsProps) {
 
       {items.map((item: RoutedTabItem, idx) => {
         return (
-          <RoutedTabPanel key={idx} selected={value} index={idx}>
+          <RoutedTabPanel key={idx} selected={tabIdx} index={idx}>
             {item.children}
           </RoutedTabPanel>
         )

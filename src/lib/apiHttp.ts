@@ -2,9 +2,9 @@ import axios from 'axios'
 
 export const apiHttp = () => {
   // read base url from session storage
-  // const baseUrl = sessionStorage.getItem('DOCKER_HTTP_BASEURL') || DOCKER_HTTP_BASEURL
+  // const baseUrl = sessionStorage.getItem('AGENT_API_BASEURL') || AGENT_API_BASEURL
 
-  const baseUrl = sessionStorage.getItem('DOCKER_HTTP_BASEURL') || ''
+  const baseUrl = sessionStorage.getItem('AGENT_API_BASEURL') || '/api'
   console.log('API BASE URL', baseUrl)
 
   return axios.create({

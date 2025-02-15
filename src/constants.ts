@@ -1,5 +1,4 @@
-//export const DOCKER_HTTP_BASEURL = 'http://localhost:5000/'
-export const DOCKER_HTTP_BASEURL = 'http://dev.online.amatic:5000/'
+export const AGENT_API_BASEURL = import.meta.env.VITE_AGENT_API_BASEURL || 'http://localhost:5000/api'
 
 export const PORTAINER_TEMPLATE_URLS = [
   {

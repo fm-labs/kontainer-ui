@@ -6,10 +6,12 @@ import ContainerPorts from './ContainerPorts.tsx'
 import IconButton from '@mui/material/IconButton'
 import { HiOutlinePlay, HiPause, HiStop, HiTrash } from 'react-icons/hi2'
 import ContainerState from './ContainerState.tsx'
-import api from '../../../lib/api.ts'
 import { Link } from 'react-router-dom'
+import { useHostApi } from '../../../helper/useHostApi.ts'
 
 const ContainersTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
+  const api = useHostApi()
+
   const handleContainerStartClick = (id: string) => () => {
     console.log('Starting container', id)
     api.startContainer()(id)

@@ -10,7 +10,7 @@ import {
   HiTrash,
 } from 'react-icons/hi2'
 import { FaDocker, FaGauge, FaLayerGroup, FaNetworkWired, FaTag, FaTags } from 'react-icons/fa6'
-import { FaHistory } from 'react-icons/fa'
+import { FaHistory, FaHome } from 'react-icons/fa'
 
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import GitHubIcon from '@mui/icons-material/GitHub'
@@ -20,6 +20,7 @@ import BugReportIcon from '@mui/icons-material/BugReport'
 const AppIcons = {
   DockerIcon: FaDocker,
   EnvironmentIcon: FaGauge,
+  HomeIcon: FaHome,
 
   // Container
   ContainerIcon: HiOutlineCube,

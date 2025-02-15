@@ -4,14 +4,15 @@ import { Helmet } from 'react-helmet-async'
 import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../elements/Heading.tsx'
 import EventsTableMaterial from '../../components/docker/Engine/EventsTableMaterial.tsx'
-import api from '../../lib/api.ts'
 import { toast } from 'react-toastify'
 import { useLoaderData } from 'react-router-dom'
+import { useHostApi } from '../../helper/useHostApi.ts'
 
 const EventsPage = () => {
   const data = useLoaderData() as any
   const [events, setEvents] = React.useState<any[]>(data || [])
   const [lastEventTime, setLastEventTime] = React.useState<number>()
+  const api = useHostApi()
 
   const fetchEvents = React.useCallback(async () => {
     console.log('fetching events')

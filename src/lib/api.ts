@@ -2,6 +2,11 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { IDockerContainer, IDockerResourceAttrs } from '../types.ts'
 import { apiHttp } from './apiHttp.ts'
 
+const getEnvironments = (config?: AxiosRequestConfig) => async (): Promise<IDockerContainer[]> => {
+  const response = await apiHttp().get(`environments`, config)
+  return response.data
+}
+
 const getStacks = (config?: AxiosRequestConfig) => async (): Promise<IDockerContainer[]> => {
   const response = await apiHttp().get(`stacks`, config)
   return response.data
@@ -135,6 +140,7 @@ const getEngineEvents =
   }
 
 const api = {
+  getEnvironments,
   getStacks,
   createStack,
   getStack,
@@ -159,4 +165,4 @@ const api = {
   getEnginePing,
   getEngineEvents,
 }
-export default api
+//export default api

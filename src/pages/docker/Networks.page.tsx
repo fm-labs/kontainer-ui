@@ -5,7 +5,6 @@ import NetworksTableMaterial from '../../components/docker/Networks/NetworksTabl
 import { Helmet } from 'react-helmet-async'
 import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../elements/Heading.tsx'
-import Button from '@mui/material/Button'
 
 const NetworksPage = () => {
   const data = useLoaderData() as any // IDockerNetwork[]

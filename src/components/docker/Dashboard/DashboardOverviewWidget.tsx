@@ -1,5 +1,4 @@
 import React from 'react'
-import api from '../../../lib/api.ts'
 import Grid from '@mui/material/Grid2'
 import Box from '@mui/material/Box'
 import { FileSizeFormatter } from '../../../elements/Formatters.tsx'
@@ -7,10 +6,12 @@ import AppIcons from '../../../elements/AppIcons.tsx'
 import { FormControlLabel, FormGroup, Switch } from '@mui/material'
 import { Link } from 'react-router-dom'
 import ContainerFormatters from '../Containers/ContainerFormatters.tsx'
+import { useHostApi } from '../../../helper/useHostApi.ts'
 
 const DashboardOverviewWidget = () => {
   const [data, setData] = React.useState<any>(null)
   const [onlyActive, setOnlyActive] = React.useState(true)
+  const api = useHostApi()
 
   const fetchData = React.useCallback(() => {
     console.log('Fetching data...')
@@ -118,15 +119,28 @@ const DashboardOverviewWidget = () => {
 
     return (
       <Item key={container.Id} color={color}>
-        <div style={{ fontWeight: 'bold' }}>
+        <div
+          style={{
+            fontWeight: 'bold',
+            textOverflow: 'ellipsis',
+            maxWidth: '100%',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+          }}
+          title={container.Names[0] || container.Id}
+        >
           <AppIcons.ContainerIcon />{' '}
           {/*<Link to={`/container/${container.Id}`}>{container.Names[0] || container.Id.substring(0, 32)}</Link>*/}
-          <ContainerFormatters.ContainerName value={container.Names[0] || container.Id.substring(0, 32)} />
+          <ContainerFormatters.ContainerName value={container.Names[0] || container.Id} />
         </div>
         <div>
-          <ContainerFormatters.ContainerId value={container.Id} showLink={true} />
+          <Link to={`containers/${container.Id}`}>
+            <ContainerFormatters.ContainerId value={container.Id} showLink={false} />
+          </Link>
         </div>
-        <div>{container.Image}</div>
+        <div>
+          <AppIcons.ImageIcon /> {container.Image.substring(0, 32)}
+        </div>
         <div>
           {container?.Status} / {container?.State}
         </div>
@@ -172,7 +186,7 @@ const DashboardOverviewWidget = () => {
           <AppIcons.ImageIcon /> {image.RepoTags[0]}
         </div>
         <div>
-          <Link to={`/images/${image.Id}`}>{image.Id.substring(0, 32)}</Link>
+          <Link to={`images/${image.Id}`}>{image.Id.substring(0, 32)}</Link>
         </div>
         <div>
           <FileSizeFormatter value={image.Size} /> / <FileSizeFormatter value={image.SharedSize} />

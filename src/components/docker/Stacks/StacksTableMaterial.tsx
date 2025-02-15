@@ -3,28 +3,43 @@ import { MaterialReactTable, useMaterialReactTable, type MRT_ColumnDef } from 'm
 import { IDockerResourceAttrs } from '../../../types.ts'
 import IconButton from '@mui/material/IconButton'
 import { HiOutlinePlay, HiPause, HiStop, HiTrash } from 'react-icons/hi2'
-import api from '../../../lib/api.ts'
 import { Link } from 'react-router-dom'
+import { useHostApi } from '../../../helper/useHostApi.ts'
+import { useErrorHandler } from '../../../helper/useErrorHandler.ts'
+import { toast } from 'react-toastify'
 
 const StacksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
+  const api = useHostApi()
+  // const defaultErrorHandler = (error: any) => {
+  //   toast.error(error?.message || 'An Error occurred')
+  // }
+
+  const { toastError: defaultErrorHandler } = useErrorHandler()
+
   const handleStackStartClick = (id: string) => () => {
     console.log('Starting stack', id)
-    api.startStack()(id)
+    api
+      .startStack()(id)
+      .then((response) => toast.info(response?.data))
+      .catch(defaultErrorHandler)
   }
 
   const handleStackStopClick = (id: string) => () => {
     console.log('Stopping stack', id)
-    api.stopStack()(id)
+    api
+      .stopStack()(id)
+      .then((response) => toast.info(response?.data))
+      .catch(defaultErrorHandler)
   }
 
   const handleStackPauseClick = (id: string) => () => {
     console.log('Pausing stack', id)
-    api.stopStack()(id)
+    api.stopStack()(id).catch(defaultErrorHandler)
   }
 
   const handleStackRemoveClick = (id: string) => () => {
     console.log('Removing stack', id)
-    api.removeStack()(id)
+    api.removeStack()(id).catch(defaultErrorHandler)
   }
 
   const columns = React.useMemo<MRT_ColumnDef<IDockerResourceAttrs>[]>(
@@ -36,7 +51,7 @@ const StacksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
         Cell: ({ cell }) => {
           const name = cell.getValue<string>()
           return (
-            <Link to={`/stack/${name}`} title={name}>
+            <Link to={`${name}`} title={name}>
               {name}
             </Link>
           )
@@ -67,21 +82,21 @@ const StacksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
           return (
             <div style={{ textAlign: 'right' }}>
               {!row?.running && (
-                <IconButton size={'small'} title={'Start'} onClick={handleStackStartClick(row.Id)}>
+                <IconButton size={'small'} title={'Start'} onClick={handleStackStartClick(row.name)}>
                   <HiOutlinePlay />
                 </IconButton>
               )}
               {row?.running && (
-                <IconButton size={'small'} title={'Pause'} onClick={handleStackPauseClick(row.Id)}>
+                <IconButton size={'small'} title={'Pause'} onClick={handleStackPauseClick(row.name)}>
                   <HiPause />
                 </IconButton>
               )}
               {row?.running && (
-                <IconButton size={'small'} title={'Stop'} onClick={handleStackStopClick(row.Id)}>
+                <IconButton size={'small'} title={'Stop'} onClick={handleStackStopClick(row.name)}>
                   <HiStop />
                 </IconButton>
               )}
-              <IconButton size={'small'} title={'Delete'} onClick={handleStackRemoveClick(row.Id)}>
+              <IconButton size={'small'} title={'Delete'} onClick={handleStackRemoveClick(row.name)}>
                 <HiTrash />
               </IconButton>
             </div>

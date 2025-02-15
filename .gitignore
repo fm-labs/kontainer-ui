@@ -1,6 +1,7 @@
 .idea/
 dist/
 build/
+public/schema/dev/
 
 ### Node template
 # Logs

@@ -4,10 +4,12 @@ import { Link } from 'react-router-dom'
 import moment from 'moment/moment'
 import Button from '@mui/material/Button'
 import ContainerPorts from './ContainerPorts.tsx'
-import api from '../../../lib/api.ts'
 import AppIcons from '../../../elements/AppIcons.tsx'
+import { useHostApi } from '../../../helper/useHostApi.ts'
 
 const ContainersTable = ({ data }) => {
+  const api = useHostApi()
+
   const handleContainerStartClick = (id: string) => () => {
     console.log('Starting container', id)
     api.startContainer()(id)

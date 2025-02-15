@@ -6,16 +6,18 @@ import { AppBar } from '@mui/material'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
-import RoutedTabs, { RoutedTabItem } from '../../../elements/RoutedTabs.tsx'
+//import RoutedTabs, { RoutedTabItem } from '../../../elements/RoutedTabs.tsx'
 import StackFromScratch from './StackFromScratch.tsx'
 import StackFromGit from './StackFromGit.tsx'
-import StackFromUrl from './StackFromUrl.tsx'
 import StackFromPortainerTemplate from './StackFromPortainerTemplate.tsx'
-import api from '../../../lib/api.ts'
 import { toast } from 'react-toastify'
 import StackFromTemplate from './StackFromTemplate.tsx'
+import { useHostApi } from '../../../helper/useHostApi.ts'
+import BasicTabs, { BasicTabItem } from '../../../elements/BasicTabs.tsx'
 
 export default function CreateStacksDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const api = useHostApi()
+
   const onSubmit = (formData: FormData) => {
     console.log('Create stack SUBMIT', formData)
 
@@ -32,7 +34,8 @@ export default function CreateStacksDialog({ open, onClose }: { open: boolean; o
       })
   }
 
-  const tabs: RoutedTabItem[] = [
+  //const tabs: RoutedTabItem[] = [
+  const tabs: BasicTabItem[] = [
     {
       label: 'From Template',
       name: 'stack-from-template',
@@ -83,7 +86,7 @@ export default function CreateStacksDialog({ open, onClose }: { open: boolean; o
         </AppBar>
 
         <DialogContent>
-          <RoutedTabs items={tabs} />
+          <BasicTabs items={tabs} />
         </DialogContent>
         {/*<DialogActions>
           <Button onClick={onClose} variant={'contained'} color={'error'}>

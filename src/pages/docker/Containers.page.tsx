@@ -1,7 +1,6 @@
 import React from 'react'
 import { useLoaderData } from 'react-router-dom'
 import Container from '@mui/material/Container'
-import api from '../../lib/api.ts'
 import { IDockerResourceAttrs } from '../../types.ts'
 import ContainersTableGrouped from '../../components/docker/Containers/ContainersTableGrouped.tsx'
 import ContainerCreateButton from '../../components/docker/Containers/ContainerCreate.button.tsx'
@@ -10,11 +9,13 @@ import { FormControlLabel, FormGroup, Switch } from '@mui/material'
 import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../elements/Heading.tsx'
 import { Helmet } from 'react-helmet-async'
+import { useHostApi } from '../../helper/useHostApi.ts'
 
 const ContainersPage = () => {
   const loaderData = useLoaderData() as IDockerResourceAttrs[]
   const [data, setData] = React.useState(loaderData)
   const [showGrouped, setShowGrouped] = React.useState(true)
+  const api = useHostApi()
 
   const handleSwitchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setShowGrouped(e.target.checked)

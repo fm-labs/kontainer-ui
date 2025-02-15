@@ -4,10 +4,12 @@ import Container from '@mui/material/Container'
 import { Helmet } from 'react-helmet-async'
 import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../elements/Heading.tsx'
-import api from '../../lib/api.ts'
 import { toast } from 'react-toastify'
+import { useHostApi } from '../../helper/useHostApi.ts'
 
 const ContainerRunPage = () => {
+  const api = useHostApi()
+
   const onRun = (data) => {
     console.log('Run', data)
 

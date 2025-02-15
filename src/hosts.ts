@@ -1,12 +1,10 @@
 const hosts = [
   {
-    id: 1,
-    name: 'Localhost',
+    hostname: 'localmachine',
     ip: '127.0.0.1',
   },
   {
-    id: 2,
-    name: 'Host 2',
+    hostname: 'remotemachine',
     ip: '172.16.0.33',
   },
 ]

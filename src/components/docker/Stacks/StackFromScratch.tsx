@@ -1,8 +1,8 @@
 import React from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
-import api from '../../../lib/api.ts'
 import { toast } from 'react-toastify'
+import { useHostApi } from '../../../helper/useHostApi.ts'
 
 const StackFromScratch = () => {
   const defaultValue = ` 
@@ -14,6 +14,7 @@ const StackFromScratch = () => {
   `
   const [stackName, setStackName] = React.useState('my-scratch-stack')
   const [stackContents, setStackContents] = React.useState(defaultValue)
+  const api = useHostApi()
 
   const handleSubmitClick = () => {
     console.log('Submit clicked')

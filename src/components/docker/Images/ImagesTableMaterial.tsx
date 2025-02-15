@@ -1,6 +1,4 @@
 import React from 'react'
-import Button from '@mui/material/Button'
-import Table from '@mui/material/Table'
 import {
   MaterialReactTable,
   useMaterialReactTable,

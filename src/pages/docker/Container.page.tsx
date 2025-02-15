@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet-async'
 import { useLoaderData } from 'react-router-dom'
 import Container from '@mui/material/Container'
 import Button, { ButtonProps } from '@mui/material/Button'
-import api from '../../lib/api.ts'
 import ReactJson from 'react-json-view'
 import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../elements/Heading.tsx'
@@ -18,10 +17,12 @@ import ContainerEnvVariablesTable from '../../components/docker/Containers/Conta
 import ContainerPathsTable from '../../components/docker/Containers/ContainerPathsTable.tsx'
 import RoutedTabs, { RoutedTabItem } from '../../elements/RoutedTabs.tsx'
 import AppIcons from '../../elements/AppIcons.tsx'
+import { useHostApi } from '../../helper/useHostApi.ts'
 
 const ContainerPage = () => {
   const loaderData = useLoaderData() as any // IDockerComposeContainer
   const [data, setData] = React.useState(loaderData)
+  const api = useHostApi()
 
   const handleContainerStartClick = (id: string) => () => {
     console.log('Starting container', id)

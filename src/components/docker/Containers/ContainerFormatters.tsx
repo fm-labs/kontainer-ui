@@ -16,7 +16,7 @@ export const ContainerName = (props: { value: string; showLink?: boolean }) => {
   const _showLink = props?.showLink || false
 
   if (_showLink) {
-    return <Link to={`/containers/${props.value}`}>{props.value}</Link>
+    return <Link to={`containers/${props.value}`}>{props.value}</Link>
   }
 
   return <span>{props.value}</span>

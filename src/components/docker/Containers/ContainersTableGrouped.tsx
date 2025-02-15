@@ -5,12 +5,14 @@ import Table from '@mui/material/Table'
 import IconButton from '@mui/material/IconButton'
 import { TableCell, TableRow } from '@mui/material'
 import { HiOutlinePlay, HiPause, HiStop, HiTrash } from 'react-icons/hi2'
-import api from '../../../lib/api.ts'
 import { IDockerResourceAttrs } from '../../../types.ts'
 import ContainerPorts from './ContainerPorts.tsx'
 import ContainerState from './ContainerState.tsx'
+import { useHostApi } from '../../../helper/useHostApi.ts'
 
 const ContainersTableGrouped = ({ data }: { data: IDockerResourceAttrs[] }) => {
+  const api = useHostApi()
+
   const groupedData = React.useMemo(() => {
     if (!data) {
       return {}
@@ -95,7 +97,7 @@ const ContainersTableGrouped = ({ data }: { data: IDockerResourceAttrs[] }) => {
               {composeProject !== '_' && (
                 <TableRow key={composeProject}>
                   <TableCell>
-                    <Link style={{ textDecoration: 'dashed underline' }} to={`/stack/${composeProject}`}>
+                    <Link style={{ textDecoration: 'dashed underline' }} to={`../stacks/${composeProject}`}>
                       {composeProject}
                     </Link>
                   </TableCell>
@@ -135,7 +137,8 @@ const ContainersTableGrouped = ({ data }: { data: IDockerResourceAttrs[] }) => {
                           paddingLeft: composeProject !== '_' ? '1em' : 0,
                         }}
                       >
-                        <Link to={`/container/${row?.Id}`}>{name}</Link>
+                        {/*<Link to={`/container/${row?.Id}`}>{name}</Link>*/}
+                        <Link to={`${row?.Id}`}>{name}</Link>
                         {hasProtectedLabel && <span style={{ color: 'red' }}> PROTECTED</span>}
                       </div>
                     </TableCell>

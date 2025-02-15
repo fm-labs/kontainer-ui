@@ -8,12 +8,15 @@ import { styled } from '@mui/material/styles'
 import MuiDrawer from '@mui/material/Drawer'
 import { MUI_DRAWER_WIDTH, MUI_DRAWER_WIDTH_DOCKED } from './layout.constants.ts'
 import NavListItems from './NavListItems.tsx'
-import { navItemsDocker } from './navigation.tsx'
+import { navItemsDocker, navItemsMain } from './navigation.tsx'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import Typography from '@mui/material/Typography'
-import { getHosts } from '../hosts.ts'
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { FaServer } from 'react-icons/fa6'
+import { useLocation, useNavigate } from 'react-router'
+import { useMatches } from 'react-router-dom'
+import { useHostRoute } from '../helper/useHostRoute.ts'
+import Box from '@mui/material/Box'
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
   '& .MuiDrawer-paper': {
@@ -46,23 +49,37 @@ interface DeveloperLayoutDrawerProps {
 }
 
 const LayoutDrawer = (props: DeveloperLayoutDrawerProps) => {
-  const [selectedHost, setSelectedHost] = React.useState<number>() // host id
-  const availableHosts = getHosts()
+  //const availableHosts = getHosts()
+  //const [selectedHost, setSelectedHost] = React.useState<string>(availableHosts[0].hostname) // host id
+  const navigate = useNavigate()
+  const hostRoute = useHostRoute()
 
-  const handleHostChange = (e: SelectChangeEvent) => {
-    setSelectedHost(parseInt(e.target.value))
-    console.log('HOST CHANGED', e.target.value)
-
-    const host = availableHosts.find((h) => h.id === parseInt(e.target.value))
-    if (!host) {
-      console.error('Host not found', e.target.value)
-      return
+  const routedNavItemsDocker = navItemsDocker.map((item) => {
+    if (!hostRoute.inHostRoute) {
+      return item
     }
+    return {
+      ...item,
+      to: hostRoute.buildHostUrl('/docker' + item.to),
+    }
+  })
 
-    // set in session storage
-    const baseUrl = `http://${host.ip}:5000/api/`
-    sessionStorage.setItem('DOCKER_HTTP_BASEURL', baseUrl)
-  }
+  // const handleHostChange = (e: SelectChangeEvent) => {
+  //   setSelectedHost(e.target.value)
+  //   console.log('HOST CHANGED', e.target.value)
+  //
+  //   const host = availableHosts.find((h) => h.hostname === e.target.value)
+  //   if (!host) {
+  //     console.error('Host not found', e.target.value)
+  //     return
+  //   }
+  //
+  //   // set in session storage
+  //   //const baseUrl = `http://${host.ip}:5000/api/`
+  //   //sessionStorage.setItem('AGENT_API_BASEURL', baseUrl)
+  //   const redirectUrl = `/${host.hostname}/`
+  //   navigate(redirectUrl)
+  // }
 
   return (
     <Drawer variant='permanent' open={props?.open}>
@@ -75,9 +92,9 @@ const LayoutDrawer = (props: DeveloperLayoutDrawerProps) => {
         }}
       >
         {/*props?.open && <Typography variant={'subtitle1'}>k:stack</Typography>*/}
-        <span style={{ display: 'inline-block', marginLeft: '1em' }}>
+        {/*<span style={{ display: 'inline-block', marginLeft: '0.5em' }}>
           <FaServer />
-        </span>
+        </span>*/}
         {props?.open && (
           <>
             {/*<select value={selectedHost} onChange={handleHostChange}>
@@ -87,20 +104,23 @@ const LayoutDrawer = (props: DeveloperLayoutDrawerProps) => {
                 </option>
               ))}
             </select>*/}
-            <Select variant={'standard'} value={selectedHost?.toString()} onChange={handleHostChange}>
-              {availableHosts.map((host) => (
-                <MenuItem key={host.id} value={host.id}>
-                  {host.name}
-                </MenuItem>
-              ))}
-            </Select>
           </>
         )}
         <IconButton onClick={props?.toggleDrawer}>{props.open ? <ChevronLeftIcon /> : <ChevronRightIcon />}</IconButton>
       </Toolbar>
       <Divider />
+      {/*<Box sx={{ p: 1, width: '100%' }}>
+        <Select fullWidth={true} variant={'standard'} value={selectedHost?.toString()} onChange={handleHostChange}>
+          {availableHosts.map((host) => (
+            <MenuItem key={host.hostname} value={host.hostname}>
+              {host.hostname}
+            </MenuItem>
+          ))}
+        </Select>
+      </Box>*/}
       <List component='nav'>
-        <NavListItems items={navItemsDocker} />
+        <NavListItems items={navItemsMain} />
+        {hostRoute.inHostRoute && <NavListItems items={routedNavItemsDocker} />}
         {/*<Divider sx={{ my: 1 }} />*/}
         {/*<NavListItems items={navItemsKube} />*/}
         {/*<Divider sx={{ my: 1 }} />*/}

@@ -6,6 +6,15 @@ const navIconProps = {
   size: 24,
 }
 
+export const navItemsMain: INavigationItem[] = [
+  {
+    key: 'environments',
+    icon: <AppIcons.HomeIcon {...navIconProps} />,
+    label: 'Environments',
+    to: '/',
+  },
+]
+
 export const navItemsDocker: INavigationItem[] = [
   {
     key: 'dashboard',

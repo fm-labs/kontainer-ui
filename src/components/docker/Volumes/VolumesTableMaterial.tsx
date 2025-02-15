@@ -1,6 +1,4 @@
 import React from 'react'
-import Button from '@mui/material/Button'
-import Table from '@mui/material/Table'
 import {
   MaterialReactTable,
   useMaterialReactTable,
@@ -8,7 +6,6 @@ import {
 } from 'material-react-table'
 import { IDockerResourceAttrs } from '../../../types.ts'
 import moment from 'moment/moment'
-import { Chip, ChipProps } from '@mui/material'
 import Typography, { TypographyProps } from '@mui/material/Typography'
 
 const VolumesTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
