@@ -31,8 +31,8 @@ const DashboardOverviewWidget = () => {
   const imagesData = React.useMemo(() => {
     if (!data) return []
 
-    let _data
-    _data = data.Images.sort((a, b) => a?.RepoTags[0].localeCompare(b?.RepoTags[0]))
+    let _data = data.Images
+    //_data = data.Images.sort((a, b) => a?.RepoTags[0].localeCompare(b?.RepoTags[0]))
 
     if (onlyActive) {
       _data = _data.filter((image) => image.Containers > 0)
