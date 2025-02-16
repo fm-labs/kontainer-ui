@@ -21,6 +21,7 @@ const api = (baseUrl: string, authToken?: string) => {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     },
+    timeout: 10000,
   })
 
   apiHttp.interceptors.request.use(
@@ -32,6 +33,17 @@ const api = (baseUrl: string, authToken?: string) => {
       return config
     },
     (error) => {},
+  )
+
+  // catch response errors with an interceptor
+  apiHttp.interceptors.response.use(
+    (response) => {
+      return response
+    },
+    (error) => {
+      console.error('API ERROR', error)
+      return Promise.reject(error)
+    },
   )
 
   const getEnvironments = (config?: AxiosRequestConfig) => async (): Promise<IDockerContainer[]> => {
@@ -98,38 +110,38 @@ const api = (baseUrl: string, authToken?: string) => {
   const getContainer =
     (config?: AxiosRequestConfig) =>
     async (id: string): Promise<IDockerContainer[]> => {
-      const response = await apiHttp.get(`container/${id}`, config)
+      const response = await apiHttp.get(`containers/${id}`, config)
       return response.data
     }
 
   const startContainer =
     (config?: AxiosRequestConfig) =>
     async (id: string): Promise<AxiosResponse> => {
-      return await apiHttp.post(`container/start/${id}`, null, config)
+      return await apiHttp.post(`containers/start/${id}`, null, config)
     }
 
   const restartContainer =
     (config?: AxiosRequestConfig) =>
     async (id: string): Promise<AxiosResponse> => {
-      return await apiHttp.post(`container/start/${id}?restart=1`, null, config)
+      return await apiHttp.post(`containers/start/${id}?restart=1`, null, config)
     }
 
   const pauseContainer =
     (config?: AxiosRequestConfig) =>
     async (id: string): Promise<AxiosResponse> => {
-      return await apiHttp.post(`container/pause/${id}`, null, config)
+      return await apiHttp.post(`containers/pause/${id}`, null, config)
     }
 
   const stopContainer =
     (config?: AxiosRequestConfig) =>
     async (id: string): Promise<AxiosResponse> => {
-      return await apiHttp.post(`container/stop/${id}`, null, config)
+      return await apiHttp.post(`containers/stop/${id}`, null, config)
     }
 
   const removeContainer =
     (config?: AxiosRequestConfig) =>
     async (id: string): Promise<AxiosResponse> => {
-      return await apiHttp.post(`container/remove/${id}`, null, config)
+      return await apiHttp.post(`containers/remove/${id}`, null, config)
     }
 
   const runContainer =

@@ -5,10 +5,23 @@ export const useErrorHandler = () => {
     console.error(error)
   }
 
-  const toastError = (error: Error) => {
+  const toastError = (error: any) => {
     //console.error(error)
-    toast.error(error?.message || 'An Error occurred')
+    let message = 'An Error occurred'
+    if (error?.message) {
+      message = error.message
+    }
+    if (error?.response?.data?.message) {
+      message = error.response.data.message
+    }
+    if (error?.response?.data?.error) {
+      message = error.response.data.error
+    }
+
+    toast.error(message)
   }
 
-  return { printError, toastError }
+  const defaultErrorHandler = toastError
+
+  return { printError, toastError, defaultErrorHandler }
 }

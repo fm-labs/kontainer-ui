@@ -7,30 +7,43 @@ import IconButton from '@mui/material/IconButton'
 import { HiOutlinePlay, HiPause, HiStop, HiTrash } from 'react-icons/hi2'
 import ContainerState from './ContainerState.tsx'
 import { Link } from 'react-router-dom'
-import { useEnvApi } from '../../../helper/useEnvApi.ts'
+import { useContainer } from './useContainer.ts'
 
 const ContainersTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
-  const api = useEnvApi()
+  const {
+    handleContainerStartClick,
+    handleContainerPauseClick,
+    handleContainerStopClick,
+    handleContainerRemoveClick,
+    handleStackStartClick,
+    handleStackStopClick,
+    handleStackDeleteClick,
+    handleContainerLogsClick,
+    handleContainerExecClick,
+  } = useContainer()
 
-  const handleContainerStartClick = (id: string) => () => {
-    console.log('Starting container', id)
-    api.startContainer()(id)
-  }
+  // const api = useEnvApi()
+  // const { defaultErrorHandler } = useErrorHandler()
 
-  const handleContainerPauseClick = (id: string) => () => {
-    console.log('Pausing container', id)
-    api.pauseContainer()(id)
-  }
-
-  const handleContainerStopClick = (id: string) => () => {
-    console.log('Stopping container', id)
-    api.stopContainer()(id)
-  }
-
-  const handleContainerRemoveClick = (id: string) => () => {
-    console.log('Removing container', id)
-    api.removeContainer()(id)
-  }
+  // const handleContainerStartClick = (id: string) => () => {
+  //   console.log('Starting container', id)
+  //   api.startContainer()(id).catch(defaultErrorHandler)
+  // }
+  //
+  // const handleContainerPauseClick = (id: string) => () => {
+  //   console.log('Pausing container', id)
+  //   api.pauseContainer()(id).catch(defaultErrorHandler)
+  // }
+  //
+  // const handleContainerStopClick = (id: string) => () => {
+  //   console.log('Stopping container', id)
+  //   api.stopContainer()(id).catch(defaultErrorHandler)
+  // }
+  //
+  // const handleContainerRemoveClick = (id: string) => () => {
+  //   console.log('Removing container', id)
+  //   api.removeContainer()(id).catch(defaultErrorHandler)
+  // }
 
   // const handleStackStartClick = (id: string) => () => {
   //   console.log('Starting project', id)
@@ -47,15 +60,15 @@ const ContainersTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => 
   //   api.removeStack()(id)
   // }
 
-  const handleContainerLogsClick = (id: string) => () => {
-    // open a new window with the logs
-    window.open(`/logstream.html?container=${id}`, '_blank')
-  }
-
-  const handleContainerExecClick = (id: string) => () => {
-    // open a new window with the logs
-    window.open(`/exec.html?container=${id}`, '_blank')
-  }
+  // const handleContainerLogsClick = (id: string) => () => {
+  //   // open a new window with the logs
+  //   window.open(`/logstream.html?container=${id}`, '_blank')
+  // }
+  //
+  // const handleContainerExecClick = (id: string) => () => {
+  //   // open a new window with the logs
+  //   window.open(`/exec.html?container=${id}`, '_blank')
+  // }
 
   const columns = React.useMemo<MRT_ColumnDef<IDockerResourceAttrs>[]>(
     () => [

@@ -8,10 +8,20 @@ import { HiOutlinePlay, HiPause, HiStop, HiTrash } from 'react-icons/hi2'
 import { IDockerResourceAttrs } from '../../../types.ts'
 import ContainerPorts from './ContainerPorts.tsx'
 import ContainerState from './ContainerState.tsx'
-import { useEnvApi } from '../../../helper/useEnvApi.ts'
+import { useContainer } from './useContainer.ts'
 
 const ContainersTableGrouped = ({ data }: { data: IDockerResourceAttrs[] }) => {
-  const api = useEnvApi()
+  const {
+    handleContainerStartClick,
+    handleContainerPauseClick,
+    handleContainerStopClick,
+    handleContainerRemoveClick,
+    handleStackStartClick,
+    handleStackStopClick,
+    handleStackDeleteClick,
+    handleContainerLogsClick,
+    handleContainerExecClick,
+  } = useContainer()
 
   const groupedData = React.useMemo(() => {
     if (!data) {
@@ -39,51 +49,6 @@ const ContainersTableGrouped = ({ data }: { data: IDockerResourceAttrs[] }) => {
       }, {})
     return sorted
   }, [data])
-
-  const handleContainerStartClick = (id: string) => () => {
-    console.log('Starting container', id)
-    api.startContainer()(id)
-  }
-
-  const handleContainerPauseClick = (id: string) => () => {
-    console.log('Pause container', id)
-    api.pauseContainer()(id)
-  }
-
-  const handleContainerStopClick = (id: string) => () => {
-    console.log('Stopping container', id)
-    api.stopContainer()(id)
-  }
-
-  const handleContainerRemoveClick = (id: string) => () => {
-    console.log('Removing container', id)
-    api.removeContainer()(id)
-  }
-
-  const handleStackStartClick = (id: string) => () => {
-    console.log('Starting stack', id)
-    api.startStack()(id)
-  }
-
-  const handleStackStopClick = (id: string) => () => {
-    console.log('Stopping stack', id)
-    api.stopStack()(id)
-  }
-
-  const handleStackDeleteClick = (id: string) => () => {
-    console.log('Deleting stack', id)
-    api.removeStack()(id)
-  }
-
-  const handleContainerLogsClick = (id: string) => () => {
-    // open a new window with the logs
-    window.open(`/logstream.html?container=${id}`, '_blank')
-  }
-
-  const handleContainerExecClick = (id: string) => () => {
-    // open a new window with the logs
-    window.open(`/exec.html?container=${id}`, '_blank')
-  }
 
   return (
     <Table size={'small'}>
