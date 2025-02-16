@@ -2,12 +2,12 @@ import React from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { toast } from 'react-toastify'
-import { useHostApi } from '../../../helper/useHostApi.ts'
+import { useEnvApi } from '../../../helper/useEnvApi.ts'
 
 const StackFromUrl = () => {
   const [stackName, setStackName] = React.useState('')
   const [composeUrl, setComposeUrl] = React.useState('')
-  const api = useHostApi()
+  const api = useEnvApi()
 
   const handleSubmitClick = () => {
     console.log('Submit clicked')

@@ -18,16 +18,31 @@ import ContainerLaunchPage from './pages/docker/ContainerLaunch.page.tsx'
 import EnvironmentsPage from './pages/admin/Environments.page.tsx'
 import EnvironmentRoutingWrapper from './pages/EnvironmentRoutingWrapper.tsx'
 import api from './lib/api2.ts'
-import { AGENT_API_BASEURL } from './constants.ts'
 import SettingsPage from './pages/admin/Settings.page.tsx'
 import appRepo from './lib/repo.ts'
+import { restoreEnvsFromLocalStorage, defaultEnvs } from './helper/useEnvironments.ts'
+import { DEFAULT_AGENT_PORT } from './constants.ts'
 
 const getHostApiFromLoaderArgs = (args: LoaderFunctionArgs) => {
-  if (!args?.params?.environment) {
-    throw new Error('Hostname not provided')
+  //const { envs } = useEnvironments()
+  if (!args?.params?.envId) {
+    throw new Error('Not in an environment')
   }
 
-  const apiBaseUrl = `http://${args.params.environment}:5000/api`
+  const envId = args.params.envId
+  let envs = restoreEnvsFromLocalStorage()
+  if (!envs) {
+    envs = defaultEnvs
+  }
+  const env = envs.find((env) => env.id === envId)
+  if (!env) {
+    throw new Error(`Environment ${envId} not found`)
+  }
+
+  const urlSchema = env.useSSL ? 'https' : 'http'
+  const hostname = env.hostname || ''
+  const agentPort = env.agentPort || DEFAULT_AGENT_PORT
+  const apiBaseUrl = `${urlSchema}://${hostname}:${agentPort}/api`
   return api(apiBaseUrl)
 }
 
@@ -52,7 +67,7 @@ const routes: RouteObject[] = [
       },
 
       {
-        path: ':environment',
+        path: ':envId',
         element: <EnvironmentRoutingWrapper />,
         children: [
           {

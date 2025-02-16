@@ -6,14 +6,14 @@ import { Helmet } from 'react-helmet-async'
 import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../elements/Heading.tsx'
 import StacksCreateButton from '../../components/docker/Stacks/StacksCreate.button.tsx'
-import { useHostApi } from '../../helper/useHostApi.ts'
+import { useEnvApi } from '../../helper/useEnvApi.ts'
 import appRepo from '../../lib/repo.ts'
 import useAutoreload from '../../helper/useAutoreload.ts'
 
 const StacksPage = () => {
   const loaderData = useLoaderData() as any // IDockerStack[]
   const [data, setData] = React.useState(loaderData)
-  const api = useHostApi()
+  const api = useEnvApi()
 
   const STACKS_FETCH_INTERVAL = 15000
 

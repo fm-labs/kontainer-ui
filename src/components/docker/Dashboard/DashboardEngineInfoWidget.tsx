@@ -4,11 +4,11 @@ import KeyValueGrid from '../../../elements/KeyValueGrid.tsx'
 import { Paper } from '@mui/material'
 import AppIcons from '../../../elements/AppIcons.tsx'
 import JsonView from '../../../elements/JsonView.tsx'
-import { useHostApi } from '../../../helper/useHostApi.ts'
+import { useEnvApi } from '../../../helper/useEnvApi.ts'
 
 const DashboardEngineInfoWidget = () => {
   const [engineInfo, setEngineInfo] = React.useState<any>(null)
-  const api = useHostApi()
+  const api = useEnvApi()
 
   const kvInfo = React.useMemo(() => {
     if (!engineInfo) return []

@@ -9,7 +9,7 @@ import { FormControlLabel, FormGroup, Switch } from '@mui/material'
 import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../elements/Heading.tsx'
 import { Helmet } from 'react-helmet-async'
-import { useHostApi } from '../../helper/useHostApi.ts'
+import { useEnvApi } from '../../helper/useEnvApi.ts'
 import appRepo from '../../lib/repo.ts'
 import useAutoreload from '../../helper/useAutoreload.ts'
 import AutoreloadButton from '../../elements/Autoreload/AutoreloadButton.tsx'
@@ -18,7 +18,7 @@ const ContainersPage = () => {
   const loaderData = useLoaderData() as IDockerResourceAttrs[]
   const [data, setData] = React.useState(loaderData)
   const [showGrouped, setShowGrouped] = React.useState(true)
-  const api = useHostApi()
+  const api = useEnvApi()
 
   const CONTAINER_REFRESH_INTERVAL = 15000
 

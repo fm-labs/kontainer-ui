@@ -1,12 +1,12 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import { EnvironmentProvider } from '../context/Environment/EnvironmentContext.tsx'
-import { useHostRoute } from '../helper/useHostRoute.ts'
+import { useEnvRoute } from '../helper/useEnvRoute.ts'
 
 const EnvironmentRoutingWrapper = () => {
-  const envRoute = useHostRoute()
+  const envRoute = useEnvRoute()
 
-  if (!envRoute.inHostRoute) {
+  if (!envRoute.isEnvRoute) {
     return <>Not a valid environment route</>
   }
 
@@ -17,7 +17,9 @@ const EnvironmentRoutingWrapper = () => {
 
   return (
     <EnvironmentProvider initialState={initialContextState}>
-      <div>Environment: {envRoute.environment}</div>
+      <div>
+        EnvId={envRoute.envId} Env={envRoute.env?.id} / {envRoute.env?.hostname} / {envRoute.env?.label}
+      </div>
 
       <Outlet />
     </EnvironmentProvider>

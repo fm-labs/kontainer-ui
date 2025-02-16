@@ -2,13 +2,13 @@ import React from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { toast } from 'react-toastify'
-import { useHostApi } from '../../../helper/useHostApi.ts'
+import { useEnvApi } from '../../../helper/useEnvApi.ts'
 
 const StackFromTemplate = () => {
   const [stackName, setStackName] = React.useState('my-nginx-stack')
   const [templateRepo, setTemplateRepo] = React.useState('fm-labs/kstack-templates')
   const [templateName, setTemplateName] = React.useState('nginx')
-  const api = useHostApi()
+  const api = useEnvApi()
 
   const handleSubmitClick = () => {
     console.log('Submit clicked')

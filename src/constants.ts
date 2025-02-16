@@ -1,5 +1,7 @@
 export const AGENT_API_BASEURL = import.meta.env.VITE_AGENT_API_BASEURL || 'http://localhost:5000/api'
 
+export const DEFAULT_AGENT_PORT = 5000
+
 export const PORTAINER_TEMPLATE_URLS = [
   {
     label: 'Official Portainer Templates (v3)',

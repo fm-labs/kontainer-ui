@@ -5,10 +5,10 @@ import { Helmet } from 'react-helmet-async'
 import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../elements/Heading.tsx'
 import { toast } from 'react-toastify'
-import { useHostApi } from '../../helper/useHostApi.ts'
+import { useEnvApi } from '../../helper/useEnvApi.ts'
 
 const ContainerRunPage = () => {
-  const api = useHostApi()
+  const api = useEnvApi()
 
   const onRun = (data) => {
     console.log('Run', data)

@@ -10,13 +10,13 @@ import { MUI_DRAWER_WIDTH, MUI_DRAWER_WIDTH_DOCKED } from './layout.constants.ts
 import NavListItems from './NavListItems.tsx'
 import { navItemsDocker, navItemsMain } from './navigation.tsx'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-import Typography from '@mui/material/Typography'
-import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
-import { FaServer } from 'react-icons/fa6'
-import { useLocation, useNavigate } from 'react-router'
-import { useMatches } from 'react-router-dom'
-import { useHostRoute } from '../helper/useHostRoute.ts'
-import Box from '@mui/material/Box'
+// import Typography from '@mui/material/Typography'
+// import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
+// import { FaServer } from 'react-icons/fa6'
+// import { useLocation, useNavigate } from 'react-router'
+// import { useMatches } from 'react-router-dom'
+// import Box from '@mui/material/Box'
+import { useEnvRoute } from '../helper/useEnvRoute.ts'
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
   '& .MuiDrawer-paper': {
@@ -51,18 +51,31 @@ interface DeveloperLayoutDrawerProps {
 const LayoutDrawer = (props: DeveloperLayoutDrawerProps) => {
   //const availableHosts = getHosts()
   //const [selectedHost, setSelectedHost] = React.useState<string>(availableHosts[0].hostname) // host id
-  const navigate = useNavigate()
-  const hostRoute = useHostRoute()
+  //const navigate = useNavigate()
+  const envRoute = useEnvRoute()
 
-  const routedNavItemsDocker = navItemsDocker.map((item) => {
-    if (!hostRoute.inHostRoute) {
-      return item
+  const routedNavItemsDocker = React.useMemo(() => {
+    if (!envRoute.isEnvRoute) {
+      return []
     }
-    return {
-      ...item,
-      to: hostRoute.buildHostUrl('/docker' + item.to),
-    }
-  })
+
+    return navItemsDocker.map((item) => {
+      return {
+        ...item,
+        to: envRoute.buildEnvUrl('/docker' + item.to),
+      }
+    })
+  }, [envRoute])
+
+  // const routedNavItemsDocker = navItemsDocker.map((item) => {
+  //   if (!envRoute.isEnvRoute) {
+  //     return item
+  //   }
+  //   return {
+  //     ...item,
+  //     to: envRoute.buildEnvUrl('/docker' + item.to),
+  //   }
+  // })
 
   // const handleHostChange = (e: SelectChangeEvent) => {
   //   setSelectedHost(e.target.value)
@@ -120,7 +133,7 @@ const LayoutDrawer = (props: DeveloperLayoutDrawerProps) => {
       </Box>*/}
       <List component='nav'>
         <NavListItems items={navItemsMain} />
-        {hostRoute.inHostRoute && <NavListItems items={routedNavItemsDocker} />}
+        <NavListItems items={routedNavItemsDocker} />
         {/*<Divider sx={{ my: 1 }} />*/}
         {/*<NavListItems items={navItemsKube} />*/}
         {/*<Divider sx={{ my: 1 }} />*/}

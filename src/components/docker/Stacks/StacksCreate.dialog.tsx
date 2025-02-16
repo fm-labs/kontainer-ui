@@ -12,11 +12,11 @@ import StackFromGit from './StackFromGit.tsx'
 import StackFromPortainerTemplate from './StackFromPortainerTemplate.tsx'
 import { toast } from 'react-toastify'
 import StackFromTemplate from './StackFromTemplate.tsx'
-import { useHostApi } from '../../../helper/useHostApi.ts'
+import { useEnvApi } from '../../../helper/useEnvApi.ts'
 import BasicTabs, { BasicTabItem } from '../../../elements/BasicTabs.tsx'
 
 export default function CreateStacksDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const api = useHostApi()
+  const api = useEnvApi()
 
   const onSubmit = (formData: FormData) => {
     console.log('Create stack SUBMIT', formData)
@@ -38,12 +38,12 @@ export default function CreateStacksDialog({ open, onClose }: { open: boolean; o
   const tabs: BasicTabItem[] = [
     {
       label: 'From Template',
-      name: 'stack-from-template',
+      label: 'stack-from-template',
       children: <StackFromTemplate />,
     },
     {
       label: 'From Git repository',
-      name: 'stack-from-git',
+      label: 'stack-from-git',
       children: <StackFromGit />,
     },
     // {
@@ -58,12 +58,12 @@ export default function CreateStacksDialog({ open, onClose }: { open: boolean; o
     // },
     {
       label: 'From Scratch',
-      name: 'stack-from-scratch',
+      label: 'stack-from-scratch',
       children: <StackFromScratch />,
     },
     {
       label: 'From Portainer',
-      name: 'stack-from-portainer',
+      label: 'stack-from-portainer',
       children: <StackFromPortainerTemplate />,
     },
   ]

@@ -8,10 +8,10 @@ import { HiOutlinePlay, HiPause, HiStop, HiTrash } from 'react-icons/hi2'
 import { IDockerResourceAttrs } from '../../../types.ts'
 import ContainerPorts from './ContainerPorts.tsx'
 import ContainerState from './ContainerState.tsx'
-import { useHostApi } from '../../../helper/useHostApi.ts'
+import { useEnvApi } from '../../../helper/useEnvApi.ts'
 
 const ContainersTableGrouped = ({ data }: { data: IDockerResourceAttrs[] }) => {
-  const api = useHostApi()
+  const api = useEnvApi()
 
   const groupedData = React.useMemo(() => {
     if (!data) {

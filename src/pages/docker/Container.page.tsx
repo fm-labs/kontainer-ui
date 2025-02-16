@@ -17,12 +17,12 @@ import ContainerEnvVariablesTable from '../../components/docker/Containers/Conta
 import ContainerPathsTable from '../../components/docker/Containers/ContainerPathsTable.tsx'
 import RoutedTabs, { RoutedTabItem } from '../../elements/RoutedTabs.tsx'
 import AppIcons from '../../elements/AppIcons.tsx'
-import { useHostApi } from '../../helper/useHostApi.ts'
+import { useEnvApi } from '../../helper/useEnvApi.ts'
 
 const ContainerPage = () => {
   const loaderData = useLoaderData() as any // IDockerComposeContainer
   const [data, setData] = React.useState(loaderData)
-  const api = useHostApi()
+  const api = useEnvApi()
 
   const handleContainerStartClick = (id: string) => () => {
     console.log('Starting container', id)
@@ -59,32 +59,32 @@ const ContainerPage = () => {
     // },
     {
       label: 'Inspect',
-      name: 'inspect',
+      label: 'inspect',
       children: <ReactJson src={data} displayDataTypes={false} displayObjectSize={false} enableClipboard={true} />,
     },
     {
       label: 'Labels',
-      name: 'labels',
+      label: 'labels',
       children: <ContainerLabelsTable labels={data?.Config?.Labels} />,
     },
     {
       label: 'Environment',
-      name: 'env',
+      label: 'env',
       children: <ContainerEnvVariablesTable env={data?.Config?.Env} />,
     },
     {
       label: 'Networks',
-      name: 'networks',
+      label: 'networks',
       children: <ContainerNetworksView networks={data?.NetworkSettings?.Networks} />,
     },
     {
       label: 'Mounts',
-      name: 'mounts',
+      label: 'mounts',
       children: <ContainerMounts mounts={data?.Mounts} />,
     },
     {
       label: 'Paths',
-      name: 'paths',
+      label: 'paths',
       children: <ContainerPathsTable container={data} />,
     },
     // {

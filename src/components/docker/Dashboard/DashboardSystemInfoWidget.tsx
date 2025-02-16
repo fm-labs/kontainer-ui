@@ -2,11 +2,11 @@ import React from 'react'
 import JsonView from '../../../elements/JsonView.tsx'
 import { Paper } from '@mui/material'
 import AppIcons from '../../../elements/AppIcons.tsx'
-import { useHostApi } from '../../../helper/useHostApi.ts'
+import { useEnvApi } from '../../../helper/useEnvApi.ts'
 
 const DashboardSystemInfoWidget = () => {
   const [systemInfo, setSystemInfo] = React.useState<any>(null)
-  const api = useHostApi()
+  const api = useEnvApi()
 
   const fetchSystemInfo = React.useCallback(() => {
     api

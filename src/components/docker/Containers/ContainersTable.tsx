@@ -5,10 +5,10 @@ import moment from 'moment/moment'
 import Button from '@mui/material/Button'
 import ContainerPorts from './ContainerPorts.tsx'
 import AppIcons from '../../../elements/AppIcons.tsx'
-import { useHostApi } from '../../../helper/useHostApi.ts'
+import { useEnvApi } from '../../../helper/useEnvApi.ts'
 
 const ContainersTable = ({ data }) => {
-  const api = useHostApi()
+  const api = useEnvApi()
 
   const handleContainerStartClick = (id: string) => () => {
     console.log('Starting container', id)

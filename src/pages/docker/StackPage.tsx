@@ -3,12 +3,12 @@ import { useLoaderData } from 'react-router-dom'
 import Container from '@mui/material/Container'
 import Button from '@mui/material/Button'
 import AppIcons from '../../elements/AppIcons.tsx'
-import { useHostApi } from '../../helper/useHostApi.ts'
+import { useEnvApi } from '../../helper/useEnvApi.ts'
 
 const StackPage = () => {
   const loaderData = useLoaderData() as any // IDockerComposeProject
   const [data, setData] = React.useState(loaderData)
-  const api = useHostApi()
+  const api = useEnvApi()
 
   const handleProjectStartClick = (id: string) => () => {
     console.log('Starting project', id)

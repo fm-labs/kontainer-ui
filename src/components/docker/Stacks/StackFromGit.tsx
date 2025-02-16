@@ -3,14 +3,14 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { toast } from 'react-toastify'
 import Typography from '@mui/material/Typography'
-import { useHostApi } from '../../../helper/useHostApi.ts'
+import { useEnvApi } from '../../../helper/useEnvApi.ts'
 
 const StackFromGit = () => {
   const [stackName, setStackName] = React.useState('my-repo-stack')
   const [repoUrl, setRepoUrl] = React.useState('https://github.com/fm-labs/kstack-example-app.git')
   const [repoBaseDir, setRepoBaseDir] = React.useState('')
   const [composeFileName, setComposeFileName] = React.useState('')
-  const api = useHostApi()
+  const api = useEnvApi()
 
   const handleSubmitClick = () => {
     console.log('Submit clicked')

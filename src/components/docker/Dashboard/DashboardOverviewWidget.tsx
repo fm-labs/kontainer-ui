@@ -6,12 +6,12 @@ import AppIcons from '../../../elements/AppIcons.tsx'
 import { FormControlLabel, FormGroup, Switch } from '@mui/material'
 import { Link } from 'react-router-dom'
 import ContainerFormatters from '../Containers/ContainerFormatters.tsx'
-import { useHostApi } from '../../../helper/useHostApi.ts'
+import { useEnvApi } from '../../../helper/useEnvApi.ts'
 
 const DashboardOverviewWidget = () => {
   const [data, setData] = React.useState<any>(null)
   const [onlyActive, setOnlyActive] = React.useState(true)
-  const api = useHostApi()
+  const api = useEnvApi()
 
   const fetchData = React.useCallback(() => {
     console.log('Fetching data...')

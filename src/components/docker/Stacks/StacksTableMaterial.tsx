@@ -4,12 +4,12 @@ import { IDockerResourceAttrs } from '../../../types.ts'
 import IconButton from '@mui/material/IconButton'
 import { HiOutlinePlay, HiPause, HiStop, HiTrash } from 'react-icons/hi2'
 import { Link } from 'react-router-dom'
-import { useHostApi } from '../../../helper/useHostApi.ts'
+import { useEnvApi } from '../../../helper/useEnvApi.ts'
 import { useErrorHandler } from '../../../helper/useErrorHandler.ts'
 import { toast } from 'react-toastify'
 
 const StacksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
-  const api = useHostApi()
+  const api = useEnvApi()
   // const defaultErrorHandler = (error: any) => {
   //   toast.error(error?.message || 'An Error occurred')
   // }
