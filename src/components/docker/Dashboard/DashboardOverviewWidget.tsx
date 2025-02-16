@@ -183,7 +183,7 @@ const DashboardOverviewWidget = () => {
     return (
       <Item key={image.Id} color={color}>
         <div style={{ fontWeight: 'bold' }}>
-          <AppIcons.ImageIcon /> {image.RepoTags[0]}
+          <AppIcons.ImageIcon /> {image?.RepoTags ? image.RepoTags[0] : image.Id.substring(0, 32)}
         </div>
         <div>
           <Link to={`images/${image.Id}`}>{image.Id.substring(0, 32)}</Link>
