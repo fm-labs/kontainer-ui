@@ -8,13 +8,6 @@ export const defaultEnvs = [
     agentPort: 5000,
     useSSL: false,
   },
-  {
-    id: '1',
-    hostname: 'localhost',
-    label: 'Local Dev',
-    agentPort: 5000,
-    useSSL: false,
-  },
 ]
 
 export const saveEnvsInLocalStorage = (envs: any[]) => {

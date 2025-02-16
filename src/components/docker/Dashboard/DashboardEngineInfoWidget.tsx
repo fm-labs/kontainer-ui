@@ -27,7 +27,6 @@ const DashboardEngineInfoWidget = () => {
     api
       .getEngineInfo()()
       .then((data) => {
-        console.log('data', data)
         setEngineInfo(data)
       })
   }, [])

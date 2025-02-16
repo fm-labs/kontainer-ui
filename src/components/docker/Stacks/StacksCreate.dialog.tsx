@@ -6,7 +6,6 @@ import { AppBar } from '@mui/material'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
-//import RoutedTabs, { RoutedTabItem } from '../../../elements/RoutedTabs.tsx'
 import StackFromScratch from './StackFromScratch.tsx'
 import StackFromGit from './StackFromGit.tsx'
 import StackFromPortainerTemplate from './StackFromPortainerTemplate.tsx'
@@ -38,12 +37,12 @@ export default function CreateStacksDialog({ open, onClose }: { open: boolean; o
   const tabs: BasicTabItem[] = [
     {
       label: 'From Template',
-      label: 'stack-from-template',
+      name: 'stack-from-template',
       children: <StackFromTemplate />,
     },
     {
       label: 'From Git repository',
-      label: 'stack-from-git',
+      name: 'stack-from-git',
       children: <StackFromGit />,
     },
     // {
@@ -58,12 +57,12 @@ export default function CreateStacksDialog({ open, onClose }: { open: boolean; o
     // },
     {
       label: 'From Scratch',
-      label: 'stack-from-scratch',
+      name: 'stack-from-scratch',
       children: <StackFromScratch />,
     },
     {
       label: 'From Portainer',
-      label: 'stack-from-portainer',
+      name: 'stack-from-portainer',
       children: <StackFromPortainerTemplate />,
     },
   ]

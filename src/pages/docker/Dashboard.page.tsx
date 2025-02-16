@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet-async'
 import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../elements/Heading.tsx'
 import Container from '@mui/material/Container'
-import DashboardSystemInfoWidget from '../../components/docker/Dashboard/DashboardSystemInfoWidget.tsx'
 import DashboardEngineInfoWidget from '../../components/docker/Dashboard/DashboardEngineInfoWidget.tsx'
 import DashboardOverviewWidget from '../../components/docker/Dashboard/DashboardOverviewWidget.tsx'
 
@@ -22,7 +21,7 @@ const DashboardPage = () => {
       <div>
         <DashboardOverviewWidget />
         <DashboardEngineInfoWidget />
-        <DashboardSystemInfoWidget />
+        {/*<DashboardSystemInfoWidget />*/}
       </div>
     </Container>
   )

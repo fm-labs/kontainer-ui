@@ -14,11 +14,11 @@ const DashboardOverviewWidget = () => {
   const api = useEnvApi()
 
   const fetchData = React.useCallback(() => {
-    console.log('Fetching data...')
+    //console.log('Fetching Engine df data...')
     api
       .getEngineDf()()
       .then((data) => {
-        console.log('Engine df data loaded', data)
+        //console.log('Engine df data loaded', data)
         setData(data)
       })
   }, [data])
@@ -101,6 +101,7 @@ const DashboardOverviewWidget = () => {
             borderColor: `${color}.main`,
             fontSize: '0.8rem',
             p: 0.5,
+            height: '100%',
           }}
         >
           {children}

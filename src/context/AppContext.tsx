@@ -23,7 +23,7 @@ export const AppStoreProvider: React.FC<{ children: ReactNode; initialState?: Ap
   const [appStore, setAppStore] = useState<AppStore>(appState)
 
   React.useEffect(() => {
-    console.log('AppStoreProvider: appStore', appStore)
+    //console.log('AppStoreProvider: appStore', appStore)
     persistAppStore(appStore)
   }, [appStore])
 

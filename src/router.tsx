@@ -152,7 +152,8 @@ const routes: RouteObject[] = [
                     path: 'events',
                     element: <EventsPage />,
                     loader: async (args) => {
-                      return getEnvApiFromLoaderArgs(args).getEngineEvents()({})
+                      const since = Math.floor(Date.now() / 1000) - 5 * 60 // last 5 minutes
+                      return getEnvApiFromLoaderArgs(args).getEngineEvents()({ since: since })
                     },
                   },
                   {

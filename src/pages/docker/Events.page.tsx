@@ -11,11 +11,11 @@ import { useEnvApi } from '../../helper/useEnvApi.ts'
 const EventsPage = () => {
   const data = useLoaderData() as any
   const [events, setEvents] = React.useState<any[]>(data || [])
-  const [lastEventTime, setLastEventTime] = React.useState<number>()
+  const [lastEventTime, setLastEventTime] = React.useState<number>(Math.floor(Date.now() / 1000))
   const api = useEnvApi()
 
   const fetchEvents = React.useCallback(async () => {
-    console.log('fetching events')
+    //console.log('fetching events')
     return await api
       .getEngineEvents()({ since: lastEventTime })
       .then((_newEvents) => {
@@ -27,7 +27,7 @@ const EventsPage = () => {
         setEvents([..._newEvents, ...events])
       })
       .catch((error) => {
-        console.error('error fetching events', error)
+        //console.error('error fetching events', error)
         toast.error('Error fetching events')
       })
       .finally(() => {
@@ -47,11 +47,11 @@ const EventsPage = () => {
     //fetchEvents()
     const timer = setInterval(() => {
       fetchEvents()
-    }, 6000)
-    console.log('EventsPage mounted')
+    }, 15000)
+    //console.log('EventsPage mounted')
 
     return () => {
-      console.log('EventsPage unmounted')
+      //console.log('EventsPage unmounted')
       clearInterval(timer)
     }
   }, [fetchEvents])

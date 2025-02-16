@@ -59,32 +59,32 @@ const ContainerPage = () => {
     // },
     {
       label: 'Inspect',
-      label: 'inspect',
+      name: 'inspect',
       children: <ReactJson src={data} displayDataTypes={false} displayObjectSize={false} enableClipboard={true} />,
     },
     {
       label: 'Labels',
-      label: 'labels',
+      name: 'labels',
       children: <ContainerLabelsTable labels={data?.Config?.Labels} />,
     },
     {
       label: 'Environment',
-      label: 'env',
+      name: 'env',
       children: <ContainerEnvVariablesTable env={data?.Config?.Env} />,
     },
     {
       label: 'Networks',
-      label: 'networks',
+      name: 'networks',
       children: <ContainerNetworksView networks={data?.NetworkSettings?.Networks} />,
     },
     {
       label: 'Mounts',
-      label: 'mounts',
+      name: 'mounts',
       children: <ContainerMounts mounts={data?.Mounts} />,
     },
     {
       label: 'Paths',
-      label: 'paths',
+      name: 'paths',
       children: <ContainerPathsTable container={data} />,
     },
     // {

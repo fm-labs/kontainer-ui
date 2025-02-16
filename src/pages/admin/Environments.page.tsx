@@ -1,17 +1,14 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import JsonView from '../../elements/JsonView.tsx'
 import Container from '@mui/material/Container'
 import useEnvironments from '../../helper/useEnvironments.ts'
 import { Helmet } from 'react-helmet-async'
 import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../elements/Heading.tsx'
-import AutoreloadButton from '../../elements/Autoreload/AutoreloadButton.tsx'
-import ContainerCreateButton from '../../components/docker/Containers/ContainerCreate.button.tsx'
 import Button from '@mui/material/Button'
 import useAuth from '../../helper/useAuth.ts'
 import { Card, CardActions, CardContent, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid2'
+import { Link } from 'react-router-dom'
 
 const EnvironmentsPage = () => {
   const { envs } = useEnvironments()
@@ -58,7 +55,15 @@ const EnvironmentsPage = () => {
                 <Typography variant='h5' component='div'>
                   {env.label}
                 </Typography>
-                <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>{env.hostname}</Typography>
+                <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>
+                  {env.hostname}:{env.agentPort}
+                </Typography>
+                <div>
+                  <Link to={`/${env.id}`}>Dashboard</Link> | <Link to={`/${env.id}/docker/containers`}>Containers</Link>{' '}
+                  | <Link to={`/${env.id}/docker/images`}>Images</Link> |{' '}
+                  <Link to={`/${env.id}/docker/volumes`}>Volumes</Link> |{' '}
+                  <Link to={`/${env.id}/docker/stacks`}>Stacks</Link>
+                </div>
               </CardContent>
               <CardActions>
                 <Button size='small' variant={'outlined'} href={`/${env.id}`}>
@@ -66,14 +71,6 @@ const EnvironmentsPage = () => {
                 </Button>
               </CardActions>
             </Card>
-            {/*<h2>
-            {env.label} ({env.hostname})
-          </h2>
-          <div>
-            <Link to={`/${env.id}`}>Dashboard</Link> | <Link to={`/${env.id}/docker`}>Docker</Link> |{' '}
-            <Link to={`/${env.id}/docker/containers`}>Containers</Link> |{' '}
-            <Link to={`/${env.id}/docker/images`}>Images</Link> | <Link to={`/${env.id}/docker/volumes`}>Volumes</Link>
-          </div>*/}
           </Grid>
         ))}
       </Grid>
