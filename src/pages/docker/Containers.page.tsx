@@ -10,6 +10,9 @@ import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../elements/Heading.tsx'
 import { Helmet } from 'react-helmet-async'
 import { useHostApi } from '../../helper/useHostApi.ts'
+import appRepo from '../../lib/repo.ts'
+import useAutoreload from '../../helper/useAutoreload.ts'
+import AutoreloadButton from '../../elements/Autoreload/AutoreloadButton.tsx'
 
 const ContainersPage = () => {
   const loaderData = useLoaderData() as IDockerResourceAttrs[]
@@ -17,26 +20,37 @@ const ContainersPage = () => {
   const [showGrouped, setShowGrouped] = React.useState(true)
   const api = useHostApi()
 
+  const CONTAINER_REFRESH_INTERVAL = 15000
+
   const handleSwitchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setShowGrouped(e.target.checked)
   }
 
-  React.useEffect(() => {
-    console.log('ContainersPage mounted')
-    const timer = setInterval(() => {
-      console.log('Refreshing containers')
-      api
-        .getContainers()()
-        .then((data) => {
-          console.log('Containers refreshed', data)
-          setData(data)
-        })
-    }, 5000)
-    return () => {
-      console.log('ContainersPage unmounted')
-      clearInterval(timer)
-    }
-  }, [])
+  const fetchContainers = React.useCallback(async () => {
+    appRepo(api)
+      .syncContainers()
+      .then((data) => {
+        setData(data)
+      })
+  }, [api])
+
+  const autoloader = useAutoreload(fetchContainers, CONTAINER_REFRESH_INTERVAL)
+
+  // React.useEffect(() => {
+  //   console.log('ContainersPage mounted')
+  //   const timer = setInterval(() => {
+  //     console.log('Refreshing containers')
+  //     fetchContainers()
+  //   }, CONTAINER_REFRESH_INTERVAL)
+  //   return () => {
+  //     console.log('ContainersPage unmounted')
+  //     clearInterval(timer)
+  //   }
+  // }, [])
+  //
+  // React.useEffect(() => {
+  //   fetchContainers()
+  // }, [])
 
   return (
     <Container maxWidth={false}>
@@ -46,6 +60,7 @@ const ContainersPage = () => {
       <Toolbar disableGutters>
         <Heading label={'Containers'}>
           <div>
+            <AutoreloadButton autoloader={autoloader} />
             <ContainerCreateButton />
           </div>
         </Heading>
@@ -58,6 +73,7 @@ const ContainersPage = () => {
             label='Show grouped'
           />
         </FormGroup>
+        {/*<div>Last update: {autoloader.lastExec ? new Date(autoloader.lastExec).toLocaleTimeString() : '?'}</div>*/}
       </div>
       {showGrouped ? <ContainersTableGrouped data={data} /> : <ContainersTableMaterial data={data} />}
     </Container>

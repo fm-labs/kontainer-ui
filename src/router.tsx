@@ -20,6 +20,7 @@ import EnvironmentRoutingWrapper from './pages/EnvironmentRoutingWrapper.tsx'
 import api from './lib/api2.ts'
 import { AGENT_API_BASEURL } from './constants.ts'
 import SettingsPage from './pages/admin/Settings.page.tsx'
+import appRepo from './lib/repo.ts'
 
 const getHostApiFromLoaderArgs = (args: LoaderFunctionArgs) => {
   if (!args?.params?.environment) {
@@ -70,7 +71,9 @@ const routes: RouteObject[] = [
                 path: 'containers',
                 element: <ContainersPage />,
                 loader: async (args) => {
-                  return getHostApiFromLoaderArgs(args).getContainers()()
+                  const api = getHostApiFromLoaderArgs(args)
+                  //return api.getContainers()()
+                  return appRepo(api).listContainers()
                 },
               },
               {
@@ -120,7 +123,9 @@ const routes: RouteObject[] = [
                 path: 'stacks',
                 element: <StacksPage />,
                 loader: async (args) => {
-                  return getHostApiFromLoaderArgs(args).getStacks()()
+                  //return getHostApiFromLoaderArgs(args).getStacks()()
+                  const api = getHostApiFromLoaderArgs(args)
+                  return appRepo(api).listStacks()
                 },
               },
               {
