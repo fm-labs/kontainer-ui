@@ -1,30 +1,43 @@
 import React from 'react'
 
-const useAutoreload = (callback: () => void, interval: number) => {
+const useAutoreload = (callback: () => void | Promise<void>, interval: number = 15000) => {
   const callbackRef = React.useRef(callback)
   callbackRef.current = callback
 
   const timerRef = React.useRef<any>()
-  const lastExec = React.useRef<number>(0)
-
+  const [lastExec, setLastExec] = React.useState<number>(0)
   const [_interval, _setInterval] = React.useState(interval)
 
   React.useEffect(() => {
     //console.log('Autoreload:mount')
-    const execCallback = () => {
-      //console.log('Autoreload:execCallback', _interval)
-      callbackRef.current()
-      lastExec.current = Date.now()
-      if (_interval <= 0) {
-        //console.log('Autoreload:skip')
-        return
+    const execCallback = async () => {
+      //console.log('Autoreload:execCallback', _interval, Date.now() / 1000)
+      let p = callbackRef.current()
+      if (!(p instanceof Promise)) {
+        p = Promise.resolve()
       }
-      timerRef.current = setTimeout(execCallback, _interval)
+      p
+        // .then(() => {
+        //   console.log('Autoreload:callback success')
+        // })
+        .catch((err) => {
+          console.error('Autoreload:callback error', err)
+        })
+        .finally(() => {
+          //console.log('Autoreload:callback done')
+          if (_interval <= 0) {
+            //console.log('Autoreload:skip')
+            return
+          }
+          //console.log('Autoreload:reschedule', _interval)
+          timerRef.current = setTimeout(execCallback, _interval)
+          setLastExec(Date.now())
+        })
     }
     execCallback()
 
     return () => {
-      //console.log('Autoreload:unmount')
+      console.log('Autoreload:unmount')
       if (timerRef.current) {
         clearTimeout(timerRef.current)
       }
@@ -32,7 +45,7 @@ const useAutoreload = (callback: () => void, interval: number) => {
   }, [_interval])
 
   return {
-    lastExec: lastExec.current,
+    lastExec: lastExec,
     interval: _interval,
     setInterval: _setInterval,
   }

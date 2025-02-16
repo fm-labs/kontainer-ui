@@ -21,8 +21,6 @@ const ContainersPage = () => {
   const api = useEnvApi()
   const repo = useEnvRepo()
 
-  const CONTAINER_REFRESH_INTERVAL = 15000
-
   const handleSwitchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setShowGrouped(e.target.checked)
   }
@@ -33,7 +31,7 @@ const ContainersPage = () => {
     })
   }, [api])
 
-  const autoloader = useAutoreload(fetchContainers, CONTAINER_REFRESH_INTERVAL)
+  const autoloader = useAutoreload(fetchContainers)
 
   // React.useEffect(() => {
   //   console.log('ContainersPage mounted')

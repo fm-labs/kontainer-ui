@@ -4,9 +4,27 @@ import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../elements/Heading.tsx'
 import Container from '@mui/material/Container'
 import DashboardEngineInfoWidget from '../../components/docker/Dashboard/DashboardEngineInfoWidget.tsx'
-import DashboardOverviewWidget from '../../components/docker/Dashboard/DashboardOverviewWidget.tsx'
+import DashboardOverview from '../../components/docker/Dashboard/DashboardOverview.tsx'
+import AutoreloadButton from '../../elements/Autoreload/AutoreloadButton.tsx'
+import { useEnvApi } from '../../helper/useEnvApi.ts'
+import useAutoreload from '../../helper/useAutoreload.ts'
 
 const DashboardPage = () => {
+  const api = useEnvApi()
+
+  const [data, setData] = React.useState<any>(null)
+  const fetchData = React.useCallback(() => {
+    //console.log('Fetching Engine df data...')
+    api
+      .getEngineDf()()
+      .then((data) => {
+        //console.log('Engine df data loaded', data)
+        setData(data)
+      })
+  }, [data])
+
+  const autoloader = useAutoreload(fetchData)
+
   return (
     <Container maxWidth={false}>
       <Helmet>
@@ -14,12 +32,14 @@ const DashboardPage = () => {
       </Helmet>
       <Toolbar disableGutters>
         <Heading label={'Dashboard'}>
-          <div></div>
+          <div>
+            <AutoreloadButton autoloader={autoloader} />
+          </div>
         </Heading>
       </Toolbar>
 
       <div>
-        <DashboardOverviewWidget />
+        <DashboardOverview data={data} />
         <DashboardEngineInfoWidget />
         {/*<DashboardSystemInfoWidget />*/}
       </div>

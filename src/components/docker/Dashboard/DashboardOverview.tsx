@@ -6,22 +6,9 @@ import AppIcons from '../../../elements/AppIcons.tsx'
 import { FormControlLabel, FormGroup, Switch } from '@mui/material'
 import { Link } from 'react-router-dom'
 import ContainerFormatters from '../Containers/ContainerFormatters.tsx'
-import { useEnvApi } from '../../../helper/useEnvApi.ts'
 
-const DashboardOverviewWidget = () => {
-  const [data, setData] = React.useState<any>(null)
+const DashboardOverview = ({ data }) => {
   const [onlyActive, setOnlyActive] = React.useState(true)
-  const api = useEnvApi()
-
-  const fetchData = React.useCallback(() => {
-    //console.log('Fetching Engine df data...')
-    api
-      .getEngineDf()()
-      .then((data) => {
-        //console.log('Engine df data loaded', data)
-        setData(data)
-      })
-  }, [data])
 
   const containersData = React.useMemo(() => {
     if (!data) return []
@@ -59,18 +46,18 @@ const DashboardOverviewWidget = () => {
     return _data
   }, [data, onlyActive])
 
-  React.useEffect(() => {
-    fetchData()
-    const timer = setInterval(() => {
-      fetchData()
-    }, 5000)
+  // React.useEffect(() => {
+  //   fetchData()
+  //   const timer = setInterval(() => {
+  //     fetchData()
+  //   }, 5000)
+  //
+  //   return () => {
+  //     clearInterval(timer)
+  //   }
+  // }, [])
 
-    return () => {
-      clearInterval(timer)
-    }
-  }, [])
-
-  const columns = 4
+  // const columns = 4
   // const containerStyle: any = { columns: columns }
   // const containerStyle2: any = {}
   // const itemStyle: any = { border: '1px solid #ccc', marginBottom: '0.2rem', breakInside: 'avoid', fontSize: '0.8rem' }
@@ -251,4 +238,4 @@ const DashboardOverviewWidget = () => {
   )
 }
 
-export default DashboardOverviewWidget
+export default DashboardOverview

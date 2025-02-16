@@ -8,13 +8,13 @@ import Paper from '@mui/material/Paper'
 import Popper from '@mui/material/Popper'
 import MenuItem from '@mui/material/MenuItem'
 import MenuList from '@mui/material/MenuList'
+import UpdateIcon from '@mui/icons-material/Update'
 
 type AutoreloadOptions = {
   [key: number]: string
 }
 
-const options = ['OFF', '5s', '15s', '30s', '1m', '5m']
-const options2: { [key: number]: string } = {
+const timerOptions: { [key: number]: string } = {
   0: 'OFF',
   5: '5s',
   15: '15s',
@@ -32,6 +32,7 @@ export default function AutoreloadButton(props: AutoreloadButtonProps) {
   const anchorRef = React.useRef<HTMLDivElement>(null)
   //const [selectedIndex, setSelectedIndex] = React.useState(1)
   const [selectedInterval, setSelectedInterval] = React.useState(props?.autoloader?.interval / 1000 || 0)
+  const [countdown, setCountdown] = React.useState(0)
 
   // const handleClick = () => {
   //   //console.info(`You clicked ${options[selectedIndex]}`)
@@ -63,6 +64,22 @@ export default function AutoreloadButton(props: AutoreloadButtonProps) {
   }
 
   React.useEffect(() => {
+    if (props.autoloader.interval > 0) {
+      const timer = setInterval(() => {
+        //const countdownValue = Date.now() - props?.autoloader?.lastExec - props.autoloader.interval
+        const countdownValue = props?.autoloader?.lastExec + props.autoloader.interval - Date.now()
+        //setCountdown(Math.ceil(countdownValue / 1000))
+        setCountdown(countdownValue / 1000)
+      }, 1000)
+      return () => {
+        clearInterval(timer)
+      }
+    } else {
+      setCountdown(0)
+    }
+  }, [props.autoloader.interval, props.autoloader.lastExec])
+
+  React.useEffect(() => {
     //console.log('AutoreloadButton:mount', props.autoloader.interval)
     setSelectedInterval(props?.autoloader?.interval / 1000 || 0)
   }, [props.autoloader.interval])
@@ -76,7 +93,10 @@ export default function AutoreloadButton(props: AutoreloadButtonProps) {
         title={`Last updated: ${props?.autoloader?.lastExec ? new Date(props.autoloader.lastExec).toLocaleTimeString() : '?'}`}
       >
         {/*<Button onClick={handleClick}>Autoreload: {options[selectedIndex]}</Button>*/}
-        <Button>Autoreload: {selectedInterval}s</Button>
+        <Button>
+          Refresh:
+          {selectedInterval > 0 ? ` ${selectedInterval}s (${countdown.toFixed(0)})` : ' OFF'}
+        </Button>
         <Button
           size='small'
           aria-controls={open ? 'split-button-menu' : undefined}
@@ -111,7 +131,7 @@ export default function AutoreloadButton(props: AutoreloadButtonProps) {
                   ))}
                 </MenuList>*/}
                 <MenuList id='split-button-menu' autoFocusItem>
-                  {Object.entries(options2).map((option, index) => (
+                  {Object.entries(timerOptions).map((option, index) => (
                     <MenuItem
                       key={option[0]}
                       selected={parseInt(option[0]) === selectedInterval}

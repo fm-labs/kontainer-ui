@@ -9,14 +9,13 @@ import StacksCreateButton from '../../components/docker/Stacks/StacksCreate.butt
 import { useEnvApi } from '../../helper/useEnvApi.ts'
 import useAutoreload from '../../helper/useAutoreload.ts'
 import { useEnvRepo } from '../../helper/useEnvRepo.ts'
+import AutoreloadButton from '../../elements/Autoreload/AutoreloadButton.tsx'
 
 const StacksPage = () => {
   const loaderData = useLoaderData() as any // IDockerStack[]
   const [data, setData] = React.useState(loaderData)
   const api = useEnvApi()
   const repo = useEnvRepo()
-
-  const STACKS_FETCH_INTERVAL = 15000
 
   const fetchStacks = React.useCallback(async () => {
     // api
@@ -29,7 +28,7 @@ const StacksPage = () => {
     })
   }, [api])
 
-  const autoloader = useAutoreload(fetchStacks, STACKS_FETCH_INTERVAL)
+  const autoloader = useAutoreload(fetchStacks)
 
   // React.useEffect(() => {
   //   console.log('StacksPage mounted')
@@ -56,12 +55,12 @@ const StacksPage = () => {
       <Toolbar disableGutters>
         <Heading label={'Stacks'}>
           <div>
+            <AutoreloadButton autoloader={autoloader} />
             <StacksCreateButton />
           </div>
         </Heading>
       </Toolbar>
 
-      <div>Last update: {autoloader.lastExec ? new Date(autoloader.lastExec).toLocaleTimeString() : '?'}</div>
       <StacksTableMaterial data={data} />
     </Container>
   )
