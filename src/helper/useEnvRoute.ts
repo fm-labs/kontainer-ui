@@ -29,7 +29,7 @@ export const useEnvRoute = () => {
   }
 
   const envId = React.useMemo(() => getEnvIdFromRoute(), [matches])
-  const env = React.useMemo(() => getEnvFromEnvId(), [matches])
+  const env = React.useMemo(() => getEnvFromEnvId(), [matches, envId])
 
   const buildEnvUrl = React.useCallback(
     (path: string) => {

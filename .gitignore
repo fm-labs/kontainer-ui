@@ -3,6 +3,8 @@ bak/
 build/
 dist/
 public/schema/dev/
+.env
+.env.local
 
 ### Node template
 # Logs

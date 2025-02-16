@@ -2,7 +2,7 @@ import React from 'react'
 import { useRouteError } from 'react-router-dom'
 import Container from '@mui/material/Container'
 import Layout from '../layout/Layout.tsx'
-import { AGENT_API_BASEURL } from '../constants.ts'
+import { MASTER_AGENT_API_BASEURL } from '../constants.ts'
 
 const RoutingErrorBoundary = () => {
   const error = useRouteError() as Error
@@ -18,8 +18,8 @@ const RoutingErrorBoundary = () => {
         {error?.message?.toLowerCase() === 'network error' && (
           <p>
             Are you sure the kstack-agent server is running on{' '}
-            <a target={'_blank'} href={AGENT_API_BASEURL} rel='noreferrer'>
-              {AGENT_API_BASEURL}
+            <a target={'_blank'} href={MASTER_AGENT_API_BASEURL} rel='noreferrer'>
+              {MASTER_AGENT_API_BASEURL}
             </a>{' '}
             ?
           </p>

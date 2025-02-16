@@ -17,14 +17,13 @@ import SettingsPage from './pages/admin/Settings.page.tsx'
 import VolumesPage from './pages/docker/Volumes.page.tsx'
 import AuthenticatedRouteWrapper from './pages/AuthenticatedRouteWrapper.tsx'
 import EnvironmentRouteWrapper from './pages/EnvironmentRouteWrapper.tsx'
-import LayoutRouteWrapper from './pages/LayoutRouteWrapper.tsx'
 import RoutingErrorBoundary from './pages/RoutingErrorBoundary.tsx'
 import PageNotFound from './pages/PageNotFound.tsx'
 import api from './lib/api2.ts'
 import appRepo from './lib/repo.ts'
-import { restoreEnvsFromLocalStorage, defaultEnvs } from './helper/useEnvironments.ts'
+import { restoreEnvsFromLocalStorage } from './helper/useEnvironments.ts'
 import { loadAppStore } from './lib/appStore.ts'
-import { DEFAULT_AGENT_PORT } from './constants.ts'
+import { DEFAULT_ENVIRONMENTS, MASTER_AGENT_PORT } from './constants.ts'
 
 const getEnvApiFromLoaderArgs = (args: LoaderFunctionArgs) => {
   //const { envs } = useEnvironments()
@@ -35,7 +34,7 @@ const getEnvApiFromLoaderArgs = (args: LoaderFunctionArgs) => {
   const envId = args.params.envId
   let envs = restoreEnvsFromLocalStorage()
   if (!envs) {
-    envs = defaultEnvs
+    envs = DEFAULT_ENVIRONMENTS
   }
   const env = envs.find((env) => env.id === envId)
   if (!env) {
@@ -43,8 +42,8 @@ const getEnvApiFromLoaderArgs = (args: LoaderFunctionArgs) => {
   }
 
   const urlSchema = env.useSSL ? 'https' : 'http'
-  const hostname = env.hostname || ''
-  const agentPort = env.agentPort || DEFAULT_AGENT_PORT
+  const hostname = env.hostname || 'localhost'
+  const agentPort = env.agentPort || MASTER_AGENT_PORT
   const apiBaseUrl = `${urlSchema}://${hostname}:${agentPort}/api`
 
   const appStore = loadAppStore()

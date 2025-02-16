@@ -1,14 +1,5 @@
 import React from 'react'
-
-export const defaultEnvs = [
-  {
-    id: '0',
-    hostname: 'localhost',
-    label: 'Local',
-    agentPort: 5000,
-    useSSL: false,
-  },
-]
+import { DEFAULT_ENVIRONMENTS } from '../constants.ts'
 
 export const saveEnvsInLocalStorage = (envs: any[]) => {
   localStorage.setItem('kstack.environments', JSON.stringify(envs))
@@ -21,7 +12,7 @@ export const restoreEnvsFromLocalStorage = () => {
 }
 
 const useEnvironments = () => {
-  const [envs, setEnvs] = React.useState(defaultEnvs)
+  const [envs, setEnvs] = React.useState(DEFAULT_ENVIRONMENTS)
 
   React.useEffect(() => {
     const envs = restoreEnvsFromLocalStorage()
