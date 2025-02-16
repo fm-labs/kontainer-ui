@@ -1,10 +1,8 @@
 import appDb from './db.ts'
 
-const appRepo = (api) => {
-  const apiClient = api
-
+const appRepo = (envId: string, apiClient) => {
   const listEnvironments = async () => {
-    const db = await appDb.openAppDb()
+    const db = await appDb.openAppDb(envId)
     const tx = db.transaction('environments', 'readonly')
     const store = tx.objectStore('environments')
     const index = store.index('by-alias')
@@ -14,8 +12,8 @@ const appRepo = (api) => {
 
   const syncContainers = async () => {
     const data = await apiClient.getContainers()()
-    const _db = await appDb.openAppDb()
-    const tx = _db.transaction('containers', 'readwrite')
+    const db = await appDb.openAppDb(envId)
+    const tx = db.transaction('containers', 'readwrite')
     const store = tx.objectStore('containers')
     for (const container of data) {
       store.put(container as any)
@@ -26,7 +24,7 @@ const appRepo = (api) => {
 
   const listContainers = async () => {
     //const data = await apiClient.getContainers()()
-    const db = await appDb.openAppDb()
+    const db = await appDb.openAppDb(envId)
     const tx = db.transaction('containers', 'readonly')
     const store = tx.objectStore('containers')
     const index = store.index('by-name')
@@ -36,8 +34,8 @@ const appRepo = (api) => {
 
   const syncStacks = async () => {
     const data = await apiClient.getStacks()()
-    const _db = await appDb.openAppDb()
-    const tx = _db.transaction('stacks', 'readwrite')
+    const db = await appDb.openAppDb(envId)
+    const tx = db.transaction('stacks', 'readwrite')
     const store = tx.objectStore('stacks')
     for (const stack of data) {
       store.put(stack as any)
@@ -48,7 +46,7 @@ const appRepo = (api) => {
 
   const listStacks = async () => {
     //const data = await apiClient.getStacks()()
-    const db = await appDb.openAppDb()
+    const db = await appDb.openAppDb(envId)
     const tx = db.transaction('stacks', 'readonly')
     const store = tx.objectStore('stacks')
     //const index = store.index('by-name')

@@ -1,9 +1,12 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 import { IDockerContainer, IDockerResourceAttrs } from '../types.ts'
 
-const api = (baseUrl) => {
-  baseUrl = baseUrl || '/api'
+const api = (baseUrl: string, authToken?: string) => {
+  //baseUrl = baseUrl || '/api'
   //console.log('API BASE URL', baseUrl)
+  if (!baseUrl) {
+    throw new Error('API base URL is required')
+  }
 
   const apiHttp = axios.create({
     baseURL: baseUrl,
@@ -19,6 +22,17 @@ const api = (baseUrl) => {
       Accept: 'application/json',
     },
   })
+
+  apiHttp.interceptors.request.use(
+    (config: InternalAxiosRequestConfig) => {
+      if (authToken) {
+        config.headers['X-Api-Key'] = authToken
+      }
+      //console.log('before request', config)
+      return config
+    },
+    (error) => {},
+  )
 
   const getEnvironments = (config?: AxiosRequestConfig) => async (): Promise<IDockerContainer[]> => {
     const response = await apiHttp.get(`environments`, config)

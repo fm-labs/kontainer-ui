@@ -7,13 +7,14 @@ import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../elements/Heading.tsx'
 import StacksCreateButton from '../../components/docker/Stacks/StacksCreate.button.tsx'
 import { useEnvApi } from '../../helper/useEnvApi.ts'
-import appRepo from '../../lib/repo.ts'
 import useAutoreload from '../../helper/useAutoreload.ts'
+import { useEnvRepo } from '../../helper/useEnvRepo.ts'
 
 const StacksPage = () => {
   const loaderData = useLoaderData() as any // IDockerStack[]
   const [data, setData] = React.useState(loaderData)
   const api = useEnvApi()
+  const repo = useEnvRepo()
 
   const STACKS_FETCH_INTERVAL = 15000
 
@@ -23,11 +24,9 @@ const StacksPage = () => {
     //   .then((data) => {
     //     setData(data)
     //   })
-    appRepo(api)
-      .syncStacks()
-      .then((data) => {
-        setData(data)
-      })
+    repo.syncStacks().then((data) => {
+      setData(data)
+    })
   }, [api])
 
   const autoloader = useAutoreload(fetchStacks, STACKS_FETCH_INTERVAL)

@@ -10,15 +10,16 @@ import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../elements/Heading.tsx'
 import { Helmet } from 'react-helmet-async'
 import { useEnvApi } from '../../helper/useEnvApi.ts'
-import appRepo from '../../lib/repo.ts'
 import useAutoreload from '../../helper/useAutoreload.ts'
 import AutoreloadButton from '../../elements/Autoreload/AutoreloadButton.tsx'
+import { useEnvRepo } from '../../helper/useEnvRepo.ts'
 
 const ContainersPage = () => {
   const loaderData = useLoaderData() as IDockerResourceAttrs[]
   const [data, setData] = React.useState(loaderData)
   const [showGrouped, setShowGrouped] = React.useState(true)
   const api = useEnvApi()
+  const repo = useEnvRepo()
 
   const CONTAINER_REFRESH_INTERVAL = 15000
 
@@ -27,11 +28,9 @@ const ContainersPage = () => {
   }
 
   const fetchContainers = React.useCallback(async () => {
-    appRepo(api)
-      .syncContainers()
-      .then((data) => {
-        setData(data)
-      })
+    repo.syncContainers().then((data) => {
+      setData(data)
+    })
   }, [api])
 
   const autoloader = useAutoreload(fetchContainers, CONTAINER_REFRESH_INTERVAL)

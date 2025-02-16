@@ -5,15 +5,9 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import Box from '@mui/material/Box'
 import { PropsWithChildren } from 'react'
 import { Helmet } from 'react-helmet-async'
-import LayoutDrawer from './LayoutDrawer.tsx'
 import AppTheme from './AppTheme.tsx'
 
-export default function Layout({ children }: PropsWithChildren<any>) {
-  const [open, setOpen] = React.useState(false)
-  const toggleDrawer = () => {
-    setOpen(!open)
-  }
-
+export default function ConnectLayout({ children }: PropsWithChildren<any>) {
   return (
     <AppTheme>
       <Helmet>
@@ -22,7 +16,6 @@ export default function Layout({ children }: PropsWithChildren<any>) {
       <LocalizationProvider dateAdapter={AdapterMoment}>
         <CssBaseline />
         <Box sx={{ display: 'flex' }}>
-          <LayoutDrawer open={open} toggleDrawer={toggleDrawer} />
           <Box
             component='main'
             sx={{
@@ -34,12 +27,7 @@ export default function Layout({ children }: PropsWithChildren<any>) {
               paddingTop: '0.5rem',
             }}
           >
-            {/*<Toolbar />*/}
-            <div>
-              {children}
-
-              {/*<Copyright sx={{ pt: 4 }} />*/}
-            </div>
+            <div>{children}</div>
           </Box>
         </Box>
       </LocalizationProvider>

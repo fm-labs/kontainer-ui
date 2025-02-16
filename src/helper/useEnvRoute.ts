@@ -17,7 +17,7 @@ export const useEnvRoute = () => {
 
     // The first match contains the host alias
     const match = matches[1]
-    return match?.params?.envId
+    return match.params.envId
   }
 
   const getEnvFromEnvId = () => {

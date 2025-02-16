@@ -1,7 +1,5 @@
 import { openDB, DBSchema } from 'idb'
 
-const DB_NAME = 'kstack-db'
-
 interface AppDB extends DBSchema {
   keyval: {
     key: string
@@ -32,18 +30,18 @@ interface AppDB extends DBSchema {
   }
 }
 
-async function openAppDb() {
-  const db = await openDB<AppDB>(DB_NAME, 1, {
+async function openAppDb(dbName: string) {
+  const db = await openDB<AppDB>(dbName, 1, {
     upgrade(db) {
       // keyval-store
       db.createObjectStore('keyval')
 
-      // env store
-      const envStore = db.createObjectStore('environments', {
-        keyPath: 'alias',
-      })
-      envStore.createIndex('by-alias', 'alias')
-      envStore.createIndex('by-hostname', 'hostname')
+      // // env store
+      // const envStore = db.createObjectStore('environments', {
+      //   keyPath: 'alias',
+      // })
+      // envStore.createIndex('by-alias', 'alias')
+      // envStore.createIndex('by-hostname', 'hostname')
 
       // containers-store
       const containerStore = db.createObjectStore('containers', {
@@ -59,12 +57,12 @@ async function openAppDb() {
     },
   })
 
-  // Add data to the keyval-store
+  // // Add data to the keyval-store
   //await db.put('keyval', 'Val', 'Key')
 
-  // Add data to the env-store
-  await db.put('environments', { alias: 'local', hostname: 'localhost' })
-  await db.put('environments', { alias: 'remote', hostname: 'remotehost' })
+  // // Add data to the env-store
+  // await db.put('environments', { alias: 'local', hostname: 'localhost' })
+  // await db.put('environments', { alias: 'remote', hostname: 'remotehost' })
 
   return db
 }

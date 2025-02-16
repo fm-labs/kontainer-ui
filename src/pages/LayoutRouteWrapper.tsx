@@ -2,7 +2,7 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Layout from '../layout/Layout.tsx'
 
-const RoutingLayoutWrapper = () => {
+const LayoutRouteWrapper = () => {
   return (
     <Layout>
       <Outlet />
@@ -10,4 +10,4 @@ const RoutingLayoutWrapper = () => {
   )
 }
 
-export default RoutingLayoutWrapper
+export default LayoutRouteWrapper
