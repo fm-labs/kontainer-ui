@@ -2,13 +2,13 @@ import React from 'react'
 import { RouterProvider } from 'react-router-dom'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import router from './router'
-import AppStore from './store/AppStore'
 import { ToastContainer } from 'react-toastify'
+import { AppStoreProvider } from './context/AppContext.tsx'
 
 function App() {
   return (
     <>
-      <AppStore>
+      <AppStoreProvider>
         <HelmetProvider>
           <Helmet>
             <meta charSet='utf-8' />
@@ -19,7 +19,7 @@ function App() {
           {/*<DevKitBar panels={panels} />*/}
         </HelmetProvider>
         <ToastContainer position={'top-center'} pauseOnFocusLoss={false} pauseOnHover={false} />
-      </AppStore>
+      </AppStoreProvider>
     </>
   )
 }
