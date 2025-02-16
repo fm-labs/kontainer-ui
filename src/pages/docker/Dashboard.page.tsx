@@ -13,6 +13,7 @@ const DashboardPage = () => {
   const api = useEnvApi()
 
   const [data, setData] = React.useState<any>(null)
+
   const fetchData = React.useCallback(() => {
     //console.log('Fetching Engine df data...')
     api
@@ -21,7 +22,7 @@ const DashboardPage = () => {
         //console.log('Engine df data loaded', data)
         setData(data)
       })
-  }, [data])
+  }, [])
 
   const autoloader = useAutoreload(fetchData)
 

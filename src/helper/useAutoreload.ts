@@ -34,10 +34,15 @@ const useAutoreload = (callback: () => void | Promise<void>, interval: number = 
           setLastExec(Date.now())
         })
     }
-    execCallback()
+    //const cb = execCallback()
+    // use a millisecond timeout to trick strict-mode not to double-execute the initial execCallback
+    timerRef.current = setTimeout(execCallback, 1)
 
     return () => {
       console.log('Autoreload:unmount')
+      // Promise.reject(cb).catch((err) => {
+      //   console.error('Autoreload:unmount error', err)
+      // })
       if (timerRef.current) {
         clearTimeout(timerRef.current)
       }

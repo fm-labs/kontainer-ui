@@ -5,6 +5,7 @@ import { Paper } from '@mui/material'
 import AppIcons from '../../../elements/AppIcons.tsx'
 import JsonView from '../../../elements/JsonView.tsx'
 import { useEnvApi } from '../../../helper/useEnvApi.ts'
+import useAutoreload from '../../../helper/useAutoreload.ts'
 
 const DashboardEngineInfoWidget = () => {
   const [engineInfo, setEngineInfo] = React.useState<any>(null)
@@ -31,8 +32,11 @@ const DashboardEngineInfoWidget = () => {
       })
   }, [])
 
+  const autoload = useAutoreload(fetchEngineInfo)
+
   React.useEffect(() => {
-    fetchEngineInfo()
+    //fetchEngineInfo()
+    autoload.setInterval(60000)
   }, [])
 
   return (
