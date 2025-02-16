@@ -18,6 +18,8 @@ import ContainerPathsTable from '../../components/docker/Containers/ContainerPat
 import RoutedTabs, { RoutedTabItem } from '../../elements/RoutedTabs.tsx'
 import AppIcons from '../../elements/AppIcons.tsx'
 import { useEnvApi } from '../../helper/useEnvApi.ts'
+import ContainerLogsWidget from '../../components/docker/Containers/ContainerLogsWidget.tsx'
+import ContainerExecCommandWidget from '../../components/docker/Containers/ContainerExecWidget.tsx'
 
 const ContainerPage = () => {
   const loaderData = useLoaderData() as any // IDockerComposeContainer
@@ -58,6 +60,16 @@ const ContainerPage = () => {
     //   children: <ReactJson src={data} displayDataTypes={false} displayObjectSize={false} enableClipboard={true} />,
     // },
     {
+      label: 'Logs',
+      name: 'logs',
+      children: <ContainerLogsWidget container={data} />,
+    },
+    {
+      label: 'Exec',
+      name: 'exec',
+      children: <ContainerExecCommandWidget container={data} />,
+    },
+    {
       label: 'Inspect',
       name: 'inspect',
       children: <ReactJson src={data} displayDataTypes={false} displayObjectSize={false} enableClipboard={true} />,
@@ -87,16 +99,6 @@ const ContainerPage = () => {
       name: 'paths',
       children: <ContainerPathsTable container={data} />,
     },
-    // {
-    //   label: 'Logs',
-    //   name: 'logs',
-    //   children: (
-    //     <>
-    //       <h1>Logs</h1>
-    //       <p>Not available yet</p>
-    //     </>
-    //   ),
-    // },
     // {
     //   label: 'Exec',
     //   name: 'exec',

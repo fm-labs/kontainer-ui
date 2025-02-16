@@ -114,6 +114,22 @@ const api = (baseUrl: string, authToken?: string) => {
       return response.data
     }
 
+  const getContainerLogs =
+    (config?: AxiosRequestConfig) =>
+    async (id: string): Promise<string[]> => {
+      const response = await apiHttp.get(`containers/logs/${id}`, config)
+      return response.data
+    }
+
+  const execContainerCommand =
+    (config?: AxiosRequestConfig) =>
+    async (id: string, cmd: string | string[]): Promise<AxiosResponse> => {
+      const data = {
+        command: Array.isArray(cmd) ? cmd : cmd.split(' '), // split string into array
+      }
+      return await apiHttp.post(`containers/exec/${id}`, data, config)
+    }
+
   const startContainer =
     (config?: AxiosRequestConfig) =>
     async (id: string): Promise<AxiosResponse> => {
@@ -193,6 +209,8 @@ const api = (baseUrl: string, authToken?: string) => {
     removeStack,
     getContainers,
     getContainer,
+    getContainerLogs,
+    execContainerCommand,
     startContainer,
     restartContainer,
     pauseContainer,
