@@ -10,9 +10,9 @@ import StackFromScratch from './StackFromScratch.tsx'
 import StackFromGit from './StackFromGit.tsx'
 import StackFromPortainerTemplate from './StackFromPortainerTemplate.tsx'
 import { toast } from 'react-toastify'
-import StackFromTemplate from './StackFromTemplate.tsx'
 import { useEnvApi } from '../../../helper/useEnvApi.ts'
 import BasicTabs, { BasicTabItem } from '../../../elements/BasicTabs.tsx'
+import StackFromTemplate from './StackFromTemplate.tsx'
 
 export default function CreateStacksDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
   const api = useEnvApi()
@@ -40,6 +40,11 @@ export default function CreateStacksDialog({ open, onClose }: { open: boolean; o
       name: 'stack-from-template',
       children: <StackFromTemplate />,
     },
+    // {
+    //   label: 'From Template Repo',
+    //   name: 'stack-from-template-repo',
+    //   children: <StackFromTemplateRepo />,
+    // },
     {
       label: 'From Git repository',
       name: 'stack-from-git',

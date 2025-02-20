@@ -5,9 +5,23 @@ import { toast } from 'react-toastify'
 import { useEnvApi } from '../../../helper/useEnvApi.ts'
 
 const StackFromTemplate = () => {
-  const [stackName, setStackName] = React.useState('my-nginx-stack')
-  const [templateRepo, setTemplateRepo] = React.useState('fm-labs/kstack-templates')
-  const [templateName, setTemplateName] = React.useState('nginx')
+  const defaultValue = ` 
+  {
+    "name": "my-nginx-stack",
+    "type": "docker-compose",
+    "description": "My Test Nginx Stack",
+    "repository": {
+      "private": false,
+      "type": "git",
+      "url": "https://github.com/fm-labs/kstack-templates.git",
+      "ref": "/ref/heads/main"
+    },
+    "base_path": "docker/nginx",
+    "compose_file": "docker-compose.yml"
+  }
+  `
+  const [stackName, setTemplateName] = React.useState('')
+  const [templateContents, setTemplateContents] = React.useState(defaultValue)
   const api = useEnvApi()
 
   const handleSubmitClick = () => {
@@ -15,9 +29,8 @@ const StackFromTemplate = () => {
 
     const formData = new FormData()
     formData.append('launcher', 'template')
-    formData.append('name', stackName)
-    formData.append('template_repo', templateRepo)
-    formData.append('template_name', templateName)
+    formData.append('stack_name', stackName)
+    formData.append('template_content', templateContents)
 
     const payload = JSON.stringify(Object.fromEntries(formData))
     console.log(formData, payload)
@@ -28,53 +41,44 @@ const StackFromTemplate = () => {
         toast.success('Stack successfully created')
       })
       .catch((error) => {
-        console.error('error creating stack', error)
-        toast.error('Error creating stack')
+        console.error('error creating stack', error?.response)
+        toast.error('Error creating stack: ' + error?.response?.data?.error)
       })
   }
 
   return (
     <div>
-      <h1>From Template Repository</h1>
+      <h1>From Template</h1>
       <div>
         <TextField
           autoFocus
           required
           margin='dense'
-          id='name'
-          name='name'
-          label='Stack Name'
-          type='text'
-          fullWidth
-          variant='standard'
-          value={stackName}
-          onChange={(e) => setStackName(e.target.value)}
-        />
-        <TextField
-          margin='dense'
-          id='template_repo'
-          name='template_repo'
-          label='Template Repository'
-          type='text'
-          fullWidth
-          variant='standard'
-          value={templateRepo}
-          onChange={(e) => setTemplateRepo(e.target.value)}
-        />
-        <TextField
-          margin='dense'
-          id='template_name'
-          name='template_name'
+          id='stack_name'
+          name='stack_name'
           label='Template Name'
           type='text'
           fullWidth
           variant='standard'
-          value={templateName}
+          value={stackName}
           onChange={(e) => setTemplateName(e.target.value)}
         />
-
+        <TextField
+          multiline={true}
+          rows={10}
+          required={true}
+          margin='dense'
+          id='template_content'
+          name='template_content'
+          label='Template Contents'
+          type='text'
+          fullWidth
+          variant='standard'
+          value={templateContents}
+          onChange={(e) => setTemplateContents(e.target.value)}
+        />
         <Button variant='contained' color='primary' onClick={handleSubmitClick}>
-          Launch Stack
+          Launch Template
         </Button>
       </div>
     </div>

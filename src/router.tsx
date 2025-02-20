@@ -85,7 +85,6 @@ const routes: RouteObject[] = [
             path: 'settings',
             element: <SettingsPage />,
           },
-
           {
             path: ':envId',
             element: <EnvironmentRouteWrapper />,

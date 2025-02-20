@@ -39,7 +39,7 @@ const useAutoreload = (callback: () => void | Promise<void>, interval: number = 
     timerRef.current = setTimeout(execCallback, 1)
 
     return () => {
-      console.log('Autoreload:unmount')
+      // console.log('Autoreload:unmount')
       // Promise.reject(cb).catch((err) => {
       //   console.error('Autoreload:unmount error', err)
       // })

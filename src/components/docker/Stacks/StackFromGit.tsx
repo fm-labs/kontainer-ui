@@ -7,8 +7,8 @@ import { useEnvApi } from '../../../helper/useEnvApi.ts'
 
 const StackFromGit = () => {
   const [stackName, setStackName] = React.useState('my-repo-stack')
-  const [repoUrl, setRepoUrl] = React.useState('https://github.com/fm-labs/kstack-example-app.git')
-  const [repoBaseDir, setRepoBaseDir] = React.useState('')
+  const [repoUrl, setRepoUrl] = React.useState('https://github.com/fm-labs/kstack-templates.git')
+  const [repoBasePath, setRepoBasePath] = React.useState('docker/nginx')
   const [composeFileName, setComposeFileName] = React.useState('')
   const api = useEnvApi()
 
@@ -17,9 +17,9 @@ const StackFromGit = () => {
 
     const formData = new FormData()
     formData.append('launcher', 'git')
-    formData.append('name', stackName)
+    formData.append('stack_name', stackName)
     formData.append('repo_url', repoUrl)
-    formData.append('repo_base_dir', repoBaseDir)
+    formData.append('base_path', repoBasePath)
     formData.append('compose_file_name', composeFileName)
 
     const payload = JSON.stringify(Object.fromEntries(formData))
@@ -76,8 +76,8 @@ const StackFromGit = () => {
           type='text'
           fullWidth
           variant='standard'
-          value={repoBaseDir}
-          onChange={(e) => setRepoBaseDir(e.target.value)}
+          value={repoBasePath}
+          onChange={(e) => setRepoBasePath(e.target.value)}
         />
         <TextField
           margin='dense'

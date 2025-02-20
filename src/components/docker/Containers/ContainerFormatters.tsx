@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export const ContainerId = (props: { value: string; showLink?: boolean; maxDigits?: number }) => {
   const _showLink = props?.showLink || false
-  const _maxDigits = props?.maxDigits || 32
+  const _maxDigits = props?.maxDigits || 12
 
   if (_showLink) {
     return <Link to={`/containers/${props.value}`}>{props.value.substring(0, _maxDigits)}</Link>

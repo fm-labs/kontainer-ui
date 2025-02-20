@@ -4,24 +4,18 @@ import moment from 'moment/moment'
 import Table from '@mui/material/Table'
 import IconButton from '@mui/material/IconButton'
 import { TableCell, TableRow } from '@mui/material'
-import { HiOutlinePlay, HiPause, HiStop, HiTrash } from 'react-icons/hi2'
+import { HiOutlinePlay, HiStop, HiTrash } from 'react-icons/hi2'
 import { IDockerResourceAttrs } from '../../../types.ts'
 import ContainerPorts from './ContainerPorts.tsx'
 import ContainerState from './ContainerState.tsx'
 import { useContainer } from './useContainer.ts'
+import ContainerIconControls from './ContainerIconControls.tsx'
+import ContainerId from './ContainerId.tsx'
+import { useEnvRoute } from '../../../helper/useEnvRoute.ts'
 
 const ContainersTableGrouped = ({ data }: { data: IDockerResourceAttrs[] }) => {
-  const {
-    handleContainerStartClick,
-    handleContainerPauseClick,
-    handleContainerStopClick,
-    handleContainerRemoveClick,
-    handleStackStartClick,
-    handleStackStopClick,
-    handleStackDeleteClick,
-    handleContainerLogsClick,
-    handleContainerExecClick,
-  } = useContainer()
+  const { handleStackStartClick, handleStackStopClick, handleStackDeleteClick } = useContainer()
+  const { buildEnvUrl } = useEnvRoute()
 
   const groupedData = React.useMemo(() => {
     if (!data) {
@@ -92,6 +86,7 @@ const ContainersTableGrouped = ({ data }: { data: IDockerResourceAttrs[] }) => {
                 const name = row?.Name.substring(1).replace(`${composeProject}-`, '')
                 const labels = row?.Config?.Labels
                 const hasProtectedLabel = labels?.['kstack.protected'] === 'true'
+                const url = buildEnvUrl(`/docker/containers/${row?.Id}`)
 
                 return (
                   <tr key={row.Id}>
@@ -103,11 +98,13 @@ const ContainersTableGrouped = ({ data }: { data: IDockerResourceAttrs[] }) => {
                         }}
                       >
                         {/*<Link to={`/container/${row?.Id}`}>{name}</Link>*/}
-                        <Link to={`${row?.Id}`}>{name}</Link>
+                        <Link to={url}>{name}</Link>
                         {hasProtectedLabel && <span style={{ color: 'red' }}> PROTECTED</span>}
                       </div>
                     </TableCell>
-                    <TableCell>{row.Id.substring(0, 12)}</TableCell>
+                    <TableCell>
+                      <ContainerId value={row.Id} />
+                    </TableCell>
                     <TableCell>{row?.Config?.Image}</TableCell>
                     {/*<TableCell><ContainerPorts ports={row?.NetworkSettings?.Ports} /></TableCell>*/}
                     <TableCell>
@@ -116,8 +113,8 @@ const ContainersTableGrouped = ({ data }: { data: IDockerResourceAttrs[] }) => {
                     <TableCell>
                       <ContainerState state={row?.State} />
                     </TableCell>
-                    <TableCell>{moment(row?.State?.StartedAt).fromNow()}</TableCell>
-                    <TableCell style={{ textAlign: 'right' }}>
+                    <TableCell>{row?.State?.StartedAt && moment(row?.State?.StartedAt).fromNow()}</TableCell>
+                    {/*<TableCell style={{ textAlign: 'right' }}>
                       {row?.State?.Status !== 'running' && (
                         <IconButton size={'small'} title={'Start'} onClick={handleContainerStartClick(row.Id)}>
                           <HiOutlinePlay />
@@ -136,6 +133,9 @@ const ContainersTableGrouped = ({ data }: { data: IDockerResourceAttrs[] }) => {
                       <IconButton size={'small'} title={'Delete'} onClick={handleContainerRemoveClick(row.Id)}>
                         <HiTrash />
                       </IconButton>
+                    </TableCell>*/}
+                    <TableCell style={{ textAlign: 'right' }}>
+                      <ContainerIconControls containerId={row.Id} containerStatus={row?.State?.Status} />
                     </TableCell>
                   </tr>
                 )

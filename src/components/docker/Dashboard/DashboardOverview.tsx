@@ -6,6 +6,9 @@ import AppIcons from '../../../elements/AppIcons.tsx'
 import { FormControlLabel, FormGroup, Switch } from '@mui/material'
 import { Link } from 'react-router-dom'
 import ContainerFormatters from '../Containers/ContainerFormatters.tsx'
+import ContainerStatusChip from '../Containers/ContainerStatusChip.tsx'
+import ContainerStatusText from '../Containers/ContainerStatusText.tsx'
+import ContainerIconControls from '../Containers/ContainerIconControls.tsx'
 
 const DashboardOverview = ({ data }) => {
   const [onlyActive, setOnlyActive] = React.useState(true)
@@ -119,7 +122,7 @@ const DashboardOverview = ({ data }) => {
         >
           <AppIcons.ContainerIcon />{' '}
           {/*<Link to={`/container/${container.Id}`}>{container.Names[0] || container.Id.substring(0, 32)}</Link>*/}
-          <ContainerFormatters.ContainerName value={container.Names[0] || container.Id} />
+          <ContainerFormatters.ContainerName value={container.Names[0] || container.Id.substring(0, 12)} />
         </div>
         <div>
           <Link to={`containers/${container.Id}`}>
@@ -127,10 +130,10 @@ const DashboardOverview = ({ data }) => {
           </Link>
         </div>
         <div>
-          <AppIcons.ImageIcon /> {container.Image.substring(0, 32)}
+          <AppIcons.ImageIcon /> {container.Image}
         </div>
         <div>
-          {container?.Status} / {container?.State}
+          {container?.Status} / <ContainerStatusText status={container?.State} />
         </div>
         <div>
           <FileSizeFormatter value={container.SizeRootFs} /> / <FileSizeFormatter value={container.SizeRw} />
@@ -156,6 +159,15 @@ const DashboardOverview = ({ data }) => {
             <AppIcons.LabelsIcon /> {Object.keys(container?.Labels).length}
           </span>
         </div>
+        <div>
+          <ContainerIconControls
+            containerId={container}
+            containerStatus={container?.State}
+            buttonProps={{
+              style: { fontSize: '0.8rem', padding: '0.1rem' },
+            }}
+          />
+        </div>
       </Item>
     )
   }
@@ -174,7 +186,7 @@ const DashboardOverview = ({ data }) => {
           <AppIcons.ImageIcon /> {image?.RepoTags ? image.RepoTags[0] : image.Id.substring(0, 32)}
         </div>
         <div>
-          <Link to={`images/${image.Id}`}>{image.Id.substring(0, 32)}</Link>
+          <Link to={`images/${image.Id}`}>{image.Id.substring(7, 19)}</Link>
         </div>
         <div>
           <FileSizeFormatter value={image.Size} /> / <FileSizeFormatter value={image.SharedSize} />

@@ -81,21 +81,18 @@ const StacksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
           const row = cell.row.original
           return (
             <div style={{ textAlign: 'right' }}>
-              {!row?.running && (
-                <IconButton size={'small'} title={'Start'} onClick={handleStackStartClick(row.name)}>
-                  <HiOutlinePlay />
-                </IconButton>
-              )}
-              {row?.running && (
-                <IconButton size={'small'} title={'Pause'} onClick={handleStackPauseClick(row.name)}>
-                  <HiPause />
-                </IconButton>
-              )}
-              {row?.running && (
-                <IconButton size={'small'} title={'Stop'} onClick={handleStackStopClick(row.name)}>
-                  <HiStop />
-                </IconButton>
-              )}
+              {!row?.running && <></>}
+              <IconButton size={'small'} title={'Start'} onClick={handleStackStartClick(row.name)}>
+                <HiOutlinePlay />
+              </IconButton>
+              {row?.running && <></>}
+              <IconButton size={'small'} title={'Pause'} onClick={handleStackPauseClick(row.name)}>
+                <HiPause />
+              </IconButton>
+              {row?.running && <></>}
+              <IconButton size={'small'} title={'Stop'} onClick={handleStackStopClick(row.name)}>
+                <HiStop />
+              </IconButton>
               <IconButton size={'small'} title={'Delete'} onClick={handleStackRemoveClick(row.name)}>
                 <HiTrash />
               </IconButton>
@@ -120,6 +117,7 @@ const StacksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
 
     initialState: {
       density: 'compact',
+      sorting: [{ id: 'name', desc: false }],
     },
   })
 

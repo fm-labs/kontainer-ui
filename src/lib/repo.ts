@@ -15,6 +15,13 @@ const appRepo = (envId: string, apiClient) => {
     const db = await appDb.openAppDb(envId)
     const tx = db.transaction('containers', 'readwrite')
     const store = tx.objectStore('containers')
+
+    // delete all existing containers
+    const allKeys = await store.getAllKeys()
+    for (const key of allKeys) {
+      store.delete(key)
+    }
+
     for (const container of data) {
       store.put(container as any)
     }
@@ -37,6 +44,13 @@ const appRepo = (envId: string, apiClient) => {
     const db = await appDb.openAppDb(envId)
     const tx = db.transaction('stacks', 'readwrite')
     const store = tx.objectStore('stacks')
+
+    // delete all existing stacks
+    const allKeys = await store.getAllKeys()
+    for (const key of allKeys) {
+      store.delete(key)
+    }
+
     for (const stack of data) {
       store.put(stack as any)
     }

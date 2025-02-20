@@ -21,7 +21,7 @@ const api = (baseUrl: string, authToken?: string) => {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     },
-    timeout: 10000,
+    timeout: 60000,
   })
 
   apiHttp.interceptors.request.use(
@@ -196,6 +196,13 @@ const api = (baseUrl: string, authToken?: string) => {
     (config?: AxiosRequestConfig) =>
     async (args: { since?: number }): Promise<any> => {
       const response = await apiHttp.get(`engine/events?since=${args.since || ''}`, config)
+      return response.data
+    }
+
+  const submitTask =
+    (config?: AxiosRequestConfig) =>
+    async (task: any): Promise<any> => {
+      const response = await apiHttp.post(`tasks`, task, config)
       return response.data
     }
 

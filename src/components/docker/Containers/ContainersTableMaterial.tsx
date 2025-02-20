@@ -3,24 +3,26 @@ import { MaterialReactTable, useMaterialReactTable, type MRT_ColumnDef } from 'm
 import { IDockerResourceAttrs } from '../../../types.ts'
 import moment from 'moment/moment'
 import ContainerPorts from './ContainerPorts.tsx'
-import IconButton from '@mui/material/IconButton'
-import { HiOutlinePlay, HiPause, HiStop, HiTrash } from 'react-icons/hi2'
 import ContainerState from './ContainerState.tsx'
 import { Link } from 'react-router-dom'
-import { useContainer } from './useContainer.ts'
+import ContainerIconControls from './ContainerIconControls.tsx'
+import ContainerId from './ContainerId.tsx'
+import { useEnvRoute } from '../../../helper/useEnvRoute.ts'
 
 const ContainersTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
-  const {
-    handleContainerStartClick,
-    handleContainerPauseClick,
-    handleContainerStopClick,
-    handleContainerRemoveClick,
-    handleStackStartClick,
-    handleStackStopClick,
-    handleStackDeleteClick,
-    handleContainerLogsClick,
-    handleContainerExecClick,
-  } = useContainer()
+  const { buildEnvUrl } = useEnvRoute()
+
+  // const {
+  //   handleContainerStartClick,
+  //   handleContainerPauseClick,
+  //   handleContainerStopClick,
+  //   handleContainerRemoveClick,
+  //   handleStackStartClick,
+  //   handleStackStopClick,
+  //   handleStackDeleteClick,
+  //   handleContainerLogsClick,
+  //   handleContainerExecClick,
+  // } = useContainer()
 
   // const api = useEnvApi()
   // const { defaultErrorHandler } = useErrorHandler()
@@ -79,8 +81,9 @@ const ContainersTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => 
         Cell: ({ cell }) => {
           const name = cell.getValue<string>()
           const id = cell.row.original?.Id
+          const url = buildEnvUrl(`/docker/containers/${id}`)
           return (
-            <Link to={`/container/${id}`} title={name}>
+            <Link to={url} title={name}>
               {name.substring(1)}
             </Link>
           )
@@ -91,7 +94,7 @@ const ContainersTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => 
         header: 'Id',
         Cell: ({ cell }) => {
           const id = cell.getValue<string>()
-          return <div title={id}>{id.substring(0, 12)}</div>
+          return <ContainerId value={id}></ContainerId>
         },
       },
       {
@@ -125,6 +128,17 @@ const ContainersTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => 
       //   },
       // },
       {
+        accessorKey: 'State.StartedAt',
+        header: 'Last Started',
+        Cell: ({ cell }) => {
+          const date = cell.getValue<string>()
+          if (!date) {
+            return '-'
+          }
+          return moment(date).fromNow()
+        },
+      },
+      {
         accessorKey: 'Created',
         header: 'Created',
         Cell: ({ cell }) => {
@@ -135,32 +149,45 @@ const ContainersTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => 
           return moment(date).fromNow()
         },
       },
+      // {
+      //   id: 'Actions',
+      //   header: 'Actions',
+      //   //sx: { textAlign: 'right' },
+      //   Cell: ({ cell }) => {
+      //     const row = cell.row.original
+      //     return (
+      //       <div style={{ textAlign: 'right' }}>
+      //         {row?.State?.Status !== 'running' && (
+      //           <IconButton size={'small'} title={'Start'} onClick={handleContainerStartClick(row.Id)}>
+      //             <HiOutlinePlay />
+      //           </IconButton>
+      //         )}
+      //         {row?.State?.Status === 'running' && (
+      //           <IconButton size={'small'} title={'Pause'} onClick={handleContainerPauseClick(row.Id)}>
+      //             <HiPause />
+      //           </IconButton>
+      //         )}
+      //         {row?.State?.Status === 'running' && (
+      //           <IconButton size={'small'} title={'Stop'} onClick={handleContainerStopClick(row.Id)}>
+      //             <HiStop />
+      //           </IconButton>
+      //         )}
+      //         <IconButton size={'small'} title={'Delete'} onClick={handleContainerRemoveClick(row.Id)}>
+      //           <HiTrash />
+      //         </IconButton>
+      //       </div>
+      //     )
+      //   },
+      // },
       {
-        id: 'Actions',
-        header: 'Actions',
+        id: 'Controls',
+        header: 'Controls',
         //sx: { textAlign: 'right' },
         Cell: ({ cell }) => {
           const row = cell.row.original
           return (
             <div style={{ textAlign: 'right' }}>
-              {row?.State?.Status !== 'running' && (
-                <IconButton size={'small'} title={'Start'} onClick={handleContainerStartClick(row.Id)}>
-                  <HiOutlinePlay />
-                </IconButton>
-              )}
-              {row?.State?.Status === 'running' && (
-                <IconButton size={'small'} title={'Pause'} onClick={handleContainerPauseClick(row.Id)}>
-                  <HiPause />
-                </IconButton>
-              )}
-              {row?.State?.Status === 'running' && (
-                <IconButton size={'small'} title={'Stop'} onClick={handleContainerStopClick(row.Id)}>
-                  <HiStop />
-                </IconButton>
-              )}
-              <IconButton size={'small'} title={'Delete'} onClick={handleContainerRemoveClick(row.Id)}>
-                <HiTrash />
-              </IconButton>
+              <ContainerIconControls containerId={row.Id} containerStatus={row?.State?.Status} />
             </div>
           )
         },
@@ -182,6 +209,10 @@ const ContainersTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => 
 
     initialState: {
       density: 'compact',
+      columnVisibility: {
+        Created: false,
+        //Actions: false,
+      },
     },
   })
 
