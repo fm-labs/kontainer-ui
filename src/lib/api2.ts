@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
-import { IDockerContainer, IDockerResourceAttrs } from '../types.ts'
+import { IBackgroundTaskResponse, IDockerContainer, IDockerResourceAttrs } from '../types.ts'
 
 const api = (baseUrl: string, authToken?: string) => {
   //baseUrl = baseUrl || '/api'
@@ -71,19 +71,19 @@ const api = (baseUrl: string, authToken?: string) => {
 
   const startStack =
     (config?: AxiosRequestConfig) =>
-    async (id: string): Promise<AxiosResponse> => {
+    async (id: string): Promise<AxiosResponse<IBackgroundTaskResponse>> => {
       return await apiHttp.post(`stack/start/${id}`, null, config)
     }
 
   const stopStack =
     (config?: AxiosRequestConfig) =>
-    async (id: string): Promise<AxiosResponse> => {
+    async (id: string): Promise<AxiosResponse<IBackgroundTaskResponse>> => {
       return await apiHttp.post(`stack/stop/${id}`, null, config)
     }
 
   const removeStack =
     (config?: AxiosRequestConfig) =>
-    async (id: string): Promise<AxiosResponse> => {
+    async (id: string): Promise<AxiosResponse<IBackgroundTaskResponse>> => {
       return await apiHttp.post(`stack/remove/${id}`, null, config)
     }
 
@@ -132,43 +132,43 @@ const api = (baseUrl: string, authToken?: string) => {
 
   const startContainer =
     (config?: AxiosRequestConfig) =>
-    async (id: string): Promise<AxiosResponse> => {
+    async (id: string): Promise<AxiosResponse<IBackgroundTaskResponse<IDockerResourceAttrs>>> => {
       return await apiHttp.post(`containers/start/${id}`, null, config)
     }
 
   const restartContainer =
     (config?: AxiosRequestConfig) =>
-    async (id: string): Promise<AxiosResponse> => {
+    async (id: string): Promise<AxiosResponse<IBackgroundTaskResponse>> => {
       return await apiHttp.post(`containers/start/${id}?restart=1`, null, config)
     }
 
   const pauseContainer =
     (config?: AxiosRequestConfig) =>
-    async (id: string): Promise<AxiosResponse> => {
+    async (id: string): Promise<AxiosResponse<IBackgroundTaskResponse>> => {
       return await apiHttp.post(`containers/pause/${id}`, null, config)
     }
 
   const stopContainer =
     (config?: AxiosRequestConfig) =>
-    async (id: string): Promise<AxiosResponse> => {
+    async (id: string): Promise<AxiosResponse<IBackgroundTaskResponse>> => {
       return await apiHttp.post(`containers/stop/${id}`, null, config)
     }
 
   const removeContainer =
     (config?: AxiosRequestConfig) =>
-    async (id: string): Promise<AxiosResponse> => {
+    async (id: string): Promise<AxiosResponse<IBackgroundTaskResponse>> => {
       return await apiHttp.post(`containers/remove/${id}`, null, config)
     }
 
   const runContainer =
     (config?: AxiosRequestConfig) =>
-    async (runData: any): Promise<AxiosResponse> => {
+    async (runData: any): Promise<AxiosResponse<IBackgroundTaskResponse>> => {
       return await apiHttp.post(`containers/run`, runData, config)
     }
 
   const launchPortainerTemplate =
     (config?: AxiosRequestConfig) =>
-    async (template: any): Promise<AxiosResponse> => {
+    async (template: any): Promise<AxiosResponse<IBackgroundTaskResponse>> => {
       return await apiHttp.post(`portainer/templates/launch`, template, config)
     }
 
@@ -201,8 +201,15 @@ const api = (baseUrl: string, authToken?: string) => {
 
   const submitTask =
     (config?: AxiosRequestConfig) =>
-    async (task: any): Promise<any> => {
+    async (task: any): Promise<AxiosResponse<IBackgroundTaskResponse>> => {
       const response = await apiHttp.post(`tasks`, task, config)
+      return response.data
+    }
+
+  const getTaskStatus =
+    (config?: AxiosRequestConfig) =>
+    async (taskId: string): Promise<AxiosResponse<IBackgroundTaskResponse>> => {
+      const response = await apiHttp.get(`tasks/${taskId}`, config)
       return response.data
     }
 
@@ -233,6 +240,8 @@ const api = (baseUrl: string, authToken?: string) => {
     getEngineDf,
     getEnginePing,
     getEngineEvents,
+    submitTask,
+    getTaskStatus,
   }
 }
 

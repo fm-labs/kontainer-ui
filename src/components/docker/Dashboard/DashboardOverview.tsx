@@ -9,6 +9,8 @@ import ContainerFormatters from '../Containers/ContainerFormatters.tsx'
 import ContainerStatusChip from '../Containers/ContainerStatusChip.tsx'
 import ContainerStatusText from '../Containers/ContainerStatusText.tsx'
 import ContainerIconControls from '../Containers/ContainerIconControls.tsx'
+import ProgressButton from '../../../elements/ProgressButton/ProgressButton.tsx'
+import ProgressFabButton from '../../../elements/ProgressButton/ProgressFabButton.tsx'
 
 const DashboardOverview = ({ data }) => {
   const [onlyActive, setOnlyActive] = React.useState(true)
@@ -233,6 +235,12 @@ const DashboardOverview = ({ data }) => {
             label='Show only active resources'
           />
         </FormGroup>
+
+        <ProgressButton>Refresh</ProgressButton>
+        <ProgressFabButton></ProgressFabButton>
+        <ProgressFabButton size={'large'}></ProgressFabButton>
+        <ProgressFabButton size={'medium'}></ProgressFabButton>
+        <ProgressFabButton size={'small'}></ProgressFabButton>
       </div>
       <h5>
         <AppIcons.ContainerIcon /> Containers ({containersData.length}/{data?.Containers?.length})

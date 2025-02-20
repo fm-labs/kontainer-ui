@@ -8,7 +8,7 @@ export const useContainer = () => {
 
   const handleContainerStartClick = (id: string) => () => {
     console.log('Starting container', id)
-    toast
+    return toast
       .promise(api.startContainer()(id), {
         pending: 'Starting container',
         success: 'Container started',
@@ -19,7 +19,7 @@ export const useContainer = () => {
 
   const handleContainerPauseClick = (id: string) => () => {
     console.log('Pause container', id)
-    toast
+    return toast
       .promise(api.pauseContainer()(id), {
         pending: 'Pausing container',
         success: 'Container paused',
@@ -30,7 +30,7 @@ export const useContainer = () => {
 
   const handleContainerStopClick = (id: string) => () => {
     console.log('Stopping container', id)
-    toast
+    return toast
       .promise(api.stopContainer()(id), {
         pending: 'Stopping container',
         success: 'Container stopped',
@@ -41,7 +41,7 @@ export const useContainer = () => {
 
   const handleContainerRemoveClick = (id: string) => () => {
     console.log('Removing container', id)
-    toast
+    return toast
       .promise(api.removeContainer()(id), {
         pending: 'Removing container',
         success: 'Container removed',
@@ -52,7 +52,7 @@ export const useContainer = () => {
 
   const handleStackStartClick = (id: string) => () => {
     console.log('Starting stack', id)
-    toast
+    return toast
       .promise(api.startStack()(id), {
         pending: 'Starting stack',
         success: 'Stack started',
@@ -63,7 +63,7 @@ export const useContainer = () => {
 
   const handleStackStopClick = (id: string) => () => {
     console.log('Stopping stack', id)
-    toast
+    return toast
       .promise(api.stopStack()(id), {
         pending: 'Stopping stack',
         success: 'Stack stopped',
@@ -74,7 +74,7 @@ export const useContainer = () => {
 
   const handleStackDeleteClick = (id: string) => () => {
     console.log('Deleting stack', id)
-    toast
+    return toast
       .promise(api.removeStack()(id), {
         pending: 'Deleting stack',
         success: 'Stack deleted',

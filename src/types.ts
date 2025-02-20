@@ -29,3 +29,10 @@ export interface IDockerNetwork {
 export interface IDockerResourceAttrs {
   [key: string]: any
 }
+
+export interface IBackgroundTaskResponse<T = any> {
+  taskId: string
+  ref?: string
+  status?: string
+  result?: T
+}

@@ -2,12 +2,16 @@ import React from 'react'
 import IconButton, { IconButtonProps } from '@mui/material/IconButton'
 import { useContainer } from './useContainer.ts'
 import AppIcons from '../../../elements/AppIcons.tsx'
+import TaskIconButton from '../../tasks/TaskIconButton.tsx'
+import { IBackgroundTaskResponse } from '../../../types.ts'
+import { AxiosResponse } from 'axios'
+import TaskFabButton from '../../tasks/TaskFabButton.tsx'
 
 type IconControlProps = {
   label: string
   icon: React.FC
   hidden?: boolean
-  onClick?: (containerId: string) => () => void
+  onClick?: (containerId: string) => () => Promise<void | AxiosResponse<IBackgroundTaskResponse>>
 }
 
 interface ContainerIconControlsProps {
@@ -19,12 +23,12 @@ interface ContainerIconControlsProps {
   showRemove?: boolean
   showLogs?: boolean
   showExec?: boolean
-  onStartClick?: (containerId: string) => () => void
-  onPauseClick?: (containerId: string) => () => void
-  onStopClick?: (containerId: string) => () => void
-  onRemoveClick?: (containerId: string) => () => void
-  onLogsClick?: (containerId: string) => () => void
-  onExecClick?: (containerId: string) => () => void
+  // onStartClick?: (containerId: string) => () => void
+  // onPauseClick?: (containerId: string) => () => void
+  // onStopClick?: (containerId: string) => () => void
+  // onRemoveClick?: (containerId: string) => () => void
+  // onLogsClick?: (containerId: string) => () => void
+  // onExecClick?: (containerId: string) => () => void
   buttonProps?: IconButtonProps
 }
 
@@ -46,28 +50,28 @@ const ContainerIconControls = ({ containerId, containerStatus, ...props }: Conta
       _controls.push({
         label: 'Start',
         icon: AppIcons.ContainerStartIcon,
-        onClick: props.onStartClick || handleContainerStartClick,
+        onClick: handleContainerStartClick,
       })
     }
     if (containerStatus === 'running' && props.showPause !== false) {
       _controls.push({
         label: 'Pause',
         icon: AppIcons.ContainerPauseIcon,
-        onClick: props.onPauseClick || handleContainerPauseClick,
+        onClick: handleContainerPauseClick,
       })
     }
     if (containerStatus === 'running' && props.showStop !== false) {
       _controls.push({
         label: 'Stop',
         icon: AppIcons.ContainerStopIcon,
-        onClick: props.onStopClick || handleContainerStopClick,
+        onClick: handleContainerStopClick,
       })
     }
     if (props.showRemove !== false) {
       _controls.push({
         label: 'Delete',
         icon: AppIcons.ContainerDeleteIcon,
-        onClick: props.onRemoveClick || handleContainerRemoveClick,
+        onClick: handleContainerRemoveClick,
       })
     }
 
@@ -77,16 +81,43 @@ const ContainerIconControls = ({ containerId, containerStatus, ...props }: Conta
   return (
     <span>
       {controls.map((control, idx) => {
-        const onClick = control?.onClick
-          ? control.onClick(containerId)
-          : () => {
-              console.log('No onClick handler for', control.label)
-            }
+        if (!control?.onClick) {
+          return null
+        }
+
+        const promise = control.onClick(containerId)
+        // return (
+        //   <IconButton key={idx} {...iconButtonProps} title={control.label} onClick={onClick}>
+        //     <control.icon />
+        //   </IconButton>
+        // )
         return (
-          <IconButton key={idx} {...iconButtonProps} title={control.label} onClick={onClick}>
+          <TaskIconButton
+            key={idx}
+            {...iconButtonProps}
+            title={control.label}
+            promise={promise}
+            onSuccess={() => {
+              console.log('Task completed')
+            }}
+          >
             <control.icon />
-          </IconButton>
+          </TaskIconButton>
         )
+        // return (
+        //   <TaskFabButton
+        //     {...iconButtonProps}
+        //     key={idx}
+        //     size={'small'}
+        //     title={control.label}
+        //     icon={<control.icon />}
+        //     promise={promise}
+        //     onSuccess={() => {
+        //       console.log('Task completed')
+        //     }}
+        //     loading={false}
+        //   ></TaskFabButton>
+        //)
       })}
 
       {/*<IconButton {...iconButtonProps} title={'Start'} onClick={handleContainerStartClick(containerId)}>
