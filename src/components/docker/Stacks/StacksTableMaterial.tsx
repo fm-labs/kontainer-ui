@@ -20,7 +20,7 @@ const StacksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
     console.log('Starting stack', id)
     api
       .startStack()(id)
-      .then((response) => toast.info(response?.data))
+      //.then((response) => toast.info(response?.data))
       .catch(defaultErrorHandler)
   }
 
@@ -28,7 +28,7 @@ const StacksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
     console.log('Stopping stack', id)
     api
       .stopStack()(id)
-      .then((response) => toast.info(response?.data))
+      //.then((response) => toast.info(response?.data))
       .catch(defaultErrorHandler)
   }
 

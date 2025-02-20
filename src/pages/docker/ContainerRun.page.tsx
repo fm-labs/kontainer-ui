@@ -24,7 +24,7 @@ const ContainerRunPage = () => {
         //     <Link to={`/containers/${data.Id}`}>View container</Link>
         //   </>,
         // )
-        toast.info(<a href={`/container/${data.Id}`}>View container {data?.Id.substring(0, 12)}</a>)
+        //toast.info(<a href={`/container/${data.Id}`}>View container {data?.Id.substring(0, 12)}</a>)
       })
       .catch((error) => {
         console.error('error running container', error)
