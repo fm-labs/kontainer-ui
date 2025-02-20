@@ -24,6 +24,7 @@ import appRepo from './lib/repo.ts'
 import { restoreEnvsFromLocalStorage } from './helper/useEnvironments.ts'
 import { loadAppStore } from './lib/appStore.ts'
 import { DEFAULT_ENVIRONMENTS, MASTER_AGENT_PORT } from './constants.ts'
+import StackTemplatesPage from './pages/templates/StackTemplates.page.tsx'
 
 const getEnvApiFromLoaderArgs = (args: LoaderFunctionArgs) => {
   //const { envs } = useEnvironments()
@@ -94,6 +95,20 @@ const routes: RouteObject[] = [
                 element: <DashboardPage />,
                 // loader: async (args) => {
                 //   return null
+                // },
+              },
+              {
+                path: 'templates',
+                element: <StackTemplatesPage />,
+                // loader: async ({ params }) => {
+                //   return getHostApiFromLoaderArgs(args).getProject()(params.id!)
+                // },
+              },
+              {
+                path: 'templates/portainer',
+                element: <PortainerTemplatesPage />,
+                // loader: async ({ params }) => {
+                //   return getHostApiFromLoaderArgs(args).getProject()(params.id!)
                 // },
               },
               {
@@ -172,13 +187,6 @@ const routes: RouteObject[] = [
                       }
                       return getEnvApiFromLoaderArgs(args).getStack()(args.params.id)
                     },
-                  },
-                  {
-                    path: 'templates/portainer',
-                    element: <PortainerTemplatesPage />,
-                    // loader: async ({ params }) => {
-                    //   return getHostApiFromLoaderArgs(args).getProject()(params.id!)
-                    // },
                   },
                   {
                     path: 'run',

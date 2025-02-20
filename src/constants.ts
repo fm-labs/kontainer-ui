@@ -19,6 +19,17 @@ export const DEFAULT_ENVIRONMENTS = [
   },
 ]
 
+export const STACK_TEMPLATE_URLS = [
+  {
+    label: 'Custom templates',
+    url: '/stack-templates.json',
+  },
+  {
+    label: 'Official templates (v0)',
+    url: 'https://raw.githubusercontent.com/fm-labs/kstack-templates/refs/heads/main/templates.json',
+  },
+]
+
 export const PORTAINER_TEMPLATE_URLS = [
   {
     label: 'Official Portainer Templates (v3)',

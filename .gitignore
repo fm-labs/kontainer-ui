@@ -3,6 +3,7 @@ bak/
 build/
 dist/
 public/schema/dev/
+public/stack-templates.json
 .env
 .env.local
 
