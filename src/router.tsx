@@ -176,9 +176,9 @@ const routes: RouteObject[] = [
                   {
                     path: 'templates',
                     element: <StackTemplatesPage />,
-                    // loader: async ({ params }) => {
-                    //   return getHostApiFromLoaderArgs(args).getProject()(params.id!)
-                    // },
+                    loader: async (args) => {
+                      return getEnvApiFromLoaderArgs(args).listTemplates()
+                    },
                   },
                   {
                     path: 'templates/portainer',

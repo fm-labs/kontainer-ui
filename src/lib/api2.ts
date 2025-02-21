@@ -152,11 +152,6 @@ const api = (baseUrl: string, authToken?: string) => {
     return response.data
   }
 
-  const launchPortainerTemplate = async (template: any): Promise<IBackgroundTaskResponse> => {
-    const response = await apiHttp.post(`portainer/templates/launch`, template)
-    return response.data
-  }
-
   const getSystemInfo = async (): Promise<any> => {
     const response = await apiHttp.get(`system/info`)
     return response.data
@@ -192,6 +187,21 @@ const api = (baseUrl: string, authToken?: string) => {
     return response.data
   }
 
+  const listTemplates = async (): Promise<any> => {
+    const response = await apiHttp.get(`templates`)
+    return response.data
+  }
+
+  const getTemplate = async (id: string): Promise<any> => {
+    const response = await apiHttp.get(`templates/${id}`)
+    return response.data
+  }
+
+  const launchPortainerTemplate = async (template: any): Promise<IBackgroundTaskResponse> => {
+    const response = await apiHttp.post(`portainer/templates/launch`, template)
+    return response.data
+  }
+
   return {
     getEnvironments,
     getStacks,
@@ -215,7 +225,6 @@ const api = (baseUrl: string, authToken?: string) => {
     getImages,
     getVolumes,
     getNetworks,
-    launchPortainerTemplate,
     getSystemInfo,
     getEngineInfo,
     getEngineDf,
@@ -223,6 +232,9 @@ const api = (baseUrl: string, authToken?: string) => {
     getEngineEvents,
     submitTask,
     getTaskStatus,
+    listTemplates,
+    getTemplate,
+    launchPortainerTemplate,
   }
 }
 

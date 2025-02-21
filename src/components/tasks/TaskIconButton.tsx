@@ -2,6 +2,7 @@ import React from 'react'
 import IconButton, { IconButtonProps } from '@mui/material/IconButton'
 import CircularProgress from '@mui/material/CircularProgress'
 import { useEnvApi } from '../../helper/useEnvApi.ts'
+import { toast } from 'react-toastify'
 
 interface TaskIconButtonProps extends IconButtonProps {
   promise: () => Promise<any>
@@ -37,7 +38,7 @@ const TaskIconButton = ({ promise, onSuccess, onFailure, children, ...iconButton
           setLoading(false)
 
           if (onSuccess) {
-            onSuccess(result)
+            onSuccess(statusData.result)
           }
         } else if (statusData.status?.toLowerCase() === 'failure') {
           console.error('Task failed', taskId, statusData)

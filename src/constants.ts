@@ -21,11 +21,7 @@ export const DEFAULT_ENVIRONMENTS = [
 
 export const STACK_TEMPLATE_URLS = [
   {
-    label: 'Custom templates',
-    url: '/stack-templates.json',
-  },
-  {
-    label: 'Official templates (v0)',
+    label: 'Official templates',
     url: 'https://raw.githubusercontent.com/fm-labs/kstack-templates/refs/heads/main/templates.json',
   },
 ]

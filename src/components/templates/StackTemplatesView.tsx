@@ -10,7 +10,7 @@ import AppIcons from '../../elements/AppIcons.tsx'
 import Button from '@mui/material/Button'
 
 interface StackTemplatesViewProps {
-  templateUrl: string
+  templates: any[]
 }
 
 // const StackTemplateInfoDialog = ({ template }: any) => {
@@ -61,29 +61,29 @@ const StackTemplateTypeChip = ({ type }: { type: string }) => {
   }
 }
 
-const StackTemplatesView = ({ templateUrl }: StackTemplatesViewProps) => {
-  const [templates, setTemplates] = React.useState<any>({})
-
-  const fetchTemplates = React.useCallback(async () => {
-    setTemplates({})
-    const response = await fetch(templateUrl)
-    const data = await response.json()
-    console.log('templates data', data)
-    setTemplates(data)
-  }, [templateUrl])
-
-  // const handleLaunchTemplate = (template: any) => {
-  //   console.log('launch template', template)
-  //   api.launchStackTemplate(template)
+const StackTemplatesView = ({ templates }: StackTemplatesViewProps) => {
+  // const [templates, setTemplates] = React.useState<any>({})
+  //
+  // const fetchTemplates = React.useCallback(async () => {
+  //   setTemplates({})
+  //   const response = await fetch(templateUrl)
+  //   const data = await response.json()
+  //   console.log('templates data', data)
+  //   setTemplates(data)
+  // }, [templateUrl])
+  //
+  // // const handleLaunchTemplate = (template: any) => {
+  // //   console.log('launch template', template)
+  // //   api.launchStackTemplate(template)
+  // // }
+  //
+  // React.useEffect(() => {
+  //   fetchTemplates()
+  // }, [templateUrl])
+  //
+  // if (!templates) {
+  //   return <div>Loading...</div>
   // }
-
-  React.useEffect(() => {
-    fetchTemplates()
-  }, [templateUrl])
-
-  if (!templates) {
-    return <div>Loading...</div>
-  }
 
   // return (
   //   <div>
@@ -100,13 +100,7 @@ const StackTemplatesView = ({ templateUrl }: StackTemplatesViewProps) => {
 
   return (
     <div>
-      <p>
-        URL: {templateUrl}
-        <br />
-        Version: {templates?.version}
-        <br />
-        Found templates: {templates?.length}
-      </p>
+      <p>Found templates: {templates?.length}</p>
       <Grid container spacing={2}>
         {templates?.length > 0 &&
           templates?.map((template: any, idx: number) => (

@@ -53,7 +53,7 @@ export const useStackHelper = () => {
   const handleStackSyncClick = (id: string) => () => {
     console.log('Syncing stack', id)
     return toast
-      .promise(api.deleteStack(id), {
+      .promise(api.syncStack(id), {
         pending: 'Syncing stack',
         success: 'Stack synced',
         error: 'Failed to sync stack',

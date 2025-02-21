@@ -4,6 +4,7 @@ import { useStackHelper } from './useStackHelper.ts'
 import AppIcons from '../../../elements/AppIcons.tsx'
 import TaskIconButton from '../../tasks/TaskIconButton.tsx'
 import { IBackgroundTaskResponse } from '../../../types.ts'
+import { toast } from 'react-toastify'
 
 type IconControlProps = {
   label: string
@@ -89,8 +90,13 @@ const StackIconControls = ({ stackId, stackStatus, ...props }: StackIconControls
             {...iconButtonProps}
             title={control.label}
             promise={taskPromise}
-            onSuccess={() => {
-              console.log('Task completed')
+            onSuccess={(result) => {
+              console.log('Task completed', result)
+              toast.success(result || 'Task completed')
+            }}
+            onFailure={(error) => {
+              console.error('Task failed', error)
+              toast.error(error?.message || 'Task failed')
             }}
           >
             <control.icon />
