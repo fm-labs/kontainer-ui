@@ -9,6 +9,7 @@ import {
   HiStop,
   HiTrash,
   HiMap,
+  HiArrowPath,
 } from 'react-icons/hi2'
 import { FaDocker, FaGauge, FaLayerGroup, FaNetworkWired, FaTag, FaTags } from 'react-icons/fa6'
 import { FaHistory, FaHome, FaTimes, FaSyncAlt } from 'react-icons/fa'
@@ -51,7 +52,7 @@ const AppIcons = {
   PauseIcon: HiPause,
   StopIcon: HiStop,
   DeleteIcon: HiTrash,
-  SyncIcon: FaSyncAlt,
+  SyncIcon: HiArrowPath,
 
   // Misc
   BugIcon: BugReportIcon,

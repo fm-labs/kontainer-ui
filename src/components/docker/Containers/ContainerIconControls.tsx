@@ -34,7 +34,7 @@ const ContainerIconControls = ({ containerId, containerStatus, ...props }: Conta
   const { handleContainerStartClick, handleContainerPauseClick, handleContainerStopClick, handleContainerRemoveClick } =
     useContainerHelper()
 
-  const iconButtonProps: IconButtonProps = { size: 'small', ...props.buttonProps }
+  const iconButtonProps: IconButtonProps = { size: 'small', sx: { p: '0.1em' }, ...props.buttonProps }
 
   const controls = React.useMemo(() => {
     const _controls: IconControlProps[] = []

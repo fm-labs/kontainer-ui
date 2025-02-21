@@ -50,10 +50,22 @@ export const useStackHelper = () => {
       .catch(defaultErrorHandler)
   }
 
+  const handleStackSyncClick = (id: string) => () => {
+    console.log('Syncing stack', id)
+    return toast
+      .promise(api.deleteStack(id), {
+        pending: 'Syncing stack',
+        success: 'Stack synced',
+        error: 'Failed to sync stack',
+      })
+      .catch(defaultErrorHandler)
+  }
+
   return {
     handleStackStartClick,
     handleStackStopClick,
     handleStackDeleteClick,
     handleStackDestroyClick,
+    handleStackSyncClick,
   }
 }

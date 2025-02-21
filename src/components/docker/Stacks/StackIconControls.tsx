@@ -14,31 +14,44 @@ type IconControlProps = {
 
 interface StackIconControlsProps {
   stackId: string
-  stackStatus: string
+  stackStatus?: string
   showStart?: boolean
   showStop?: boolean
   showDelete?: boolean
   showDestroy?: boolean
   showLogs?: boolean
+  showSync?: boolean
   buttonProps?: IconButtonProps
 }
 
 const StackIconControls = ({ stackId, stackStatus, ...props }: StackIconControlsProps) => {
-  const { handleStackStartClick, handleStackStopClick, handleStackDeleteClick, handleStackDestroyClick } =
-    useStackHelper()
+  const {
+    handleStackStartClick,
+    handleStackStopClick,
+    handleStackDeleteClick,
+    handleStackDestroyClick,
+    handleStackSyncClick,
+  } = useStackHelper()
 
-  const iconButtonProps: IconButtonProps = { size: 'small', ...props.buttonProps }
+  const iconButtonProps: IconButtonProps = { size: 'small', sx: { p: '0.1em' }, ...props.buttonProps }
 
   const controls = React.useMemo(() => {
     const _controls: IconControlProps[] = []
-    if (stackStatus !== 'running' && props.showStart !== false) {
+    if (props.showSync !== false) {
+      _controls.push({
+        label: 'Sync',
+        icon: AppIcons.SyncIcon,
+        onClick: handleStackSyncClick,
+      })
+    }
+    if (props.showStart !== false) {
       _controls.push({
         label: 'Start',
         icon: AppIcons.StartIcon,
         onClick: handleStackStartClick,
       })
     }
-    if (stackStatus === 'running' && props.showStop !== false) {
+    if (props.showStop !== false) {
       _controls.push({
         label: 'Stop',
         icon: AppIcons.StopIcon,

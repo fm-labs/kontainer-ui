@@ -2,19 +2,16 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import moment from 'moment/moment'
 import Table from '@mui/material/Table'
-import IconButton from '@mui/material/IconButton'
 import { TableCell, TableRow } from '@mui/material'
-import { HiOutlinePlay, HiStop, HiTrash } from 'react-icons/hi2'
 import { IDockerResourceAttrs } from '../../../types.ts'
 import ContainerPorts from './ContainerPorts.tsx'
 import ContainerState from './ContainerState.tsx'
 import ContainerIconControls from './ContainerIconControls.tsx'
 import ContainerId from './ContainerId.tsx'
 import { useEnvRoute } from '../../../helper/useEnvRoute.ts'
-import { useStackHelper } from '../Stacks/useStackHelper.ts'
+import StackIconControls from '../Stacks/StackIconControls.tsx'
 
 const ContainersTableGrouped = ({ data }: { data: IDockerResourceAttrs[] }) => {
-  const { handleStackStartClick, handleStackStopClick, handleStackDeleteClick } = useStackHelper()
   const { buildEnvUrl } = useEnvRoute()
 
   const groupedData = React.useMemo(() => {
@@ -66,19 +63,7 @@ const ContainersTableGrouped = ({ data }: { data: IDockerResourceAttrs[] }) => {
                   <TableCell>{`${running}/${rows.length} running`}</TableCell>
                   <TableCell>-</TableCell>
                   <TableCell style={{ textAlign: 'right' }}>
-                    {running === 0 && (
-                      <IconButton size={'small'} title={'Start'} onClick={handleStackStartClick(composeProject)}>
-                        <HiOutlinePlay />
-                      </IconButton>
-                    )}
-                    {running > 0 && (
-                      <IconButton size={'small'} title={'Stop'} onClick={handleStackStopClick(composeProject)}>
-                        <HiStop />
-                      </IconButton>
-                    )}
-                    <IconButton size={'small'} title={'Delete'} onClick={handleStackDeleteClick(composeProject)}>
-                      <HiTrash />
-                    </IconButton>
+                    <StackIconControls stackId={composeProject} />
                   </TableCell>
                 </TableRow>
               )}
@@ -114,26 +99,6 @@ const ContainersTableGrouped = ({ data }: { data: IDockerResourceAttrs[] }) => {
                       <ContainerState state={row?.State} />
                     </TableCell>
                     <TableCell>{row?.State?.StartedAt && moment(row?.State?.StartedAt).fromNow()}</TableCell>
-                    {/*<TableCell style={{ textAlign: 'right' }}>
-                      {row?.State?.Status !== 'running' && (
-                        <IconButton size={'small'} title={'Start'} onClick={handleContainerStartClick(row.Id)}>
-                          <HiOutlinePlay />
-                        </IconButton>
-                      )}
-                      {row?.State?.Status === 'running' && (
-                        <IconButton size={'small'} title={'Pause'} onClick={handleContainerPauseClick(row.Id)}>
-                          <HiPause />
-                        </IconButton>
-                      )}
-                      {row?.State?.Status === 'running' && (
-                        <IconButton size={'small'} title={'Stop'} onClick={handleContainerStopClick(row.Id)}>
-                          <HiStop />
-                        </IconButton>
-                      )}
-                      <IconButton size={'small'} title={'Delete'} onClick={handleContainerRemoveClick(row.Id)}>
-                        <HiTrash />
-                      </IconButton>
-                    </TableCell>*/}
                     <TableCell style={{ textAlign: 'right' }}>
                       <ContainerIconControls containerId={row.Id} containerStatus={row?.State?.Status} />
                     </TableCell>

@@ -67,15 +67,6 @@ const StacksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
           )
         },
       },
-      // {
-      //   accessorKey: 'running',
-      //   header: 'Running',
-      //   Cell: ({ cell }) => {
-      //     const running = cell.getValue<boolean>()
-      //     //return <div>{running ? 'Yes' : 'No'}</div>
-      //     return <div>?</div>
-      //   },
-      // },
       {
         accessorKey: 'managed',
         header: 'Managed',
@@ -85,13 +76,35 @@ const StacksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
         },
       },
       {
+        accessorKey: 'status',
+        header: 'Status',
+        // Cell: ({ cell }) => {
+        //   const running = cell.getValue<boolean>()
+        //   return <div>{running ? 'Yes' : 'No'}</div>
+        // },
+      },
+      {
+        accessorKey: 'containers',
+        header: 'Containers',
+        Cell: ({ cell }) => {
+          const containers = cell.getValue<any[]>()
+          if (!containers) {
+            return <div>0/0</div>
+          }
+
+          const running = containers.filter((c) => c?.State?.Status === 'running').length
+          const total = containers.length
+          return <div>{running + '/' + total}</div>
+        },
+      },
+      {
         id: 'Actions',
         header: 'Actions',
         //sx: { textAlign: 'right' },
         Cell: ({ cell }) => {
           const row = cell.row.original
           const stackName = row.name
-          const stackStatus = row.running ? 'running' : 'stopped'
+          const stackStatus = row.status
           return <StackIconControls stackId={stackName} stackStatus={stackStatus} />
           // return (
           //   <div style={{ textAlign: 'right' }}>
