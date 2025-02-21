@@ -23,7 +23,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
 
-    - name: Checkout repo with submodules
+    - name: Checkout repo
       uses: actions/checkout@v4
 
 
