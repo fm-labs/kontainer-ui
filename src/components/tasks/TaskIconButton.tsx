@@ -1,6 +1,7 @@
 import React from 'react'
 import IconButton, { IconButtonProps } from '@mui/material/IconButton'
 import CircularProgress from '@mui/material/CircularProgress'
+import { useEnvApi } from '../../helper/useEnvApi.ts'
 
 interface TaskIconButtonProps extends IconButtonProps {
   promise: () => Promise<any>
@@ -10,57 +11,88 @@ interface TaskIconButtonProps extends IconButtonProps {
 
 const TaskIconButton = ({ promise, onSuccess, onFailure, children, ...iconButtonProps }: TaskIconButtonProps) => {
   const [loading, setLoading] = React.useState(false)
-  const [loaded, setLoaded] = React.useState(false)
-  const [error, setError] = React.useState<Error | null>(null)
   const [result, setResult] = React.useState<any | null>(null)
+  const [taskId, setTaskId] = React.useState<string | null>(null)
+
+  const api = useEnvApi()
 
   const handleClick = () => {
     setLoading(true)
-
-    setTimeout(executePromise, 1000)
+    setTimeout(submitTask, 500)
   }
 
-  const executePromise = React.useCallback(() => {
+  const fetchTaskStatus = React.useCallback(() => {
+    if (!taskId) {
+      return
+    }
+    console.log('Fetching task status', taskId)
+    api
+      .getTaskStatus(taskId)
+      .then((statusData) => {
+        console.log('Task status', taskId, statusData)
+        if (statusData.status?.toLowerCase() === 'success') {
+          console.log('Task done', taskId)
+          setTaskId(null)
+          setResult(statusData.result)
+          setLoading(false)
+
+          if (onSuccess) {
+            onSuccess(result)
+          }
+        } else if (statusData.status?.toLowerCase() === 'failure') {
+          console.error('Task failed', taskId, statusData)
+          const error = new Error(statusData?.error)
+          setTaskId(null)
+          setResult(error)
+          setLoading(false)
+
+          if (onFailure) {
+            onFailure(error)
+          }
+        }
+      })
+      .catch((err) => {
+        console.error('Task status error', taskId)
+      })
+  }, [taskId])
+
+  React.useEffect(() => {
+    if (!taskId) {
+      return
+    }
+
+    console.log('Monitoring task', taskId)
+    const timer = setInterval(fetchTaskStatus, 5000)
+
+    return () => {
+      console.log('Cleaning up task monitor', taskId)
+      clearInterval(timer)
+    }
+  }, [taskId])
+
+  const submitTask = React.useCallback(() => {
     setLoading(true)
-    setLoaded(false)
-    setError(null)
     setResult(null)
 
     promise()
       .then((result) => {
-        if (onSuccess) {
-          onSuccess(result)
+        console.log('Task submitted', result)
+        const taskId = result?.task_id
+        if (!taskId) {
+          throw new Error('Task ID not found')
         }
-        setResult(result)
-        setLoaded(true)
+        setTaskId(taskId)
+        //console.log('Task ID', taskId)
         return result
       })
       .catch((error) => {
         if (onFailure) {
           onFailure(error)
         }
-        setError(error)
-        setResult(null)
+        setResult(error)
       })
-      .finally(() => {
-        setLoading(false)
-      })
+      .finally(() => {})
   }, [promise, onSuccess, onFailure])
-
-  React.useEffect(() => {
-    if (loading) {
-      return
-    }
-    if (loaded) {
-      return
-    }
-  }, [loading, loaded])
-
-  // return (
-  //   <Button onClick={handleClick} {...buttonProps}>
-  //     {buttonProps.children} {loading ? 'Loading ...' : ''} {loaded ? 'Loaded!' : ''}
-  //   </Button>
-  // )
 
   return (
     <IconButton {...iconButtonProps} onClick={handleClick}>

@@ -25,11 +25,9 @@ const DashboardEngineInfoWidget = () => {
   }, [engineInfo])
 
   const fetchEngineInfo = React.useCallback(() => {
-    api
-      .getEngineInfo()()
-      .then((data) => {
-        setEngineInfo(data)
-      })
+    api.getEngineInfo().then((data) => {
+      setEngineInfo(data)
+    })
   }, [])
 
   const autoload = useAutoreload(fetchEngineInfo)

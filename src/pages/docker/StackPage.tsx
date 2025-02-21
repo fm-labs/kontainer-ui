@@ -24,12 +24,10 @@ const StackPage = () => {
     console.log('ProjectPage mounted')
     const timer = setInterval(() => {
       console.log('Refreshing projects')
-      api
-        .getStack()(data.name)
-        .then((data) => {
-          console.log('Project refreshed', data)
-          setData(data)
-        })
+      api.getStack(data.name).then((data) => {
+        console.log('Project refreshed', data)
+        setData(data)
+      })
     }, 10000)
     return () => {
       console.log('ProjectPage unmounted')
@@ -42,13 +40,13 @@ const StackPage = () => {
       <h1>Project {data.name}</h1>
       {/*<ProjectCreateModal />*/}
       <Button size={'small'} onClick={handleProjectStartClick(data.name)}>
-        <AppIcons.ContainerStartIcon /> Start
+        <AppIcons.StartIcon /> Start
       </Button>
       <Button size={'small'} onClick={handleProjectStopClick(data.name)}>
-        <AppIcons.ContainerStopIcon /> Stop
+        <AppIcons.StopIcon /> Stop
       </Button>
       <Button size={'small'} color={'error'}>
-        <AppIcons.ContainerDeleteIcon /> Remove
+        <AppIcons.DeleteIcon /> Remove
       </Button>
       <hr />
       <h3>Active Containers</h3>

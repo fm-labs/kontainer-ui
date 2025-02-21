@@ -14,9 +14,8 @@ const ContainerRunPage = () => {
     console.log('Run', data)
 
     api
-      .runContainer()(data)
-      .then((response) => {
-        const data = response.data
+      .runContainer(data)
+      .then((data) => {
         console.log('Container run', data)
         toast.success('Container run')
         // toast.info(

@@ -17,7 +17,7 @@ const EventsPage = () => {
   const fetchEvents = React.useCallback(async () => {
     //console.log('fetching events')
     return await api
-      .getEngineEvents()({ since: lastEventTime })
+      .getEngineEvents({ since: lastEventTime })
       .then((_newEvents) => {
         if (_newEvents.length === 0) return
         // sort new Events by 'time' field

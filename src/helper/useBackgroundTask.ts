@@ -3,14 +3,14 @@ import { IBackgroundTaskResponse } from '../types.ts'
 
 const useBackgroundTask = async (task: () => Promise<IBackgroundTaskResponse>) => {
   const submissionResponse = await task()
-  const taskId = submissionResponse.taskId
+  const taskId = submissionResponse.task_id
   if (!taskId) {
     return Promise.reject('Task submission failed')
   }
 
   const api = useEnvApi()
   return async () => {
-    return await api.getTaskStatus()(taskId)
+    return await api.getTaskStatus(taskId)
   }
 }
 

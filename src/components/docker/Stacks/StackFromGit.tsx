@@ -25,7 +25,7 @@ const StackFromGit = () => {
     const payload = JSON.stringify(Object.fromEntries(formData))
     console.log(formData, payload)
     api
-      .createStack()(payload)
+      .createStack(payload)
       .then((response) => {
         console.log(response)
         toast.success('Stack successfully created')

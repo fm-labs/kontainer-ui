@@ -8,9 +8,10 @@ import {
   HiPause,
   HiStop,
   HiTrash,
+  HiMap,
 } from 'react-icons/hi2'
 import { FaDocker, FaGauge, FaLayerGroup, FaNetworkWired, FaTag, FaTags } from 'react-icons/fa6'
-import { FaHistory, FaHome } from 'react-icons/fa'
+import { FaHistory, FaHome, FaTimes, FaSyncAlt } from 'react-icons/fa'
 
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import GitHubIcon from '@mui/icons-material/GitHub'
@@ -24,13 +25,11 @@ const AppIcons = {
 
   // Container
   ContainerIcon: HiOutlineCube,
-  ContainerStartIcon: HiOutlinePlay,
-  ContainerPauseIcon: HiPause,
-  ContainerStopIcon: HiStop,
-  ContainerDeleteIcon: HiTrash,
 
   // Stack
   StackIcon: FaLayerGroup,
+  StackUpIcon: HiOutlinePlay,
+  StackDownIcon: FaTimes,
 
   // Image
   ImageIcon: HiOutlineCubeTransparent,
@@ -43,6 +42,16 @@ const AppIcons = {
 
   // Event
   EventIcon: FaHistory,
+
+  // Template
+  TemplateIcon: HiMap,
+
+  // Actions
+  StartIcon: HiOutlinePlay,
+  PauseIcon: HiPause,
+  StopIcon: HiStop,
+  DeleteIcon: HiTrash,
+  SyncIcon: FaSyncAlt,
 
   // Misc
   BugIcon: BugReportIcon,

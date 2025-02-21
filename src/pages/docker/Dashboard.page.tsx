@@ -16,12 +16,10 @@ const DashboardPage = () => {
 
   const fetchData = React.useCallback(() => {
     //console.log('Fetching Engine df data...')
-    api
-      .getEngineDf()()
-      .then((data) => {
-        //console.log('Engine df data loaded', data)
-        setData(data)
-      })
+    api.getEngineDf().then((data) => {
+      //console.log('Engine df data loaded', data)
+      setData(data)
+    })
   }, [])
 
   const autoloader = useAutoreload(fetchData)

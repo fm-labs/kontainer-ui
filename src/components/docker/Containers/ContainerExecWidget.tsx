@@ -17,11 +17,9 @@ const ContainerExecCommandWidget = ({ container }) => {
       return
     }
 
-    const p = api
-      .execContainerCommand()(container.Id, command)
-      .then((response) => {
-        setLogs(response.data)
-      })
+    const p = api.execContainerCommand(container.Id, command).then((response) => {
+      setLogs(response.data)
+    })
 
     await toast.promise(p, {
       pending: 'Executing command',

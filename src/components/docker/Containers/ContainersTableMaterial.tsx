@@ -29,37 +29,37 @@ const ContainersTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => 
 
   // const handleContainerStartClick = (id: string) => () => {
   //   console.log('Starting container', id)
-  //   api.startContainer()(id).catch(defaultErrorHandler)
+  //   api.startContainer(id).catch(defaultErrorHandler)
   // }
   //
   // const handleContainerPauseClick = (id: string) => () => {
   //   console.log('Pausing container', id)
-  //   api.pauseContainer()(id).catch(defaultErrorHandler)
+  //   api.pauseContainer(id).catch(defaultErrorHandler)
   // }
   //
   // const handleContainerStopClick = (id: string) => () => {
   //   console.log('Stopping container', id)
-  //   api.stopContainer()(id).catch(defaultErrorHandler)
+  //   api.stopContainer(id).catch(defaultErrorHandler)
   // }
   //
   // const handleContainerRemoveClick = (id: string) => () => {
   //   console.log('Removing container', id)
-  //   api.removeContainer()(id).catch(defaultErrorHandler)
+  //   api.removeContainer(id).catch(defaultErrorHandler)
   // }
 
   // const handleStackStartClick = (id: string) => () => {
   //   console.log('Starting project', id)
-  //   api.startStack()(id)
+  //   api.startStack(id)
   // }
   //
   // const handleStackStopClick = (id: string) => () => {
   //   console.log('Stopping project', id)
-  //   api.stopStack()(id)
+  //   api.stopStack(id)
   // }
   //
   // const handleStackRemoveClick = (id: string) => () => {
   //   console.log('Removing project', id)
-  //   api.removeStack()(id)
+  //   api.removeStack(id)
   // }
 
   // const handleContainerLogsClick = (id: string) => () => {

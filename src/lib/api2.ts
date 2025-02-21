@@ -42,176 +42,155 @@ const api = (baseUrl: string, authToken?: string) => {
     },
     (error) => {
       console.error('API ERROR', error)
+      if (error?.code === 'ECONNABORTED') {
+        console.error('ECONNABORTED')
+        return error
+      }
       return Promise.reject(error)
     },
   )
 
-  const getEnvironments = (config?: AxiosRequestConfig) => async (): Promise<IDockerContainer[]> => {
-    const response = await apiHttp.get(`environments`, config)
+  const getEnvironments = async (): Promise<IDockerContainer[]> => {
+    const response = await apiHttp.get(`environments`)
     return response.data
   }
 
-  const getStacks = (config?: AxiosRequestConfig) => async (): Promise<IDockerContainer[]> => {
-    const response = await apiHttp.get(`stacks`, config)
+  const getStacks = async (): Promise<IDockerContainer[]> => {
+    const response = await apiHttp.get(`stacks`)
     return response.data
   }
 
-  const createStack =
-    (config?: AxiosRequestConfig) =>
-    async (data: any): Promise<AxiosResponse> => {
-      return await apiHttp.post(`stacks/create`, data, config)
-    }
+  const createStack = async (data: any): Promise<IBackgroundTaskResponse[]> => {
+    const response = await apiHttp.post(`stacks/create`, data)
+    return response.data
+  }
 
-  const getStack =
-    (config?: AxiosRequestConfig) =>
-    async (id: string): Promise<IDockerContainer[]> => {
-      const response = await apiHttp.get(`stack/${id}`, config)
+  const getStack = async (id: string): Promise<IDockerContainer[]> => {
+    const response = await apiHttp.get(`stacks/${id}`)
+    return response.data
+  }
+
+  const _stackAction =
+    (stackId: string, action: string, config?: AxiosRequestConfig) => async (): Promise<IBackgroundTaskResponse> => {
+      const response = await apiHttp.post(`stacks/${stackId}/${action}?async=1`, null, config)
       return response.data
     }
 
-  const startStack =
-    (config?: AxiosRequestConfig) =>
-    async (id: string): Promise<AxiosResponse<IBackgroundTaskResponse>> => {
-      return await apiHttp.post(`stack/start/${id}`, null, config)
+  const startStack = (id: string) => _stackAction(id, 'start')()
+
+  const stopStack = (id: string) => _stackAction(id, 'stop')()
+
+  const deleteStack = (id: string) => _stackAction(id, 'delete')()
+
+  const destroyStack = (id: string) => _stackAction(id, 'destroy')()
+
+  const syncStack = (id: string) => _stackAction(id, 'sync')()
+
+  const getImages = async (): Promise<IDockerResourceAttrs[]> => {
+    const response = await apiHttp.get(`images`)
+    return response.data
+  }
+
+  const getVolumes = async (): Promise<IDockerResourceAttrs[]> => {
+    const response = await apiHttp.get(`volumes`)
+    return response.data
+  }
+
+  const getNetworks = async (): Promise<IDockerResourceAttrs[]> => {
+    const response = await apiHttp.get(`networks`)
+    return response.data
+  }
+
+  const getContainers = async (): Promise<IDockerResourceAttrs[]> => {
+    const response = await apiHttp.get(`containers`)
+    return response.data
+  }
+
+  const getContainer = async (id: string): Promise<IDockerContainer[]> => {
+    const response = await apiHttp.get(`containers/${id}`)
+    return response.data
+  }
+
+  const getContainerLogs = async (id: string): Promise<string[]> => {
+    const response = await apiHttp.get(`containers/${id}/logs`)
+    return response.data
+  }
+
+  const execContainerCommand = async (id: string, cmd: string | string[]): Promise<AxiosResponse> => {
+    const data = {
+      command: Array.isArray(cmd) ? cmd : cmd.split(' '), // split string into array
     }
-
-  const stopStack =
-    (config?: AxiosRequestConfig) =>
-    async (id: string): Promise<AxiosResponse<IBackgroundTaskResponse>> => {
-      return await apiHttp.post(`stack/stop/${id}`, null, config)
-    }
-
-  const removeStack =
-    (config?: AxiosRequestConfig) =>
-    async (id: string): Promise<AxiosResponse<IBackgroundTaskResponse>> => {
-      return await apiHttp.post(`stack/remove/${id}`, null, config)
-    }
-
-  const getImages = (config?: AxiosRequestConfig) => async (): Promise<IDockerResourceAttrs[]> => {
-    const response = await apiHttp.get(`images`, config)
-    return response.data
+    return apiHttp.post(`containers/${id}/exec`, data)
   }
 
-  const getVolumes = (config?: AxiosRequestConfig) => async (): Promise<IDockerResourceAttrs[]> => {
-    const response = await apiHttp.get(`volumes`, config)
-    return response.data
-  }
-
-  const getNetworks = (config?: AxiosRequestConfig) => async (): Promise<IDockerResourceAttrs[]> => {
-    const response = await apiHttp.get(`networks`, config)
-    return response.data
-  }
-
-  const getContainers = (config?: AxiosRequestConfig) => async (): Promise<IDockerResourceAttrs[]> => {
-    const response = await apiHttp.get(`containers`, config)
-    return response.data
-  }
-
-  const getContainer =
-    (config?: AxiosRequestConfig) =>
-    async (id: string): Promise<IDockerContainer[]> => {
-      const response = await apiHttp.get(`containers/${id}`, config)
+  const _containerActionSync =
+    (containerId: string, action: string, data: any, config?: AxiosRequestConfig) =>
+    async (): Promise<IBackgroundTaskResponse> => {
+      const response = await apiHttp.post(`containers/${containerId}/${action}`, data, config)
       return response.data
     }
 
-  const getContainerLogs =
-    (config?: AxiosRequestConfig) =>
-    async (id: string): Promise<string[]> => {
-      const response = await apiHttp.get(`containers/logs/${id}`, config)
+  const _containerActionAsync =
+    (containerId: string, action: string, data: any, config?: AxiosRequestConfig) =>
+    async (): Promise<IBackgroundTaskResponse> => {
+      const response = await apiHttp.post(`containers/${containerId}/${action}?async=1`, data, config)
       return response.data
     }
 
-  const execContainerCommand =
-    (config?: AxiosRequestConfig) =>
-    async (id: string, cmd: string | string[]): Promise<AxiosResponse> => {
-      const data = {
-        command: Array.isArray(cmd) ? cmd : cmd.split(' '), // split string into array
-      }
-      return await apiHttp.post(`containers/exec/${id}`, data, config)
-    }
+  const startContainer = (id: string) => _containerActionAsync(id, 'start', null)()
 
-  const startContainer =
-    (config?: AxiosRequestConfig) =>
-    async (id: string): Promise<AxiosResponse<IBackgroundTaskResponse<IDockerResourceAttrs>>> => {
-      return await apiHttp.post(`containers/start/${id}`, null, config)
-    }
+  const restartContainer = (id: string) => _containerActionAsync(id, 'restart', null)()
 
-  const restartContainer =
-    (config?: AxiosRequestConfig) =>
-    async (id: string): Promise<AxiosResponse<IBackgroundTaskResponse>> => {
-      return await apiHttp.post(`containers/start/${id}?restart=1`, null, config)
-    }
+  const pauseContainer = (id: string) => _containerActionAsync(id, 'pause', null)()
 
-  const pauseContainer =
-    (config?: AxiosRequestConfig) =>
-    async (id: string): Promise<AxiosResponse<IBackgroundTaskResponse>> => {
-      return await apiHttp.post(`containers/pause/${id}`, null, config)
-    }
+  const stopContainer = (id: string) => _containerActionAsync(id, 'stop', null)()
 
-  const stopContainer =
-    (config?: AxiosRequestConfig) =>
-    async (id: string): Promise<AxiosResponse<IBackgroundTaskResponse>> => {
-      return await apiHttp.post(`containers/stop/${id}`, null, config)
-    }
+  const removeContainer = (id: string) => _containerActionAsync(id, 'remove', null)()
 
-  const removeContainer =
-    (config?: AxiosRequestConfig) =>
-    async (id: string): Promise<AxiosResponse<IBackgroundTaskResponse>> => {
-      return await apiHttp.post(`containers/remove/${id}`, null, config)
-    }
-
-  const runContainer =
-    (config?: AxiosRequestConfig) =>
-    async (runData: any): Promise<AxiosResponse<IBackgroundTaskResponse>> => {
-      return await apiHttp.post(`containers/run`, runData, config)
-    }
-
-  const launchPortainerTemplate =
-    (config?: AxiosRequestConfig) =>
-    async (template: any): Promise<AxiosResponse<IBackgroundTaskResponse>> => {
-      return await apiHttp.post(`portainer/templates/launch`, template, config)
-    }
-
-  const getSystemInfo = (config?: AxiosRequestConfig) => async (): Promise<any> => {
-    const response = await apiHttp.get(`system/info`, config)
+  const runContainer = async (runData: any): Promise<IBackgroundTaskResponse> => {
+    const response = await apiHttp.post(`containers/run`, runData)
     return response.data
   }
 
-  const getEngineInfo = (config?: AxiosRequestConfig) => async (): Promise<any> => {
-    const response = await apiHttp.get(`engine/info`, config)
+  const launchPortainerTemplate = async (template: any): Promise<IBackgroundTaskResponse> => {
+    const response = await apiHttp.post(`portainer/templates/launch`, template)
     return response.data
   }
 
-  const getEngineDf = (config?: AxiosRequestConfig) => async (): Promise<any> => {
-    const response = await apiHttp.get(`engine/df`, config)
+  const getSystemInfo = async (): Promise<any> => {
+    const response = await apiHttp.get(`system/info`)
     return response.data
   }
 
-  const getEnginePing = (config?: AxiosRequestConfig) => async (): Promise<any> => {
-    const response = await apiHttp.get(`engine/ping`, config)
+  const getEngineInfo = async (): Promise<any> => {
+    const response = await apiHttp.get(`engine/info`)
     return response.data
   }
 
-  const getEngineEvents =
-    (config?: AxiosRequestConfig) =>
-    async (args: { since?: number }): Promise<any> => {
-      const response = await apiHttp.get(`engine/events?since=${args.since || ''}`, config)
-      return response.data
-    }
+  const getEngineDf = async (): Promise<any> => {
+    const response = await apiHttp.get(`engine/df`)
+    return response.data
+  }
 
-  const submitTask =
-    (config?: AxiosRequestConfig) =>
-    async (task: any): Promise<AxiosResponse<IBackgroundTaskResponse>> => {
-      const response = await apiHttp.post(`tasks`, task, config)
-      return response.data
-    }
+  const getEnginePing = async (): Promise<any> => {
+    const response = await apiHttp.get(`engine/ping`)
+    return response.data
+  }
 
-  const getTaskStatus =
-    (config?: AxiosRequestConfig) =>
-    async (taskId: string): Promise<AxiosResponse<IBackgroundTaskResponse>> => {
-      const response = await apiHttp.get(`tasks/${taskId}`, config)
-      return response.data
-    }
+  const getEngineEvents = async (args: { since?: number }): Promise<any> => {
+    const response = await apiHttp.get(`engine/events?since=${args.since || ''}`)
+    return response.data
+  }
+
+  const submitTask = async (task: any): Promise<IBackgroundTaskResponse> => {
+    const response = await apiHttp.post(`tasks`, task)
+    return response.data
+  }
+
+  const getTaskStatus = async (taskId: string): Promise<IBackgroundTaskResponse> => {
+    const response = await apiHttp.get(`tasks/${taskId}/status`)
+    return response.data
+  }
 
   return {
     getEnvironments,
@@ -220,7 +199,9 @@ const api = (baseUrl: string, authToken?: string) => {
     getStack,
     startStack,
     stopStack,
-    removeStack,
+    deleteStack,
+    destroyStack,
+    syncStack,
     getContainers,
     getContainer,
     getContainerLogs,

@@ -12,17 +12,17 @@ const ContainersTable = ({ data }) => {
 
   const handleContainerStartClick = (id: string) => () => {
     console.log('Starting container', id)
-    api.startContainer()(id)
+    api.startContainer(id)
   }
 
   const handleContainerStopClick = (id: string) => () => {
     console.log('Stopping container', id)
-    api.stopContainer()(id)
+    api.stopContainer(id)
   }
 
   const handleContainerRemoveClick = (id: string) => () => {
     console.log('Removing container', id)
-    api.removeContainer()(id)
+    api.removeContainer(id)
   }
 
   return (
@@ -50,16 +50,16 @@ const ContainersTable = ({ data }) => {
               <td>
                 {row?.State?.Status !== 'running' && (
                   <Button size={'small'} onClick={handleContainerStartClick(row.Id)}>
-                    <AppIcons.ContainerStartIcon />{' '}
+                    <AppIcons.StartIcon />{' '}
                   </Button>
                 )}
                 {row?.State?.Status === 'running' && (
                   <Button size={'small'} onClick={handleContainerStopClick(row.Id)}>
-                    <AppIcons.ContainerStopIcon />{' '}
+                    <AppIcons.StopIcon />{' '}
                   </Button>
                 )}
                 <Button size={'small'} onClick={handleContainerRemoveClick(row.Id)} color={'error'}>
-                  <AppIcons.ContainerDeleteIcon />{' '}
+                  <AppIcons.DeleteIcon />{' '}
                 </Button>
               </td>
             </tr>

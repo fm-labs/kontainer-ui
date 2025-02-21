@@ -52,16 +52,16 @@ export const navItemsDocker: INavigationItem[] = [
     label: 'Networks',
     to: '/networks',
   },
-  // {
-  //   key: 'run',
-  //   icon: <FaTerminal {...navIconProps} />,
-  //   label: 'Run',
-  //   to: '/run',
-  // },
   {
     key: 'events',
     icon: <AppIcons.EventIcon {...navIconProps} />,
     label: 'Events',
     to: '/events',
+  },
+  {
+    key: 'templates',
+    icon: <AppIcons.TemplateIcon {...navIconProps} />,
+    label: 'Templates',
+    to: '/templates',
   },
 ]

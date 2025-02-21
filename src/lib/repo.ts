@@ -11,7 +11,7 @@ const appRepo = (envId: string, apiClient) => {
   }
 
   const syncContainers = async () => {
-    const data = await apiClient.getContainers()()
+    const data = await apiClient.getContainers()
     const db = await appDb.openAppDb(envId)
     const tx = db.transaction('containers', 'readwrite')
     const store = tx.objectStore('containers')
@@ -30,7 +30,7 @@ const appRepo = (envId: string, apiClient) => {
   }
 
   const listContainers = async () => {
-    //const data = await apiClient.getContainers()()
+    //const data = await apiClient.getContainers()
     const db = await appDb.openAppDb(envId)
     const tx = db.transaction('containers', 'readonly')
     const store = tx.objectStore('containers')
@@ -40,7 +40,7 @@ const appRepo = (envId: string, apiClient) => {
   }
 
   const syncStacks = async () => {
-    const data = await apiClient.getStacks()()
+    const data = await apiClient.getStacks()
     const db = await appDb.openAppDb(envId)
     const tx = db.transaction('stacks', 'readwrite')
     const store = tx.objectStore('stacks')
@@ -59,7 +59,7 @@ const appRepo = (envId: string, apiClient) => {
   }
 
   const listStacks = async () => {
-    //const data = await apiClient.getStacks()()
+    //const data = await apiClient.getStacks()
     const db = await appDb.openAppDb(envId)
     const tx = db.transaction('stacks', 'readonly')
     const store = tx.objectStore('stacks')

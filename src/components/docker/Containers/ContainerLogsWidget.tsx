@@ -6,11 +6,9 @@ const ContainerLogsWidget = ({ container }) => {
   const api = useEnvApi()
 
   const fetchLogs = React.useCallback(async () => {
-    api
-      .getContainerLogs()(container.Id)
-      .then((data) => {
-        setLogs(data)
-      })
+    api.getContainerLogs(container.Id).then((data) => {
+      setLogs(data)
+    })
   }, [container])
 
   React.useEffect(() => {

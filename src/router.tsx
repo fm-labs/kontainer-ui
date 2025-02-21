@@ -3,7 +3,6 @@ import { createBrowserRouter, LoaderFunctionArgs, RouteObject } from 'react-rout
 import ContainersPage from './pages/docker/Containers.page.tsx'
 import ContainerPage from './pages/docker/Container.page.tsx'
 import ContainerLaunchPage from './pages/docker/ContainerLaunch.page.tsx'
-import ContainerRunPage from './pages/docker/ContainerRun.page.tsx'
 import DashboardPage from './pages/docker/Dashboard.page.tsx'
 import ImagesPage from './pages/docker/Images.page.tsx'
 import NetworksPage from './pages/docker/Networks.page.tsx'
@@ -13,6 +12,7 @@ import EventsPage from './pages/docker/Events.page.tsx'
 import EnvironmentsPage from './pages/admin/Environments.page.tsx'
 import LoginPage from './pages/user/Login.page.tsx'
 import PortainerTemplatesPage from './pages/portainer/PortainerTemplates.page.tsx'
+import StackTemplatesPage from './pages/templates/StackTemplates.page.tsx'
 import SettingsPage from './pages/admin/Settings.page.tsx'
 import VolumesPage from './pages/docker/Volumes.page.tsx'
 import AuthenticatedRouteWrapper from './pages/AuthenticatedRouteWrapper.tsx'
@@ -24,7 +24,6 @@ import appRepo from './lib/repo.ts'
 import { restoreEnvsFromLocalStorage } from './helper/useEnvironments.ts'
 import { loadAppStore } from './lib/appStore.ts'
 import { DEFAULT_ENVIRONMENTS, MASTER_AGENT_PORT } from './constants.ts'
-import StackTemplatesPage from './pages/templates/StackTemplates.page.tsx'
 
 const getEnvApiFromLoaderArgs = (args: LoaderFunctionArgs) => {
   //const { envs } = useEnvironments()
@@ -79,7 +78,7 @@ const routes: RouteObject[] = [
             //path: 'environments',
             element: <EnvironmentsPage />,
             // loader: async (args) => {
-            //   return api(AGENT_API_BASEURL).getEnvironments()()
+            //   return api(AGENT_API_BASEURL).getEnvironments()
             // },
           },
           {
@@ -98,20 +97,6 @@ const routes: RouteObject[] = [
                 // },
               },
               {
-                path: 'templates',
-                element: <StackTemplatesPage />,
-                // loader: async ({ params }) => {
-                //   return getHostApiFromLoaderArgs(args).getProject()(params.id!)
-                // },
-              },
-              {
-                path: 'templates/portainer',
-                element: <PortainerTemplatesPage />,
-                // loader: async ({ params }) => {
-                //   return getHostApiFromLoaderArgs(args).getProject()(params.id!)
-                // },
-              },
-              {
                 path: 'docker',
                 //element: <DockerWrapper />,
                 children: [
@@ -121,7 +106,7 @@ const routes: RouteObject[] = [
                     element: <ContainersPage />,
                     loader: async (args) => {
                       const api = getEnvApiFromLoaderArgs(args)
-                      //return api.getContainers()()
+                      //return api.getContainers()
                       return appRepo(args.params.envId!, api).listContainers()
                     },
                   },
@@ -137,28 +122,28 @@ const routes: RouteObject[] = [
                       if (!args.params.id) {
                         throw new Error('Container id not provided')
                       }
-                      return getEnvApiFromLoaderArgs(args).getContainer()(args.params.id)
+                      return getEnvApiFromLoaderArgs(args).getContainer(args.params.id)
                     },
                   },
                   {
                     path: 'images',
                     element: <ImagesPage />,
                     loader: async (args) => {
-                      return getEnvApiFromLoaderArgs(args).getImages()()
+                      return getEnvApiFromLoaderArgs(args).getImages()
                     },
                   },
                   {
                     path: 'volumes',
                     element: <VolumesPage />,
                     loader: async (args) => {
-                      return getEnvApiFromLoaderArgs(args).getVolumes()()
+                      return getEnvApiFromLoaderArgs(args).getVolumes()
                     },
                   },
                   {
                     path: 'networks',
                     element: <NetworksPage />,
                     loader: async (args) => {
-                      return getEnvApiFromLoaderArgs(args).getNetworks()()
+                      return getEnvApiFromLoaderArgs(args).getNetworks()
                     },
                   },
                   {
@@ -166,14 +151,14 @@ const routes: RouteObject[] = [
                     element: <EventsPage />,
                     loader: async (args) => {
                       const since = Math.floor(Date.now() / 1000) - 5 * 60 // last 5 minutes
-                      return getEnvApiFromLoaderArgs(args).getEngineEvents()({ since: since })
+                      return getEnvApiFromLoaderArgs(args).getEngineEvents({ since: since })
                     },
                   },
                   {
                     path: 'stacks',
                     element: <StacksPage />,
                     loader: async (args) => {
-                      //return getHostApiFromLoaderArgs(args).getStacks()()
+                      //return getHostApiFromLoaderArgs(args).getStacks()
                       const api = getEnvApiFromLoaderArgs(args)
                       return appRepo(args.params.envId!, api).listStacks()
                     },
@@ -185,16 +170,27 @@ const routes: RouteObject[] = [
                       if (!args.params.id) {
                         throw new Error('Stack id not provided')
                       }
-                      return getEnvApiFromLoaderArgs(args).getStack()(args.params.id)
+                      return getEnvApiFromLoaderArgs(args).getStack(args.params.id)
                     },
                   },
                   {
-                    path: 'run',
-                    element: <ContainerRunPage />,
+                    path: 'templates',
+                    element: <StackTemplatesPage />,
                     // loader: async ({ params }) => {
                     //   return getHostApiFromLoaderArgs(args).getProject()(params.id!)
                     // },
                   },
+                  {
+                    path: 'templates/portainer',
+                    element: <PortainerTemplatesPage />,
+                    // loader: async ({ params }) => {
+                    //   return getHostApiFromLoaderArgs(args).getProject()(params.id!)
+                    // },
+                  },
+                  // {
+                  //   path: 'run',
+                  //   element: <ContainerRunPage />,
+                  // },
                 ],
               },
             ],

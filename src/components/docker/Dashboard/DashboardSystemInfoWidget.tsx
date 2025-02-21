@@ -9,12 +9,10 @@ const DashboardSystemInfoWidget = () => {
   const api = useEnvApi()
 
   const fetchSystemInfo = React.useCallback(() => {
-    api
-      .getSystemInfo()()
-      .then((data) => {
-        console.log('data', data)
-        setSystemInfo(data)
-      })
+    api.getSystemInfo().then((data) => {
+      console.log('data', data)
+      setSystemInfo(data)
+    })
   }, [])
 
   React.useEffect(() => {

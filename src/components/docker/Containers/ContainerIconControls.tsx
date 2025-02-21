@@ -1,17 +1,15 @@
 import React from 'react'
-import IconButton, { IconButtonProps } from '@mui/material/IconButton'
-import { useContainer } from './useContainer.ts'
+import { IconButtonProps } from '@mui/material/IconButton'
+import { useContainerHelper } from './useContainerHelper.ts'
 import AppIcons from '../../../elements/AppIcons.tsx'
 import TaskIconButton from '../../tasks/TaskIconButton.tsx'
 import { IBackgroundTaskResponse } from '../../../types.ts'
-import { AxiosResponse } from 'axios'
-import TaskFabButton from '../../tasks/TaskFabButton.tsx'
 
 type IconControlProps = {
   label: string
   icon: React.FC
   hidden?: boolean
-  onClick?: (containerId: string) => () => Promise<void | AxiosResponse<IBackgroundTaskResponse>>
+  onClick?: (containerId: string) => () => Promise<void | IBackgroundTaskResponse>
 }
 
 interface ContainerIconControlsProps {
@@ -33,14 +31,8 @@ interface ContainerIconControlsProps {
 }
 
 const ContainerIconControls = ({ containerId, containerStatus, ...props }: ContainerIconControlsProps) => {
-  const {
-    handleContainerStartClick,
-    handleContainerPauseClick,
-    handleContainerStopClick,
-    handleContainerRemoveClick,
-    handleContainerLogsClick,
-    handleContainerExecClick,
-  } = useContainer()
+  const { handleContainerStartClick, handleContainerPauseClick, handleContainerStopClick, handleContainerRemoveClick } =
+    useContainerHelper()
 
   const iconButtonProps: IconButtonProps = { size: 'small', ...props.buttonProps }
 
@@ -49,28 +41,28 @@ const ContainerIconControls = ({ containerId, containerStatus, ...props }: Conta
     if (containerStatus !== 'running' && props.showStart !== false) {
       _controls.push({
         label: 'Start',
-        icon: AppIcons.ContainerStartIcon,
+        icon: AppIcons.StartIcon,
         onClick: handleContainerStartClick,
       })
     }
     if (containerStatus === 'running' && props.showPause !== false) {
       _controls.push({
         label: 'Pause',
-        icon: AppIcons.ContainerPauseIcon,
+        icon: AppIcons.PauseIcon,
         onClick: handleContainerPauseClick,
       })
     }
     if (containerStatus === 'running' && props.showStop !== false) {
       _controls.push({
         label: 'Stop',
-        icon: AppIcons.ContainerStopIcon,
+        icon: AppIcons.StopIcon,
         onClick: handleContainerStopClick,
       })
     }
     if (props.showRemove !== false) {
       _controls.push({
         label: 'Delete',
-        icon: AppIcons.ContainerDeleteIcon,
+        icon: AppIcons.DeleteIcon,
         onClick: handleContainerRemoveClick,
       })
     }
@@ -121,16 +113,16 @@ const ContainerIconControls = ({ containerId, containerStatus, ...props }: Conta
       })}
 
       {/*<IconButton {...iconButtonProps} title={'Start'} onClick={handleContainerStartClick(containerId)}>
-        <AppIcons.ContainerStartIcon />
+        <AppIcons.StartIcon />
       </IconButton>
       <IconButton {...iconButtonProps} title={'Pause'} onClick={handleContainerPauseClick(containerId)}>
-        <AppIcons.ContainerPauseIcon />
+        <AppIcons.PauseIcon />
       </IconButton>
       <IconButton {...iconButtonProps} title={'Stop'} onClick={handleContainerStopClick(containerId)}>
-        <AppIcons.ContainerStopIcon />
+        <AppIcons.StopIcon />
       </IconButton>
       <IconButton {...iconButtonProps} title={'Delete'} onClick={handleContainerRemoveClick(containerId)}>
-        <AppIcons.ContainerDeleteIcon />
+        <AppIcons.DeleteIcon />
       </IconButton>*/}
     </span>
   )

@@ -8,13 +8,13 @@ import { HiOutlinePlay, HiStop, HiTrash } from 'react-icons/hi2'
 import { IDockerResourceAttrs } from '../../../types.ts'
 import ContainerPorts from './ContainerPorts.tsx'
 import ContainerState from './ContainerState.tsx'
-import { useContainer } from './useContainer.ts'
 import ContainerIconControls from './ContainerIconControls.tsx'
 import ContainerId from './ContainerId.tsx'
 import { useEnvRoute } from '../../../helper/useEnvRoute.ts'
+import { useStackHelper } from '../Stacks/useStackHelper.ts'
 
 const ContainersTableGrouped = ({ data }: { data: IDockerResourceAttrs[] }) => {
-  const { handleStackStartClick, handleStackStopClick, handleStackDeleteClick } = useContainer()
+  const { handleStackStartClick, handleStackStopClick, handleStackDeleteClick } = useStackHelper()
   const { buildEnvUrl } = useEnvRoute()
 
   const groupedData = React.useMemo(() => {

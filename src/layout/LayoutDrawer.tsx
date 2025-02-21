@@ -133,8 +133,9 @@ const LayoutDrawer = (props: DeveloperLayoutDrawerProps) => {
       </Box>*/}
       <List component='nav'>
         {/*<NavListItems items={navItemsMain} />*/}
-        <NavListItems items={routedNavItemsDocker} />
         {/*<Divider sx={{ my: 1 }} />*/}
+        <NavListItems items={routedNavItemsDocker} />
+        <Divider sx={{ my: 1 }} />
         {/*<NavListItems items={navItemsKube} />*/}
         {/*<Divider sx={{ my: 1 }} />*/}
         {/*<DeveloperNavListItems items={navItemsGsTools} />*/}

@@ -40,12 +40,10 @@ const ContainerPage = () => {
     console.log('ContainerPage mounted')
     const timer = setInterval(() => {
       console.log('Refreshing containers')
-      api
-        .getContainer()(data.Id)
-        .then((data) => {
-          console.log('Container refreshed', data)
-          setData(data)
-        })
+      api.getContainer(data.Id).then((data) => {
+        console.log('Container refreshed', data)
+        setData(data)
+      })
     }, 5000)
     return () => {
       console.log('ContainerPage unmounted')
@@ -136,33 +134,21 @@ const ContainerPage = () => {
           <div>
             <ContainerState state={data?.State} />{' '}
             {data?.State?.Status !== 'running' && (
-              <Button
-                {...buttonProps}
-                onClick={handleContainerStartClick(data.Id)}
-                startIcon={<AppIcons.ContainerStartIcon />}
-              >
+              <Button {...buttonProps} onClick={handleContainerStartClick(data.Id)} startIcon={<AppIcons.StartIcon />}>
                 Start
               </Button>
             )}
             {data?.State?.Status === 'running' && (
-              <Button
-                {...buttonProps}
-                onClick={handleContainerStartClick(data.Id)}
-                startIcon={<AppIcons.ContainerPauseIcon />}
-              >
+              <Button {...buttonProps} onClick={handleContainerStartClick(data.Id)} startIcon={<AppIcons.PauseIcon />}>
                 Pause
               </Button>
             )}
             {data?.State?.Status === 'running' && (
-              <Button
-                {...buttonProps}
-                onClick={handleContainerStopClick(data.Id)}
-                startIcon={<AppIcons.ContainerStopIcon />}
-              >
+              <Button {...buttonProps} onClick={handleContainerStopClick(data.Id)} startIcon={<AppIcons.StopIcon />}>
                 Stop
               </Button>
             )}
-            <Button {...buttonProps} color={'error'} startIcon={<AppIcons.ContainerDeleteIcon />}>
+            <Button {...buttonProps} color={'error'} startIcon={<AppIcons.DeleteIcon />}>
               Remove
             </Button>
           </div>

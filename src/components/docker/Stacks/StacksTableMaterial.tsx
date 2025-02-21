@@ -2,11 +2,11 @@ import React from 'react'
 import { MaterialReactTable, useMaterialReactTable, type MRT_ColumnDef } from 'material-react-table'
 import { IDockerResourceAttrs } from '../../../types.ts'
 import IconButton from '@mui/material/IconButton'
-import { HiOutlinePlay, HiPause, HiStop, HiTrash } from 'react-icons/hi2'
 import { Link } from 'react-router-dom'
 import { useEnvApi } from '../../../helper/useEnvApi.ts'
 import { useErrorHandler } from '../../../helper/useErrorHandler.ts'
-import { toast } from 'react-toastify'
+import AppIcons from '../../../elements/AppIcons.tsx'
+import StackIconControls from './StackIconControls.tsx'
 
 const StacksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
   const api = useEnvApi()
@@ -19,7 +19,7 @@ const StacksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
   const handleStackStartClick = (id: string) => () => {
     console.log('Starting stack', id)
     api
-      .startStack()(id)
+      .startStack(id)
       //.then((response) => toast.info(response?.data))
       .catch(defaultErrorHandler)
   }
@@ -27,19 +27,29 @@ const StacksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
   const handleStackStopClick = (id: string) => () => {
     console.log('Stopping stack', id)
     api
-      .stopStack()(id)
+      .stopStack(id)
       //.then((response) => toast.info(response?.data))
       .catch(defaultErrorHandler)
   }
 
   const handleStackPauseClick = (id: string) => () => {
     console.log('Pausing stack', id)
-    api.stopStack()(id).catch(defaultErrorHandler)
+    api.stopStack(id).catch(defaultErrorHandler)
   }
 
-  const handleStackRemoveClick = (id: string) => () => {
-    console.log('Removing stack', id)
-    api.removeStack()(id).catch(defaultErrorHandler)
+  const handleStackDeleteClick = (id: string) => () => {
+    console.log('Delete stack', id)
+    api.deleteStack(id).catch(defaultErrorHandler)
+  }
+
+  const handleStackDestroyClick = (id: string) => () => {
+    console.log('Destroy stack', id)
+    api.destroyStack(id).catch(defaultErrorHandler)
+  }
+
+  const handleStackSyncClick = (id: string) => () => {
+    console.log('Sync stack', id)
+    api.syncStack(id).catch(defaultErrorHandler)
   }
 
   const columns = React.useMemo<MRT_ColumnDef<IDockerResourceAttrs>[]>(
@@ -57,14 +67,15 @@ const StacksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
           )
         },
       },
-      {
-        accessorKey: 'running',
-        header: 'Running',
-        Cell: ({ cell }) => {
-          const running = cell.getValue<boolean>()
-          return <div>{running ? 'Yes' : 'No'}</div>
-        },
-      },
+      // {
+      //   accessorKey: 'running',
+      //   header: 'Running',
+      //   Cell: ({ cell }) => {
+      //     const running = cell.getValue<boolean>()
+      //     //return <div>{running ? 'Yes' : 'No'}</div>
+      //     return <div>?</div>
+      //   },
+      // },
       {
         accessorKey: 'managed',
         header: 'Managed',
@@ -79,25 +90,31 @@ const StacksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
         //sx: { textAlign: 'right' },
         Cell: ({ cell }) => {
           const row = cell.row.original
-          return (
-            <div style={{ textAlign: 'right' }}>
-              {!row?.running && <></>}
-              <IconButton size={'small'} title={'Start'} onClick={handleStackStartClick(row.name)}>
-                <HiOutlinePlay />
-              </IconButton>
-              {row?.running && <></>}
-              <IconButton size={'small'} title={'Pause'} onClick={handleStackPauseClick(row.name)}>
-                <HiPause />
-              </IconButton>
-              {row?.running && <></>}
-              <IconButton size={'small'} title={'Stop'} onClick={handleStackStopClick(row.name)}>
-                <HiStop />
-              </IconButton>
-              <IconButton size={'small'} title={'Delete'} onClick={handleStackRemoveClick(row.name)}>
-                <HiTrash />
-              </IconButton>
-            </div>
-          )
+          const stackName = row.name
+          const stackStatus = row.running ? 'running' : 'stopped'
+          return <StackIconControls stackId={stackName} stackStatus={stackStatus} />
+          // return (
+          //   <div style={{ textAlign: 'right' }}>
+          //     <IconButton size={'small'} title={'Start'} onClick={handleStackStartClick(row.name)}>
+          //       <AppIcons.StackUpIcon />
+          //     </IconButton>
+          //     <IconButton size={'small'} title={'Pause'} onClick={handleStackPauseClick(row.name)}>
+          //       <AppIcons.PauseIcon />
+          //     </IconButton>
+          //     <IconButton size={'small'} title={'Stop'} onClick={handleStackStopClick(row.name)}>
+          //       <AppIcons.StopIcon />
+          //     </IconButton>
+          //     <IconButton size={'small'} title={'Delete'} onClick={handleStackDeleteClick(row.name)}>
+          //       <AppIcons.StackDownIcon />
+          //     </IconButton>
+          //     <IconButton size={'small'} title={'Destroy'} onClick={handleStackDestroyClick(row.name)}>
+          //       <AppIcons.DeleteIcon />
+          //     </IconButton>
+          //     <IconButton size={'small'} title={'Sync'} onClick={handleStackSyncClick(row.name)}>
+          //       <AppIcons.SyncIcon />
+          //     </IconButton>
+          //   </div>
+          // )
         },
       },
     ],

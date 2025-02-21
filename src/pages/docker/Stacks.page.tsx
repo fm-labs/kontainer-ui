@@ -19,7 +19,7 @@ const StacksPage = () => {
 
   const fetchStacks = React.useCallback(async () => {
     // api
-    //   .getStacks()()
+    //   .getStacks()
     //   .then((data) => {
     //     setData(data)
     //   })

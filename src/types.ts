@@ -31,8 +31,9 @@ export interface IDockerResourceAttrs {
 }
 
 export interface IBackgroundTaskResponse<T = any> {
-  taskId: string
+  task_id: string
   ref?: string
   status?: string
+  error?: any
   result?: T
 }

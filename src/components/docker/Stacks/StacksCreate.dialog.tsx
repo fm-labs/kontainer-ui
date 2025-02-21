@@ -22,7 +22,7 @@ export default function CreateStacksDialog({ open, onClose }: { open: boolean; o
 
     console.log(formData)
     api
-      .createStack()(formData)
+      .createStack(formData)
       .then((response) => {
         console.log(response)
         toast.success('Stack successfully created')
