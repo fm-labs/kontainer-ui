@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
-import { IBackgroundTaskResponse, IDockerContainer, IDockerResourceAttrs } from '../types.ts'
+import { IBackgroundTaskResponse, IDockerContainer, IDockerResourceAttrs, ContainerRegistry } from '../types.ts'
 
 const api = (baseUrl: string, authToken?: string) => {
   //baseUrl = baseUrl || '/api'
@@ -197,8 +197,43 @@ const api = (baseUrl: string, authToken?: string) => {
     return response.data
   }
 
+  const addTemplate = async (data: any): Promise<IBackgroundTaskResponse> => {
+    const response = await apiHttp.post(`templates`, data)
+    return response.data
+  }
+
   const launchPortainerTemplate = async (template: any): Promise<IBackgroundTaskResponse> => {
     const response = await apiHttp.post(`portainer/templates/launch`, template)
+    return response.data
+  }
+
+  const getContainerRegistries = async (): Promise<ContainerRegistry[]> => {
+    const response = await apiHttp.get(`admin/registries`)
+    return response.data
+  }
+
+  const updateContainerRegistry = async (registryName: string, data: any): Promise<any> => {
+    const response = await apiHttp.post(`admin/registries/${registryName}`, data)
+    return response.data
+  }
+
+  const deleteContainerRegistry = async (registryName: string): Promise<any> => {
+    const response = await apiHttp.delete(`admin/registries/${registryName}`)
+    return response.data
+  }
+
+  const listPrivateKeys = async (): Promise<string[]> => {
+    const response = await apiHttp.get(`admin/keys`)
+    return response.data
+  }
+
+  const updatePrivateKey = async (keyName: string, data: any): Promise<any> => {
+    const response = await apiHttp.post(`admin/keys`, data)
+    return response.data
+  }
+
+  const deletePrivateKey = async (keyName: string): Promise<any> => {
+    const response = await apiHttp.delete(`admin/keys/${keyName}`)
     return response.data
   }
 
@@ -234,7 +269,14 @@ const api = (baseUrl: string, authToken?: string) => {
     getTaskStatus,
     listTemplates,
     getTemplate,
+    addTemplate,
     launchPortainerTemplate,
+    getContainerRegistries,
+    updateContainerRegistry,
+    deleteContainerRegistry,
+    listPrivateKeys,
+    updatePrivateKey,
+    deletePrivateKey,
   }
 }
 

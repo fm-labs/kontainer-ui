@@ -1,7 +1,8 @@
+import * as React from 'react'
 import { useEnvRoute } from './useEnvRoute.ts'
+import { useAppStore } from '../context/AppContext.tsx'
 import api from '../lib/api2.ts'
 import { MASTER_AGENT_PORT } from '../constants.ts'
-import { useAppStore } from '../context/AppContext.tsx'
 
 export const useEnvApi = () => {
   const envRoute = useEnvRoute()
@@ -15,5 +16,11 @@ export const useEnvApi = () => {
   const agentPort = envRoute?.env?.agentPort || MASTER_AGENT_PORT
   const apiBaseUrl = `${urlSchema}://${hostname}:${agentPort}/api`
   const authToken = appStore?.authToken
-  return api(apiBaseUrl, authToken)
+
+  const _api = React.useMemo(() => {
+    return api(apiBaseUrl, authToken)
+  }, [apiBaseUrl, authToken])
+
+  //return api(apiBaseUrl, authToken)
+  return _api
 }

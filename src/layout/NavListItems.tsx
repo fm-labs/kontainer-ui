@@ -24,6 +24,8 @@ const NavListItems = ({ items }: NavListItemsProps) => {
             onClick={() => !item?.target && navigate(item.to)}
             href={item?.target ? item.to : ''}
             target={item?.target}
+            title={item.label}
+            aria-label={item.label}
           >
             <ListItemIcon>{Icon}</ListItemIcon>
             <ListItemText

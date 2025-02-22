@@ -9,10 +9,10 @@ import NetworksPage from './pages/docker/Networks.page.tsx'
 import StacksPage from './pages/docker/Stacks.page.tsx'
 import StackPage from './pages/docker/StackPage.tsx'
 import EventsPage from './pages/docker/Events.page.tsx'
-import EnvironmentsPage from './pages/admin/Environments.page.tsx'
+import EnvironmentsPage from './pages/Environments.page.tsx'
 import LoginPage from './pages/user/Login.page.tsx'
 import PortainerTemplatesPage from './pages/portainer/PortainerTemplates.page.tsx'
-import StackTemplatesPage from './pages/templates/StackTemplates.page.tsx'
+import StackTemplatesPage from './pages/admin/StackTemplates.page.tsx'
 import SettingsPage from './pages/admin/Settings.page.tsx'
 import VolumesPage from './pages/docker/Volumes.page.tsx'
 import AuthenticatedRouteWrapper from './pages/AuthenticatedRouteWrapper.tsx'
@@ -80,10 +80,6 @@ const routes: RouteObject[] = [
             // loader: async (args) => {
             //   return api(AGENT_API_BASEURL).getEnvironments()
             // },
-          },
-          {
-            path: 'settings',
-            element: <SettingsPage />,
           },
           {
             path: ':envId',
@@ -173,25 +169,31 @@ const routes: RouteObject[] = [
                       return getEnvApiFromLoaderArgs(args).getStack(args.params.id)
                     },
                   },
-                  {
-                    path: 'templates',
-                    element: <StackTemplatesPage />,
-                    loader: async (args) => {
-                      return getEnvApiFromLoaderArgs(args).listTemplates()
-                    },
-                  },
-                  {
-                    path: 'templates/portainer',
-                    element: <PortainerTemplatesPage />,
-                    // loader: async ({ params }) => {
-                    //   return getHostApiFromLoaderArgs(args).getProject()(params.id!)
-                    // },
-                  },
                   // {
                   //   path: 'run',
                   //   element: <ContainerRunPage />,
                   // },
                 ],
+              }, // # docker
+
+              {
+                path: 'templates',
+                element: <StackTemplatesPage />,
+                loader: async (args) => {
+                  return getEnvApiFromLoaderArgs(args).listTemplates()
+                },
+              },
+              {
+                path: 'templates/portainer',
+                element: <PortainerTemplatesPage />,
+                // loader: async ({ params }) => {
+                //   return getHostApiFromLoaderArgs(args).getProject()(params.id!)
+                // },
+              },
+
+              {
+                path: 'settings',
+                element: <SettingsPage />,
               },
             ],
           },

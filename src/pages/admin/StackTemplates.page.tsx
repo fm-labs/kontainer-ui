@@ -3,6 +3,11 @@ import StackTemplatesView from '../../components/templates/StackTemplatesView.ts
 import Container from '@mui/material/Container'
 import { useLoaderData } from 'react-router-dom'
 import { useEnvApi } from '../../helper/useEnvApi.ts'
+import { Helmet } from 'react-helmet-async'
+import Toolbar from '@mui/material/Toolbar'
+import Heading from '../../elements/Heading.tsx'
+import BasicDialogButton from '../../elements/Dialog/BasicDialogButton.tsx'
+import AddTemplateForm from '../../components/templates/AddTemplateForm.tsx'
 
 const StackTemplatesPage = () => {
   const templates = useLoaderData() as any[]
@@ -27,7 +32,18 @@ const StackTemplatesPage = () => {
 
   return (
     <Container maxWidth={false}>
-      <h1>Stack Templates</h1>
+      <Helmet>
+        <title>Stack Templates</title>
+      </Helmet>
+      <Toolbar disableGutters>
+        <Heading label={'Stack Templates'}>
+          <div>
+            <BasicDialogButton label={'Add Templates'} dialogLabel={'Add Templates'}>
+              <AddTemplateForm />
+            </BasicDialogButton>
+          </div>
+        </Heading>
+      </Toolbar>
 
       <div>
         <select onChange={(e) => setSelectedTemplateName(e.target.value)}>

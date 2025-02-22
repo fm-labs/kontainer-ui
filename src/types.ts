@@ -37,3 +37,11 @@ export interface IBackgroundTaskResponse<T = any> {
   error?: any
   result?: T
 }
+
+export type ContainerRegistry = {
+  name: string
+  host: string
+  label?: string
+  username?: string
+  password?: string
+}

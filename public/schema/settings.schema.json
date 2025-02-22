@@ -1,0 +1,12 @@
+{
+  "$id": "https://schema.kloudia.io/kstack/settings.schema.json",
+  "title": "Settings",
+  "description": "Settings for the Kstack agent",
+  "type": "object",
+  "properties": {
+    "siteTitle": {
+      "type": "string",
+      "description": "Custom site title"
+    }
+  }
+}

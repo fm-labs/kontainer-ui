@@ -8,7 +8,7 @@ import { styled } from '@mui/material/styles'
 import MuiDrawer from '@mui/material/Drawer'
 import { MUI_DRAWER_WIDTH, MUI_DRAWER_WIDTH_DOCKED } from './layout.constants.ts'
 import NavListItems from './NavListItems.tsx'
-import { navItemsDocker, navItemsMain } from './navigation.tsx'
+import { navItemsDocker, navItemsHost, navItemsMain } from './navigation.tsx'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 // import Typography from '@mui/material/Typography'
 // import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
@@ -54,28 +54,14 @@ const LayoutDrawer = (props: DeveloperLayoutDrawerProps) => {
   //const navigate = useNavigate()
   const envRoute = useEnvRoute()
 
-  const routedNavItemsDocker = React.useMemo(() => {
-    if (!envRoute.isEnvRoute) {
-      return []
-    }
-
-    return navItemsDocker.map((item) => {
+  const envRouted = (items) => {
+    return items.map((item) => {
       return {
         ...item,
-        to: envRoute.buildEnvUrl('/docker' + item.to),
+        to: envRoute.buildEnvUrl(item.to),
       }
     })
-  }, [envRoute])
-
-  // const routedNavItemsDocker = navItemsDocker.map((item) => {
-  //   if (!envRoute.isEnvRoute) {
-  //     return item
-  //   }
-  //   return {
-  //     ...item,
-  //     to: envRoute.buildEnvUrl('/docker' + item.to),
-  //   }
-  // })
+  }
 
   // const handleHostChange = (e: SelectChangeEvent) => {
   //   setSelectedHost(e.target.value)
@@ -134,7 +120,9 @@ const LayoutDrawer = (props: DeveloperLayoutDrawerProps) => {
       <List component='nav'>
         {/*<NavListItems items={navItemsMain} />*/}
         {/*<Divider sx={{ my: 1 }} />*/}
-        <NavListItems items={routedNavItemsDocker} />
+        <NavListItems items={envRouted(navItemsDocker)} />
+        <Divider sx={{ my: 1 }} />
+        <NavListItems items={envRouted(navItemsHost)} />
         <Divider sx={{ my: 1 }} />
         {/*<NavListItems items={navItemsKube} />*/}
         {/*<Divider sx={{ my: 1 }} />*/}
