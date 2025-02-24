@@ -42,7 +42,7 @@ export const useStackHelper = () => {
   const handleStackDestroyClick = (id: string) => () => {
     console.log('Destroying stack', id)
     return toast
-      .promise(api.deleteStack(id), {
+      .promise(api.destroyStack(id), {
         pending: 'Destroying stack',
         success: 'Stack destroyed',
         error: 'Failed to destroy stack',

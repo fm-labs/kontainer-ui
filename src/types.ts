@@ -45,3 +45,24 @@ export type ContainerRegistry = {
   username?: string
   password?: string
 }
+
+export type StackRepository = {
+  name: string
+  host: string
+  label?: string
+  username?: string
+  password?: string
+}
+
+export type StackTemplate = {
+  //id: string
+  type: string
+  name: string
+  description?: string
+  repository?: StackRepository
+  //categories: string[]
+  //ports: string[]
+  //volumes: string[]
+  //networks: string[]
+  //services: any
+}

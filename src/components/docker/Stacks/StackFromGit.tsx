@@ -10,6 +10,8 @@ const StackFromGit = () => {
   const [repoUrl, setRepoUrl] = React.useState('https://github.com/fm-labs/kstack-templates.git')
   const [repoBasePath, setRepoBasePath] = React.useState('docker/nginx')
   const [composeFileName, setComposeFileName] = React.useState('')
+  const [sshKeyId, setSshKeyId] = React.useState('')
+
   const api = useEnvApi()
 
   const handleSubmitClick = () => {
@@ -21,6 +23,7 @@ const StackFromGit = () => {
     formData.append('repo_url', repoUrl)
     formData.append('base_path', repoBasePath)
     formData.append('compose_file_name', composeFileName)
+    formData.append('ssh_key_id', sshKeyId)
 
     const payload = JSON.stringify(Object.fromEntries(formData))
     console.log(formData, payload)
@@ -66,7 +69,9 @@ const StackFromGit = () => {
           onChange={(e) => setRepoUrl(e.target.value)}
         />
 
-        <Typography variant='h5'>Advanced Settings</Typography>
+        <Typography variant='h5' sx={{ mt: 2 }}>
+          Advanced Settings
+        </Typography>
 
         <TextField
           margin='dense'
@@ -89,6 +94,18 @@ const StackFromGit = () => {
           variant='standard'
           value={composeFileName}
           onChange={(e) => setComposeFileName(e.target.value)}
+        />
+
+        <TextField
+          margin='dense'
+          id='ssh_key_id'
+          name='ssh_key_id'
+          label='SSH Key ID (set only for private repositories)'
+          type='text'
+          fullWidth
+          variant='standard'
+          value={sshKeyId}
+          onChange={(e) => setSshKeyId(e.target.value)}
         />
 
         <Button variant='contained' color='primary' onClick={handleSubmitClick}>

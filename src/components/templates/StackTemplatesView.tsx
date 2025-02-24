@@ -3,11 +3,12 @@ import Grid from '@mui/material/Grid2'
 import { Avatar, Card, CardActions, CardContent, CardHeader, Chip, ChipProps, Typography } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import GitHubIcon from '@mui/icons-material/GitHub'
-import SourceIcon from '@mui/icons-material/Source'
-import BugReportIcon from '@mui/icons-material/BugReport'
-import AppIcons from '../../elements/AppIcons.tsx'
+// import GitHubIcon from '@mui/icons-material/GitHub'
+// import SourceIcon from '@mui/icons-material/Source'
+// import BugReportIcon from '@mui/icons-material/BugReport'
+// import AppIcons from '../../elements/AppIcons.tsx'
 import Button from '@mui/material/Button'
+import TemplateLaunchDialogButton from './TemplateLaunchDialogButton.tsx'
 
 interface StackTemplatesViewProps {
   templates: any[]
@@ -98,6 +99,11 @@ const StackTemplatesView = ({ templates }: StackTemplatesViewProps) => {
   //   </div>
   // )
 
+  const handleLaunchTemplate = (template: any) => {
+    console.log('launch template', template)
+    // api.launchStackTemplate(template)
+  }
+
   return (
     <div>
       <p>Found templates: {templates?.length}</p>
@@ -133,14 +139,13 @@ const StackTemplatesView = ({ templates }: StackTemplatesViewProps) => {
                   </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
-                  <IconButton aria-label='Add to favorites'>
-                    {/*<FavoriteOutlinedIcon />*/}
+                  {/*<IconButton aria-label='Add to favorites'>
                     <AppIcons.LikeIcon />
-                  </IconButton>
+                  </IconButton>*/}
                   {/*<IconButton aria-label='Share'>
                   <ShareIcon />
                 </IconButton>*/}
-                  {template?.repository && template.repository?.url && (
+                  {/*template?.repository && template.repository?.url && (
                     <IconButton
                       aria-label='Share'
                       href={template.repository.url}
@@ -149,14 +154,11 @@ const StackTemplatesView = ({ templates }: StackTemplatesViewProps) => {
                     >
                       <GitHubIcon />
                     </IconButton>
-                  )}
-                  {template?.repository && template.repository?.stackfile && (
+                  )*/}
+                  {/*template?.repository && template.repository?.stackfile && (
                     <IconButton
                       aria-label='Source'
                       href={
-                        // template.repository.url /*.replace('github.com', 'raw.githubusercontent.com')*/ +
-                        // '/blob/master/' +
-                        // template.repository.stackfile
                         template.repository.url.replace('github.com', 'raw.githubusercontent.com') +
                         '/refs/heads/master/' +
                         template.repository.stackfile
@@ -166,12 +168,15 @@ const StackTemplatesView = ({ templates }: StackTemplatesViewProps) => {
                     >
                       <SourceIcon />
                     </IconButton>
-                  )}
-                  <IconButton aria-label='JSON' onClick={() => console.log('Template', template)}>
+                  )*/}
+                  {/*<IconButton aria-label='JSON' onClick={() => console.log('Template', template)}>
                     <BugReportIcon />
-                  </IconButton>
+                  </IconButton>*/}
                   <>
-                    <Button variant={'contained'} /*onClick={() => handleLaunchTemplate(template)}*/>Launch</Button>
+                    <Button variant={'outlined'} onClick={() => handleLaunchTemplate(template)}>
+                      Launch
+                    </Button>
+                    <TemplateLaunchDialogButton template={template} />
                   </>
                 </CardActions>
               </Card>

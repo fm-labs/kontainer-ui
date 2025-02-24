@@ -4,8 +4,7 @@ import Button from '@mui/material/Button'
 import { toast } from 'react-toastify'
 import { useEnvApi } from '../../../helper/useEnvApi.ts'
 
-const StackFromTemplate = () => {
-  const defaultValue = ` 
+const exampleTemplateContent = ` 
   {
     "name": "my-nginx-stack",
     "type": "docker-compose",
@@ -20,8 +19,17 @@ const StackFromTemplate = () => {
     "compose_file": "docker-compose.yml"
   }
   `
-  const [stackName, setTemplateName] = React.useState('')
-  const [templateContents, setTemplateContents] = React.useState(defaultValue)
+
+interface StackFromTemplateProps {
+  initialData?: {
+    stackName?: string
+    templateContent?: string
+  }
+}
+
+const StackFromTemplate = ({ initialData }: StackFromTemplateProps) => {
+  const [stackName, setTemplateName] = React.useState(initialData?.stackName || '')
+  const [templateContent, setTemplateContent] = React.useState(initialData?.templateContent || '')
   const api = useEnvApi()
 
   const handleSubmitClick = () => {
@@ -30,7 +38,13 @@ const StackFromTemplate = () => {
     const formData = new FormData()
     formData.append('launcher', 'template')
     formData.append('stack_name', stackName)
-    formData.append('template_content', templateContents)
+    formData.append('template_content', templateContent)
+
+    // basic validation
+    if (!stackName || !templateContent) {
+      toast.error('Please fill in all required fields')
+      return
+    }
 
     const payload = JSON.stringify(Object.fromEntries(formData))
     console.log(formData, payload)
@@ -48,7 +62,6 @@ const StackFromTemplate = () => {
 
   return (
     <div>
-      <h1>From Template</h1>
       <div>
         <TextField
           autoFocus
@@ -56,7 +69,7 @@ const StackFromTemplate = () => {
           margin='dense'
           id='stack_name'
           name='stack_name'
-          label='Template Name'
+          label='Stack Name'
           type='text'
           fullWidth
           variant='standard'
@@ -70,12 +83,13 @@ const StackFromTemplate = () => {
           margin='dense'
           id='template_content'
           name='template_content'
+          placeholder={exampleTemplateContent}
           label='Template Contents'
           type='text'
           fullWidth
           variant='standard'
-          value={templateContents}
-          onChange={(e) => setTemplateContents(e.target.value)}
+          value={templateContent}
+          onChange={(e) => setTemplateContent(e.target.value)}
         />
         <Button variant='contained' color='primary' onClick={handleSubmitClick}>
           Launch Template
