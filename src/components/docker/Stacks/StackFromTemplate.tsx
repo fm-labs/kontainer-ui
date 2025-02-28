@@ -30,7 +30,7 @@ interface StackFromTemplateProps {
 const StackFromTemplate = ({ initialData }: StackFromTemplateProps) => {
   const [stackName, setTemplateName] = React.useState(initialData?.stackName || '')
   const [templateContent, setTemplateContent] = React.useState(initialData?.templateContent || '')
-  const api = useEnvApi()
+  const { api } = useEnvApi()
 
   const handleSubmitClick = () => {
     console.log('Submit clicked')

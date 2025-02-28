@@ -8,7 +8,7 @@ import { toast } from 'react-toastify'
 import { useEnvApi } from '../../helper/useEnvApi.ts'
 
 const ContainerRunPage = () => {
-  const api = useEnvApi()
+  const { api } = useEnvApi()
 
   const onRun = (data) => {
     console.log('Run', data)

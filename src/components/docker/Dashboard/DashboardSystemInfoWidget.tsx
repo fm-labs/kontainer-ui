@@ -6,7 +6,7 @@ import { useEnvApi } from '../../../helper/useEnvApi.ts'
 
 const DashboardSystemInfoWidget = () => {
   const [systemInfo, setSystemInfo] = React.useState<any>(null)
-  const api = useEnvApi()
+  const { api } = useEnvApi()
 
   const fetchSystemInfo = React.useCallback(() => {
     api.getSystemInfo().then((data) => {

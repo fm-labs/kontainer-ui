@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 
 const ContainerExecCommandWidget = ({ container }) => {
   const [logs, setLogs] = React.useState<string[]>([])
-  const api = useEnvApi()
+  const { api } = useEnvApi()
   const [command, setCommand] = React.useState('whoami')
 
   const execCommand = React.useCallback(async () => {

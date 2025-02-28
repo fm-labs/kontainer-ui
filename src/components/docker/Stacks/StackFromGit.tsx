@@ -12,7 +12,7 @@ const StackFromGit = () => {
   const [composeFileName, setComposeFileName] = React.useState('')
   const [sshKeyId, setSshKeyId] = React.useState('')
 
-  const api = useEnvApi()
+  const { api } = useEnvApi()
 
   const handleSubmitClick = () => {
     console.log('Submit clicked')

@@ -21,9 +21,10 @@ import RoutingErrorBoundary from './pages/RoutingErrorBoundary.tsx'
 import PageNotFound from './pages/PageNotFound.tsx'
 import api from './lib/api2.ts'
 import appRepo from './lib/repo.ts'
-import { restoreEnvsFromLocalStorage } from './helper/useEnvironments.ts'
+import { DEFAULT_ENVIRONMENT, restoreEnvsFromLocalStorage } from './helper/useEnvironments.ts'
 import AuthProviderRouteWrapper from './pages/AuthProviderRouteWrapper.tsx'
-import { DEFAULT_ENVIRONMENTS, MASTER_AGENT_PORT } from './constants.ts'
+import { MASTER_AGENT_PORT } from './constants.ts'
+import LogoutPage from './pages/user/Logout.page.tsx'
 
 const getEnvApiFromLoaderArgs = (args: LoaderFunctionArgs) => {
   //const { envs } = useEnvironments()
@@ -34,7 +35,7 @@ const getEnvApiFromLoaderArgs = (args: LoaderFunctionArgs) => {
   const envId = args.params.envId
   let envs = restoreEnvsFromLocalStorage()
   if (!envs) {
-    envs = DEFAULT_ENVIRONMENTS
+    envs = [DEFAULT_ENVIRONMENT]
   }
   const env = envs.find((env) => env.id === envId)
   if (!env) {
@@ -45,7 +46,7 @@ const getEnvApiFromLoaderArgs = (args: LoaderFunctionArgs) => {
   const hostname = env.hostname || 'localhost'
   const agentPort = env.agentPort || MASTER_AGENT_PORT
   const apiBaseUrl = `${urlSchema}://${hostname}:${agentPort}/api`
-  const authToken = localStorage.getItem('authToken') || undefined
+  const authToken = localStorage.getItem(envId + '.authToken') || undefined
   return api(apiBaseUrl, authToken)
 }
 
@@ -57,28 +58,31 @@ const routes: RouteObject[] = [
 
     children: [
       {
-        path: 'auth',
+        index: true,
+        //path: 'environments',
+        element: <EnvironmentsPage />,
+        // loader: async (args) => {
+        //   return api(AGENT_API_BASEURL).getEnvironments()
+        // },
+      },
+
+      { path: '*', element: <PageNotFound /> },
+
+      {
+        path: ':envId',
+        element: <EnvironmentRouteWrapper />,
         children: [
           {
-            path: 'login',
+            path: 'connect',
             element: <LoginPage />,
           },
-        ],
-      },
-      {
-        element: <AuthenticatedRouteWrapper />,
-        children: [
           {
-            index: true,
-            //path: 'environments',
-            element: <EnvironmentsPage />,
-            // loader: async (args) => {
-            //   return api(AGENT_API_BASEURL).getEnvironments()
-            // },
+            path: 'disconnect',
+            element: <LogoutPage />,
           },
+
           {
-            path: ':envId',
-            element: <EnvironmentRouteWrapper />,
+            element: <AuthenticatedRouteWrapper />,
             children: [
               {
                 index: true,
@@ -192,8 +196,6 @@ const routes: RouteObject[] = [
               },
             ],
           },
-
-          { path: '*', element: <PageNotFound /> },
         ],
       },
     ],

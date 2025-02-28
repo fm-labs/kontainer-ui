@@ -8,7 +8,7 @@ const AddTemplateForm = () => {
   const defaultValue = `[]`
   const [templateId, setTemplateId] = React.useState('')
   const [templateContents, setTemplateContents] = React.useState(defaultValue)
-  const api = useEnvApi()
+  const { api } = useEnvApi()
 
   const handleSubmitClick = () => {
     console.log('Submit clicked')

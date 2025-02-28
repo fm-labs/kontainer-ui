@@ -12,7 +12,7 @@ const EventsPage = () => {
   const data = useLoaderData() as any
   const [events, setEvents] = React.useState<any[]>(data || [])
   const [lastEventTime, setLastEventTime] = React.useState<number>(Math.floor(Date.now() / 1000))
-  const api = useEnvApi()
+  const { api } = useEnvApi()
 
   const fetchEvents = React.useCallback(async () => {
     //console.log('fetching events')

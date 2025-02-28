@@ -15,7 +15,7 @@ const TaskIconButton = ({ promise, onSuccess, onFailure, children, ...iconButton
   const [result, setResult] = React.useState<any | null>(null)
   const [taskId, setTaskId] = React.useState<string | null>(null)
 
-  const api = useEnvApi()
+  const { api } = useEnvApi()
 
   const handleClick = () => {
     setLoading(true)

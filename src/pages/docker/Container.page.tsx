@@ -24,7 +24,7 @@ import ContainerExecCommandWidget from '../../components/docker/Containers/Conta
 const ContainerPage = () => {
   const loaderData = useLoaderData() as any // IDockerComposeContainer
   const [data, setData] = React.useState(loaderData)
-  const api = useEnvApi()
+  const { api } = useEnvApi()
 
   const handleContainerStartClick = (id: string) => () => {
     console.log('Starting container', id)

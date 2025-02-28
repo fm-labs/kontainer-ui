@@ -14,7 +14,7 @@ const StackTemplatesPage = () => {
   const templates = useLoaderData() as any[]
   const [selectedTemplateName, setSelectedTemplateName] = React.useState('')
   const [templateData, setTemplateData] = React.useState([])
-  const api = useEnvApi()
+  const { api } = useEnvApi()
 
   // sort templateDate by template_id
   const sortedTemplates = React.useMemo(() => {

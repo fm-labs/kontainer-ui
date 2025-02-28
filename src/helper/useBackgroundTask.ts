@@ -8,7 +8,7 @@ const useBackgroundTask = async (task: () => Promise<IBackgroundTaskResponse>) =
     return Promise.reject('Task submission failed')
   }
 
-  const api = useEnvApi()
+  const { api } = useEnvApi()
   return async () => {
     return await api.getTaskStatus(taskId)
   }

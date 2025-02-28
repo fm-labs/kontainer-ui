@@ -19,14 +19,14 @@ const EnvironmentRouteWrapper = () => {
 
   return (
     <EnvironmentProvider initialState={initialContextState}>
-      <Layout>
-        <Container maxWidth={false} style={{ fontSize: '0.9em' }}>
-          <Link to={'/'}>Environments</Link>
-          {' > '}
-          <Link to={`/${envRoute.envId}`}>{envRoute.env?.label || envRoute.env?.hostname}</Link>
-        </Container>
-        <Outlet />
-      </Layout>
+      {/*<Layout>*/}
+      {/*<Container maxWidth={false} style={{ fontSize: '0.9em' }}>
+        <Link to={'/'}>Environments</Link>
+        {' > '}
+        <Link to={`/${envRoute.envId}`}>{envRoute.env?.label || envRoute.env?.hostname}</Link>
+      </Container>*/}
+      <Outlet />
+      {/*</Layout>*/}
     </EnvironmentProvider>
   )
 }

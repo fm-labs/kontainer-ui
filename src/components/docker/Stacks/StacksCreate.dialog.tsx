@@ -15,7 +15,7 @@ import BasicTabs, { BasicTabItem } from '../../../elements/BasicTabs.tsx'
 import StackFromTemplate from './StackFromTemplate.tsx'
 
 export default function CreateStacksDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const api = useEnvApi()
+  const { api } = useEnvApi()
 
   const onSubmit = (formData: FormData) => {
     console.log('Create stack SUBMIT', formData)

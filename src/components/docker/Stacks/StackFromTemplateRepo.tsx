@@ -8,7 +8,7 @@ const StackFromTemplateRepo = () => {
   const [stackName, setStackName] = React.useState('my-nginx-stack')
   const [templateRepo, setTemplateRepo] = React.useState('fm-labs/kstack-templates')
   const [templateName, setTemplateName] = React.useState('nginx')
-  const api = useEnvApi()
+  const { api } = useEnvApi()
 
   const handleSubmitClick = () => {
     console.log('Submit clicked')

@@ -24,7 +24,7 @@ const ContainersTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => 
   //   handleContainerExecClick,
   // } = useContainer()
 
-  // const api = useEnvApi()
+  // const { api } = useEnvApi()
   // const { defaultErrorHandler } = useErrorHandler()
 
   // const handleContainerStartClick = (id: string) => () => {

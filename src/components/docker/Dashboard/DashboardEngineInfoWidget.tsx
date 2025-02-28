@@ -9,7 +9,7 @@ import useAutoreload from '../../../helper/useAutoreload.ts'
 
 const DashboardEngineInfoWidget = () => {
   const [engineInfo, setEngineInfo] = React.useState<any>(null)
-  const api = useEnvApi()
+  const { api } = useEnvApi()
 
   const kvInfo = React.useMemo(() => {
     if (!engineInfo) return []

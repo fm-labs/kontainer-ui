@@ -9,7 +9,7 @@ import AppIcons from '../../../elements/AppIcons.tsx'
 import StackIconControls from './StackIconControls.tsx'
 
 const StacksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
-  const api = useEnvApi()
+  const { api } = useEnvApi()
   // const defaultErrorHandler = (error: any) => {
   //   toast.error(error?.message || 'An Error occurred')
   // }

@@ -3,7 +3,7 @@ import { useErrorHandler } from '../../../helper/useErrorHandler.ts'
 import { useEnvApi } from '../../../helper/useEnvApi.ts'
 
 export const useContainerHelper = () => {
-  const api = useEnvApi()
+  const { api } = useEnvApi()
   const { defaultErrorHandler } = useErrorHandler()
 
   const handleContainerStartClick = (id: string) => () => {

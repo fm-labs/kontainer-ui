@@ -14,7 +14,7 @@ const StackFromScratch = () => {
   `
   const [stackName, setStackName] = React.useState('')
   const [stackContents, setStackContents] = React.useState(defaultValue)
-  const api = useEnvApi()
+  const { api } = useEnvApi()
 
   const handleSubmitClick = () => {
     console.log('Submit clicked')

@@ -8,7 +8,7 @@ import AppIcons from '../../../elements/AppIcons.tsx'
 import { useEnvApi } from '../../../helper/useEnvApi.ts'
 
 const ContainersTable = ({ data }) => {
-  const api = useEnvApi()
+  const { api } = useEnvApi()
 
   const handleContainerStartClick = (id: string) => () => {
     console.log('Starting container', id)

@@ -10,7 +10,7 @@ import { toast } from 'react-toastify'
 
 const ContainerRegistriesManagerWidget = () => {
   const [registries, setRegistries] = React.useState<ContainerRegistry[]>([])
-  const api = useEnvApi()
+  const { api } = useEnvApi()
 
   const fetchRegistries = React.useCallback(async () => {
     const response = await api.getContainerRegistries()

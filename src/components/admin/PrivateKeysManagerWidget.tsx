@@ -9,7 +9,7 @@ import { toast } from 'react-toastify'
 
 const PrivateKeysManagerWidget = () => {
   const [pkeys, setPkeys] = React.useState<string[]>([])
-  const api = useEnvApi()
+  const { api } = useEnvApi()
 
   const fetchKeys = React.useCallback(async () => {
     const response = await api.listPrivateKeys()

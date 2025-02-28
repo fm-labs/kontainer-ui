@@ -7,7 +7,7 @@ import { useEnvApi } from '../../../helper/useEnvApi.ts'
 const StackFromUrl = () => {
   const [stackName, setStackName] = React.useState('')
   const [composeUrl, setComposeUrl] = React.useState('')
-  const api = useEnvApi()
+  const { api } = useEnvApi()
 
   const handleSubmitClick = () => {
     console.log('Submit clicked')

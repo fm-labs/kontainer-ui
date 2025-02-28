@@ -8,9 +8,14 @@ import DashboardOverview from '../../components/docker/Dashboard/DashboardOvervi
 import AutoreloadButton from '../../elements/Autoreload/AutoreloadButton.tsx'
 import { useEnvApi } from '../../helper/useEnvApi.ts'
 import useAutoreload from '../../helper/useAutoreload.ts'
+import Button from '@mui/material/Button'
+import { useAuth } from '../../context/AuthProvider.tsx'
+import { useNavigate } from 'react-router'
 
 const DashboardPage = () => {
-  const api = useEnvApi()
+  const { api } = useEnvApi()
+  const { logout } = useAuth()
+  const navigate = useNavigate()
 
   const [data, setData] = React.useState<any>(null)
 
@@ -24,6 +29,13 @@ const DashboardPage = () => {
 
   const autoloader = useAutoreload(fetchData)
 
+  const handleDisconnectClick = () => {
+    logout().then(() => {
+      console.log('Disconnected')
+      navigate('/')
+    })
+  }
+
   return (
     <Container maxWidth={false}>
       <Helmet>
@@ -32,6 +44,9 @@ const DashboardPage = () => {
       <Toolbar disableGutters>
         <Heading label={'Dashboard'}>
           <div>
+            <Button variant={'outlined'} onClick={handleDisconnectClick}>
+              Disconnect
+            </Button>
             <AutoreloadButton autoloader={autoloader} />
           </div>
         </Heading>

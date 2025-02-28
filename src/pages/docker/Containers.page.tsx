@@ -18,7 +18,7 @@ const ContainersPage = () => {
   const loaderData = useLoaderData() as IDockerResourceAttrs[]
   const [data, setData] = React.useState(loaderData)
   const [showGrouped, setShowGrouped] = React.useState(true)
-  const api = useEnvApi()
+  const { api } = useEnvApi()
   const repo = useEnvRepo()
 
   const handleSwitchChange = (e: React.ChangeEvent<HTMLInputElement>) => {

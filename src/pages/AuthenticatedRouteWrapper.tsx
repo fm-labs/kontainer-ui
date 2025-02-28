@@ -2,6 +2,9 @@ import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 import { useLocation } from 'react-router'
 import { useAuth } from '../context/AuthProvider.tsx'
+import ConnectLayout from '../layout/ConnectLayout.tsx'
+import Layout from '../layout/Layout.tsx'
+import LoginPage from './user/Login.page.tsx'
 
 const AuthenticatedRouteWrapper = () => {
   const { authToken, isAuthenticated } = useAuth()
@@ -28,13 +31,18 @@ const AuthenticatedRouteWrapper = () => {
 
   if (!isAuthenticated) {
     //return renderNotAuthenticated()
-    return redirectToLogin()
+    //return redirectToLogin()
+    return (
+      <ConnectLayout>
+        <LoginPage />
+      </ConnectLayout>
+    )
   }
 
   return (
-    <>
+    <Layout>
       <Outlet />
-    </>
+    </Layout>
   )
 }
 

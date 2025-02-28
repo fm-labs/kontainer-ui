@@ -12,7 +12,7 @@ import { useAuth } from '../context/AuthProvider.tsx'
 
 const EnvironmentsPage = () => {
   const { envs } = useEnvironments()
-  const { logout } = useAuth()
+  //const { logout } = useAuth()
 
   //const data = useLoaderData() as any
   //const [envs, setEnvs] = React.useState(defaultEnvs)
@@ -37,13 +37,8 @@ const EnvironmentsPage = () => {
         <title>Connect</title>
       </Helmet>
       <Toolbar disableGutters>
-        <Heading label={'Environments'}>
-          <div>
-            <Button variant='contained' color='primary' onClick={() => logout()}>
-              Logout
-            </Button>
-            {/*<EnvironementCreateButton />*/}
-          </div>
+        <Heading label={'Connect to Environment'}>
+          <div>{/*<EnvironmentCreateButton />*/}</div>
         </Heading>
       </Toolbar>
 
@@ -66,12 +61,12 @@ const EnvironmentsPage = () => {
                 </div>
               </CardContent>
               <CardActions>
-                <Button size='small' variant={'outlined'} href={`/${env.id}`}>
+                <Button size='small' variant={'outlined'} href={`/${env.id}/connect`}>
                   Connect
                 </Button>
-                <Button size='small' variant={'outlined'} href={`/${env.id}/disconnect`}>
+                {/*<Button size='small' variant={'outlined'} href={`/${env.id}/disconnect`}>
                   Disconnect
-                </Button>
+                </Button>*/}
               </CardActions>
             </Card>
           </Grid>

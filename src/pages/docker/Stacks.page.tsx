@@ -14,7 +14,7 @@ import AutoreloadButton from '../../elements/Autoreload/AutoreloadButton.tsx'
 const StacksPage = () => {
   const loaderData = useLoaderData() as any // IDockerStack[]
   const [data, setData] = React.useState(loaderData)
-  const api = useEnvApi()
+  const { api } = useEnvApi()
   const repo = useEnvRepo()
 
   const fetchStacks = React.useCallback(async () => {

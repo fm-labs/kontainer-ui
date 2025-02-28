@@ -8,7 +8,7 @@ import { useEnvApi } from '../../helper/useEnvApi.ts'
 const StackPage = () => {
   const loaderData = useLoaderData() as any // IDockerComposeProject
   const [data, setData] = React.useState(loaderData)
-  const api = useEnvApi()
+  const { api } = useEnvApi()
 
   const handleProjectStartClick = (id: string) => () => {
     console.log('Starting project', id)
