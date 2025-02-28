@@ -13,7 +13,7 @@ import { useAuth } from '../../context/AuthProvider.tsx'
 import { useNavigate } from 'react-router'
 
 const DashboardPage = () => {
-  const { api } = useEnvApi()
+  const { api, envId } = useEnvApi()
   const { logout } = useAuth()
   const navigate = useNavigate()
 
@@ -32,6 +32,7 @@ const DashboardPage = () => {
   const handleDisconnectClick = () => {
     logout().then(() => {
       console.log('Disconnected')
+      localStorage.removeItem(envId + '.authToken')
       navigate('/')
     })
   }

@@ -51,7 +51,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode; authProcessor: 
       })
       .finally(() => {
         setAuthToken(undefined)
-        localStorage.removeItem('authToken')
+        //localStorage.removeItem('authToken')
       })
   }
 
