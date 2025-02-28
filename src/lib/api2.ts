@@ -27,7 +27,7 @@ const api = (baseUrl: string, authToken?: string) => {
   apiHttp.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
       if (authToken) {
-        config.headers['X-Api-Key'] = authToken
+        //config.headers['X-Api-Key'] = authToken
         config.headers['Authorization'] = `Bearer ${authToken}`
       }
       //console.log('before request', config)
@@ -43,6 +43,12 @@ const api = (baseUrl: string, authToken?: string) => {
     },
     (error) => {
       console.error('API ERROR', error)
+      // check 401 Unauthorized
+      if (error?.response?.status === 401) {
+        console.error('401 Unauthorized')
+        // @todo - handle 401 Unauthorized
+      }
+
       if (error?.code === 'ECONNABORTED') {
         console.error('ECONNABORTED')
         return error

@@ -5,7 +5,7 @@ import React from 'react'
 
 export const useEnvRepo = () => {
   const envRoute = useEnvRoute()
-  const envApi = useEnvApi()
+  const { api: envApi } = useEnvApi()
 
   const repo = React.useMemo(() => {
     if (!envRoute) {
