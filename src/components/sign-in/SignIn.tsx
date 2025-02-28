@@ -61,8 +61,8 @@ interface SignInProps {
 }
 
 export default function SignIn(props: SignInProps) {
-  const [emailError, setEmailError] = React.useState(false)
-  const [emailErrorMessage, setEmailErrorMessage] = React.useState('')
+  const [usernameError, setUsernameError] = React.useState(false)
+  const [usernameErrorMessage, setUsernameErrorMessage] = React.useState('')
   const [passwordError, setPasswordError] = React.useState(false)
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('')
   const [open, setOpen] = React.useState(false)
@@ -76,13 +76,13 @@ export default function SignIn(props: SignInProps) {
   }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    if (emailError || passwordError) {
+    if (usernameError || passwordError) {
       event.preventDefault()
       return
     }
     const data = new FormData(event.currentTarget)
     console.log({
-      email: data.get('email'),
+      username: data.get('username'),
       password: data.get('password'),
     })
 
@@ -91,22 +91,22 @@ export default function SignIn(props: SignInProps) {
     }
 
     event.preventDefault()
-    return
+    return false
   }
 
   const validateInputs = () => {
-    const email = document.getElementById('email') as HTMLInputElement
+    const username = document.getElementById('username') as HTMLInputElement
     const password = document.getElementById('password') as HTMLInputElement
 
     let isValid = true
 
-    if (!email.value /*|| !/\S+@\S+\.\S+/.test(email.value)*/) {
-      setEmailError(true)
-      setEmailErrorMessage('Please enter a valid email address.')
+    if (!username.value /*|| !/\S+@\S+\.\S+/.test(username.value)*/) {
+      setUsernameError(true)
+      setUsernameErrorMessage('Please enter a valid username address.')
       isValid = false
     } else {
-      setEmailError(false)
-      setEmailErrorMessage('')
+      setUsernameError(false)
+      setUsernameErrorMessage('')
     }
 
     if (!password.value /*|| password.value.length < 6*/) {
@@ -143,20 +143,20 @@ export default function SignIn(props: SignInProps) {
             }}
           >
             <FormControl>
-              <FormLabel htmlFor='email'>Email</FormLabel>
+              <FormLabel htmlFor='username'>Username</FormLabel>
               <TextField
-                error={emailError}
-                helperText={emailErrorMessage}
-                id='email'
-                type='email'
-                name='email'
-                placeholder='your@email.com'
-                autoComplete='email'
+                error={usernameError}
+                helperText={usernameErrorMessage}
+                id='username'
+                type='username'
+                name='username'
+                placeholder='your@username.com'
+                autoComplete='username'
                 autoFocus
                 required
                 fullWidth
                 variant='outlined'
-                color={emailError ? 'error' : 'primary'}
+                color={usernameError ? 'error' : 'primary'}
               />
             </FormControl>
             <FormControl>

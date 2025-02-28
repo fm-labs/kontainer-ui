@@ -1,20 +1,21 @@
 import React from 'react'
-import { useAppStore } from '../context/AppContext.tsx'
-import { Link, Navigate, Outlet, useMatches } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 import { useLocation } from 'react-router'
+import { useAuth } from '../context/AuthProvider.tsx'
 
 const AuthenticatedRouteWrapper = () => {
-  const { appStore, setAppStore } = useAppStore()
+  const { authToken, isAuthenticated } = useAuth()
   const location = useLocation()
-  const route = useMatches()
 
-  const renderNotAuthenticated = () => {
-    return (
-      <div>
-        Not authenticated <Link to={`/auth/login?goto=${''}`}>Go to Login</Link>
-      </div>
-    )
-  }
+  // const route = useMatches()
+  //
+  // const renderNotAuthenticated = () => {
+  //   return (
+  //     <div>
+  //       Not authenticated <Link to={`/auth/login?goto=${''}`}>Go to Login</Link>
+  //     </div>
+  //   )
+  // }
 
   const redirectToLogin = () => {
     return (
@@ -25,11 +26,7 @@ const AuthenticatedRouteWrapper = () => {
     )
   }
 
-  if (!appStore) {
-    return <div>Loading...</div>
-  }
-
-  if (!appStore.authToken) {
+  if (!isAuthenticated) {
     //return renderNotAuthenticated()
     return redirectToLogin()
   }

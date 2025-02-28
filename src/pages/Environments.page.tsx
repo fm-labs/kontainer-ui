@@ -5,10 +5,10 @@ import { Helmet } from 'react-helmet-async'
 import Toolbar from '@mui/material/Toolbar'
 import Heading from '../elements/Heading.tsx'
 import Button from '@mui/material/Button'
-import useAuth from '../helper/useAuth.ts'
 import { Card, CardActions, CardContent, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid2'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../context/AuthProvider.tsx'
 
 const EnvironmentsPage = () => {
   const { envs } = useEnvironments()
@@ -68,6 +68,9 @@ const EnvironmentsPage = () => {
               <CardActions>
                 <Button size='small' variant={'outlined'} href={`/${env.id}`}>
                   Connect
+                </Button>
+                <Button size='small' variant={'outlined'} href={`/${env.id}/disconnect`}>
+                  Disconnect
                 </Button>
               </CardActions>
             </Card>

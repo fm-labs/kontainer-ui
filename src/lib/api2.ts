@@ -28,6 +28,7 @@ const api = (baseUrl: string, authToken?: string) => {
     (config: InternalAxiosRequestConfig) => {
       if (authToken) {
         config.headers['X-Api-Key'] = authToken
+        config.headers['Authorization'] = `Bearer ${authToken}`
       }
       //console.log('before request', config)
       return config
@@ -49,6 +50,16 @@ const api = (baseUrl: string, authToken?: string) => {
       return Promise.reject(error)
     },
   )
+
+  const postLogin = async (data: FormData): Promise<{ access_token: string }> => {
+    const response = await apiHttp.post(`auth/login`, data)
+    return response.data
+  }
+
+  const postLogout = async (): Promise<void> => {
+    const response = await apiHttp.post(`auth/logout`)
+    return response.data
+  }
 
   const getEnvironments = async (): Promise<IDockerContainer[]> => {
     const response = await apiHttp.get(`environments`)
@@ -238,6 +249,8 @@ const api = (baseUrl: string, authToken?: string) => {
   }
 
   return {
+    postLogin,
+    postLogout,
     getEnvironments,
     getStacks,
     createStack,

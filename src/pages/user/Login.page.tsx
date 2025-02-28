@@ -2,8 +2,8 @@ import React from 'react'
 import SignIn from '../../components/sign-in/SignIn.tsx'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router'
-import useAuth from '../../helper/useAuth.ts'
 import { Navigate } from 'react-router-dom'
+import { useAuth } from '../../context/AuthProvider.tsx'
 
 const LoginPage = () => {
   const navigate = useNavigate()
@@ -15,7 +15,13 @@ const LoginPage = () => {
       .then(() => {
         toast.success('Login successful')
       })
-      .then(() => navigate('/0/'))
+      .catch((error) => {
+        const msg = error?.response?.data?.error || error?.message || 'Login failed'
+        toast.error(msg)
+        //throw error
+      })
+
+    return false
   }
 
   if (isAuthenticated) {
@@ -24,6 +30,7 @@ const LoginPage = () => {
 
   return (
     <>
+      {isAuthenticated && <>You are already logged in</>}
       <SignIn onSubmit={onSubmit} />
     </>
   )

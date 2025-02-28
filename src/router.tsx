@@ -22,7 +22,7 @@ import PageNotFound from './pages/PageNotFound.tsx'
 import api from './lib/api2.ts'
 import appRepo from './lib/repo.ts'
 import { restoreEnvsFromLocalStorage } from './helper/useEnvironments.ts'
-import { loadAppStore } from './lib/appStore.ts'
+import AuthProviderRouteWrapper from './pages/AuthProviderRouteWrapper.tsx'
 import { DEFAULT_ENVIRONMENTS, MASTER_AGENT_PORT } from './constants.ts'
 
 const getEnvApiFromLoaderArgs = (args: LoaderFunctionArgs) => {
@@ -45,33 +45,28 @@ const getEnvApiFromLoaderArgs = (args: LoaderFunctionArgs) => {
   const hostname = env.hostname || 'localhost'
   const agentPort = env.agentPort || MASTER_AGENT_PORT
   const apiBaseUrl = `${urlSchema}://${hostname}:${agentPort}/api`
-
-  const appStore = loadAppStore()
-  const authToken = appStore?.authToken
+  const authToken = localStorage.getItem('authToken') || undefined
   return api(apiBaseUrl, authToken)
 }
 
 const routes: RouteObject[] = [
   {
-    path: '/auth',
-    //element: <AuthRouteWrapper />,
-    errorElement: <RoutingErrorBoundary />,
-
-    children: [
-      {
-        path: 'login',
-        element: <LoginPage />,
-      },
-    ],
-  },
-  {
     path: '/',
-    element: <AuthenticatedRouteWrapper />,
+    element: <AuthProviderRouteWrapper />,
     errorElement: <RoutingErrorBoundary />,
 
     children: [
       {
-        //element: <LayoutRouteWrapper />,
+        path: 'auth',
+        children: [
+          {
+            path: 'login',
+            element: <LoginPage />,
+          },
+        ],
+      },
+      {
+        element: <AuthenticatedRouteWrapper />,
         children: [
           {
             index: true,
