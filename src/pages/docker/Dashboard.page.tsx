@@ -3,8 +3,6 @@ import { Helmet } from 'react-helmet-async'
 import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../elements/Heading.tsx'
 import Container from '@mui/material/Container'
-import DashboardEngineInfoWidget from '../../components/docker/Dashboard/DashboardEngineInfoWidget.tsx'
-import DashboardOverview from '../../components/docker/Dashboard/DashboardOverview.tsx'
 import AutoreloadButton from '../../elements/Autoreload/AutoreloadButton.tsx'
 import { useEnvApi } from '../../helper/useEnvApi.ts'
 import useAutoreload from '../../helper/useAutoreload.ts'
@@ -14,7 +12,8 @@ import { useNavigate } from 'react-router'
 import DashboardOverview2 from '../../components/docker/Dashboard/DashboardOverview2.tsx'
 
 const DashboardPage = () => {
-  const { api, envId } = useEnvApi()
+  const { api, env } = useEnvApi()
+  const envId = env.id
   const { logout } = useAuth()
   const navigate = useNavigate()
 
