@@ -2,7 +2,6 @@ import React from 'react'
 import IconButton, { IconButtonProps } from '@mui/material/IconButton'
 import CircularProgress from '@mui/material/CircularProgress'
 import { useEnvApi } from '../../helper/useEnvApi.ts'
-import { toast } from 'react-toastify'
 
 interface TaskIconButtonProps extends IconButtonProps {
   promise: () => Promise<any>

@@ -21,10 +21,9 @@ import RoutingErrorBoundary from './pages/RoutingErrorBoundary.tsx'
 import PageNotFound from './pages/PageNotFound.tsx'
 import api from './lib/api2.ts'
 import appRepo from './lib/repo.ts'
-import { DEFAULT_ENVIRONMENT, restoreEnvsFromLocalStorage } from './helper/useEnvironments.ts'
-import AuthProviderRouteWrapper from './pages/AuthProviderRouteWrapper.tsx'
-import { MASTER_AGENT_PORT } from './constants.ts'
+import { restoreEnvsFromLocalStorage } from './helper/useEnvironments.ts'
 import LogoutPage from './pages/user/Logout.page.tsx'
+import { DEFAULT_ENVIRONMENT } from './constants.ts'
 
 const getEnvApiFromLoaderArgs = (args: LoaderFunctionArgs) => {
   //const { envs } = useEnvironments()
@@ -41,19 +40,13 @@ const getEnvApiFromLoaderArgs = (args: LoaderFunctionArgs) => {
   if (!env) {
     throw new Error(`Environment ${envId} not found`)
   }
-
-  const urlSchema = env.useSSL ? 'https' : 'http'
-  const hostname = env.hostname || 'localhost'
-  const agentPort = env.agentPort || MASTER_AGENT_PORT
-  const apiBaseUrl = `${urlSchema}://${hostname}:${agentPort}/api`
-  const authToken = localStorage.getItem(envId + '.authToken') || undefined
-  return api(apiBaseUrl, authToken)
+  return api(env)
 }
 
 const routes: RouteObject[] = [
   {
     path: '/',
-    element: <AuthProviderRouteWrapper />,
+    //element: <AuthProviderRouteWrapper />,
     errorElement: <RoutingErrorBoundary />,
 
     children: [

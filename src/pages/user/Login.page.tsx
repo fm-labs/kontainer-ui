@@ -3,7 +3,7 @@ import SignIn from '../../components/sign-in/SignIn.tsx'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router'
 import { Navigate } from 'react-router-dom'
-import { useAuth } from '../../context/AuthProvider.tsx'
+import { useAuth } from '../../helper/useAuth.tsx'
 
 const LoginPage = () => {
   const navigate = useNavigate()

@@ -1,9 +1,20 @@
 import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
-import { IBackgroundTaskResponse, IDockerContainer, IDockerResourceAttrs, ContainerRegistry } from '../types.ts'
+import {
+  IBackgroundTaskResponse,
+  IDockerContainer,
+  IDockerResourceAttrs,
+  ContainerRegistry,
+  HostEnvironment,
+} from '../types.ts'
+import { MASTER_AGENT_PORT } from '../constants.ts'
 
-const api = (baseUrl: string, authToken?: string) => {
-  //baseUrl = baseUrl || '/api'
-  //console.log('API BASE URL', baseUrl)
+const api = (env: HostEnvironment) => {
+  const envId = env?.id
+  const urlSchema = env?.useSSL ? 'https' : 'http'
+  const hostname = env?.hostname || 'localhost'
+  const agentPort = env?.agentPort || MASTER_AGENT_PORT
+  const baseUrl = `${urlSchema}://${hostname}:${agentPort}/api`
+
   if (!baseUrl) {
     throw new Error('API base URL is required')
   }
@@ -26,6 +37,7 @@ const api = (baseUrl: string, authToken?: string) => {
 
   apiHttp.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
+      const authToken = localStorage.getItem(envId + '.authToken') || undefined
       if (authToken) {
         //config.headers['X-Api-Key'] = authToken
         config.headers['Authorization'] = `Bearer ${authToken}`
@@ -47,6 +59,8 @@ const api = (baseUrl: string, authToken?: string) => {
       if (error?.response?.status === 401) {
         console.error('401 Unauthorized')
         // @todo - handle 401 Unauthorized
+        localStorage.removeItem(envId + '.authToken')
+        window.location.reload()
       }
 
       if (error?.code === 'ECONNABORTED') {

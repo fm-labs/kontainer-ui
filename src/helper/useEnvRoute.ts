@@ -1,20 +1,18 @@
+import React from 'react'
 import { useLocation } from 'react-router'
 import { useMatches } from 'react-router-dom'
-import React from 'react'
 import useEnvironments from './useEnvironments.ts'
 
 export const useEnvRoute = () => {
   const location = useLocation()
   const matches = useMatches()
   const { envs } = useEnvironments()
-
   //console.log('useHostRoute', location, matches)
 
   const getEnvIdFromRoute = () => {
     if (!matches || matches.length <= 1) {
       return
     }
-
     // The first match contains the host alias
     const match = matches[1]
     return match.params.envId
@@ -24,7 +22,6 @@ export const useEnvRoute = () => {
     if (!envs) {
       return
     }
-
     return envs.find((env) => env.id === envId)
   }
 

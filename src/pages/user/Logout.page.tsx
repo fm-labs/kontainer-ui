@@ -1,6 +1,6 @@
 import React from 'react'
 import Button from '@mui/material/Button'
-import { useAuth } from '../../context/AuthProvider.tsx'
+import { useAuth } from '../../helper/useAuth.tsx'
 import { useNavigate } from 'react-router'
 import Container from '@mui/material/Container'
 

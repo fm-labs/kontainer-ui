@@ -1,32 +1,23 @@
 import React from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import { EnvironmentProvider } from '../context/EnvironmentContext.tsx'
 import { useEnvRoute } from '../helper/useEnvRoute.ts'
-import Layout from '../layout/Layout.tsx'
-import Container from '@mui/material/Container'
+import { AuthProvider } from '../helper/useAuth.tsx'
+import { useAuthApi } from '../helper/useAuthApi.ts'
 
 const EnvironmentRouteWrapper = () => {
   const envRoute = useEnvRoute()
-
-  if (!envRoute.isEnvRoute) {
-    return <>Not a valid environment route</>
+  if (!envRoute.isEnvRoute || !envRoute.env) {
+    return <div>Not a valid environment</div>
   }
 
-  const initialContextState = {
-    hostname: 'localhost',
-    autoconnect: true,
-  }
+  const authProcessor = useAuthApi()
 
   return (
-    <EnvironmentProvider initialState={initialContextState}>
-      {/*<Layout>*/}
-      {/*<Container maxWidth={false} style={{ fontSize: '0.9em' }}>
-        <Link to={'/'}>Environments</Link>
-        {' > '}
-        <Link to={`/${envRoute.envId}`}>{envRoute.env?.label || envRoute.env?.hostname}</Link>
-      </Container>*/}
-      <Outlet />
-      {/*</Layout>*/}
+    <EnvironmentProvider initialState={envRoute.env}>
+      <AuthProvider authProcessor={authProcessor}>
+        <Outlet />
+      </AuthProvider>
     </EnvironmentProvider>
   )
 }

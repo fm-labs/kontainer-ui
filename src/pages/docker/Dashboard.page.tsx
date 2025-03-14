@@ -9,8 +9,9 @@ import AutoreloadButton from '../../elements/Autoreload/AutoreloadButton.tsx'
 import { useEnvApi } from '../../helper/useEnvApi.ts'
 import useAutoreload from '../../helper/useAutoreload.ts'
 import Button from '@mui/material/Button'
-import { useAuth } from '../../context/AuthProvider.tsx'
+import { useAuth } from '../../helper/useAuth.tsx'
 import { useNavigate } from 'react-router'
+import DashboardOverview2 from '../../components/docker/Dashboard/DashboardOverview2.tsx'
 
 const DashboardPage = () => {
   const { api, envId } = useEnvApi()
@@ -54,8 +55,9 @@ const DashboardPage = () => {
       </Toolbar>
 
       <div>
-        <DashboardOverview data={data} />
-        <DashboardEngineInfoWidget />
+        <DashboardOverview2 data={data} />
+        {/*<DashboardOverview data={data} />*/}
+        {/*<DashboardEngineInfoWidget />*/}
         {/*<DashboardSystemInfoWidget />*/}
       </div>
     </Container>

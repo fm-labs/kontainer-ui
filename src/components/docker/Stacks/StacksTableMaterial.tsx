@@ -1,12 +1,12 @@
 import React from 'react'
 import { MaterialReactTable, useMaterialReactTable, type MRT_ColumnDef } from 'material-react-table'
 import { IDockerResourceAttrs } from '../../../types.ts'
-import IconButton from '@mui/material/IconButton'
 import { Link } from 'react-router-dom'
 import { useEnvApi } from '../../../helper/useEnvApi.ts'
+import StackIconControls from './StackIconControls.tsx'
 import { useErrorHandler } from '../../../helper/useErrorHandler.ts'
 import AppIcons from '../../../elements/AppIcons.tsx'
-import StackIconControls from './StackIconControls.tsx'
+import IconButton from '@mui/material/IconButton'
 
 const StacksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
   const { api } = useEnvApi()
@@ -14,43 +14,43 @@ const StacksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
   //   toast.error(error?.message || 'An Error occurred')
   // }
 
-  const { toastError: defaultErrorHandler } = useErrorHandler()
+  //const { toastError: defaultErrorHandler } = useErrorHandler()
 
-  const handleStackStartClick = (id: string) => () => {
-    console.log('Starting stack', id)
-    api
-      .startStack(id)
-      //.then((response) => toast.info(response?.data))
-      .catch(defaultErrorHandler)
-  }
-
-  const handleStackStopClick = (id: string) => () => {
-    console.log('Stopping stack', id)
-    api
-      .stopStack(id)
-      //.then((response) => toast.info(response?.data))
-      .catch(defaultErrorHandler)
-  }
-
-  const handleStackPauseClick = (id: string) => () => {
-    console.log('Pausing stack', id)
-    api.stopStack(id).catch(defaultErrorHandler)
-  }
-
-  const handleStackDeleteClick = (id: string) => () => {
-    console.log('Delete stack', id)
-    api.deleteStack(id).catch(defaultErrorHandler)
-  }
-
-  const handleStackDestroyClick = (id: string) => () => {
-    console.log('Destroy stack', id)
-    api.destroyStack(id).catch(defaultErrorHandler)
-  }
-
-  const handleStackSyncClick = (id: string) => () => {
-    console.log('Sync stack', id)
-    api.syncStack(id).catch(defaultErrorHandler)
-  }
+  // const handleStackStartClick = (id: string) => () => {
+  //   console.log('Starting stack', id)
+  //   api
+  //     .startStack(id)
+  //     //.then((response) => toast.info(response?.data))
+  //     .catch(defaultErrorHandler)
+  // }
+  //
+  // const handleStackStopClick = (id: string) => () => {
+  //   console.log('Stopping stack', id)
+  //   api
+  //     .stopStack(id)
+  //     //.then((response) => toast.info(response?.data))
+  //     .catch(defaultErrorHandler)
+  // }
+  //
+  // const handleStackPauseClick = (id: string) => () => {
+  //   console.log('Pausing stack', id)
+  //   api.stopStack(id).catch(defaultErrorHandler)
+  // }
+  //
+  // const handleStackDeleteClick = (id: string) => () => {
+  //   console.log('Delete stack', id)
+  //   api.deleteStack(id).catch(defaultErrorHandler)
+  // }
+  //
+  // const handleStackDestroyClick = (id: string) => () => {
+  //   console.log('Destroy stack', id)
+  //   api.destroyStack(id).catch(defaultErrorHandler)
+  // }
+  //
+  // const handleStackSyncClick = (id: string) => () => {
+  //   console.log('Sync stack', id)
+  //   api.syncStack(id).catch(defaultErrorHandler)
+  // }
 
   const columns = React.useMemo<MRT_ColumnDef<IDockerResourceAttrs>[]>(
     () => [

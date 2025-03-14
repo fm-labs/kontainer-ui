@@ -1,3 +1,5 @@
+import { HostEnvironment } from './types.ts'
+
 export const MASTER_AGENT_API_BASEURL = import.meta.env.VITE_AGENT_API_BASEURL || 'http://localhost:5000/api'
 
 export const CURRENT_HOSTNAME = window.location.hostname
@@ -30,3 +32,10 @@ export const PORTAINER_TEMPLATE_URLS = [
     url: 'https://raw.githubusercontent.com/Lissy93/portainer-templates/refs/heads/main/templates.json',
   },
 ]
+export const DEFAULT_ENVIRONMENT: HostEnvironment = {
+  id: '0',
+  label: MASTER_AGENT_LABEL,
+  hostname: MASTER_AGENT_HOST,
+  agentPort: MASTER_AGENT_PORT,
+  useSSL: MASTER_AGENT_SSL,
+}
