@@ -169,7 +169,6 @@ export default function SignIn(props: SignInProps) {
                 type='password'
                 id='password'
                 autoComplete='current-password'
-                autoFocus
                 required
                 fullWidth
                 variant='outlined'
