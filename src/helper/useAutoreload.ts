@@ -4,7 +4,7 @@ const useAutoreload = (callback: () => void | Promise<void>, interval: number = 
   const callbackRef = React.useRef(callback)
   callbackRef.current = callback
 
-  const timerRef = React.useRef<any>()
+  const timerRef = React.useRef<any>(null)
   const [lastExec, setLastExec] = React.useState<number>(0)
   const [_interval, _setInterval] = React.useState(interval)
 
