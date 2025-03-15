@@ -1,11 +1,11 @@
 // global imports
-@use "styles/_fonts";
+//@use "styles/_fonts";
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Oswald&family=Raleway:wght@300;400&family=Roboto+Condensed&display=swap");
 
 // vendor imports
-@use "styles/_toastify";
+//@use "styles/_toastify";
+@import "~react-toastify/dist/ReactToastify.css";
 
-// app imports
-//@import "styles/App";
 
 
 body {
@@ -64,13 +64,4 @@ code {
   to {
     transform: rotate(360deg);
   }
-}
-
-/** MUI Overrides **/
-//.MuiTableCell-sizeSmall {
-//  padding: 0.3rem 0.6rem !important;
-//}
-
-.MuiIconButton-sizeSmall > * {
-  //font-size: 1.1rem !important;
 }
