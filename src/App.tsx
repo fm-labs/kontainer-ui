@@ -2,7 +2,7 @@ import React from 'react'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { RouterProvider } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
-import { AppStoreProvider } from './context/AppContext.tsx'
+import { AppStoreProvider } from './helper/useAppStoreContext.tsx'
 import router from './router'
 
 function App() {

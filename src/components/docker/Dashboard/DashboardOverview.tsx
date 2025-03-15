@@ -1,26 +1,28 @@
 import React from 'react'
 import Grid from '@mui/material/Grid2'
 import Box from '@mui/material/Box'
-import { FileSizeFormatter } from '../../../elements/Formatters.tsx'
+import { FileSizeFormatter } from '~/elements/Formatters.tsx'
 import AppIcons from '../../../elements/AppIcons.tsx'
 import { FormControlLabel, FormGroup, Switch } from '@mui/material'
 import { Link } from 'react-router-dom'
-import ContainerFormatters from '../Containers/ContainerFormatters.tsx'
-import ContainerStatusText from '../Containers/ContainerStatusText.tsx'
-import ContainerIconControls from '../Containers/ContainerIconControls.tsx'
+import ContainerFormatters from '~/components/docker/Container/components/ContainerFormatters.tsx'
+import ContainerStatusText from '~/components/docker/Container/components/ContainerStatusText.tsx'
+import ContainerIconControls from '~/components/docker/Container/components/ContainerIconControls.tsx'
+import { useEnvironment } from '~/helper/useEnvironmentContext.tsx'
 
-const DashboardOverview = ({ data }) => {
+const DashboardOverview = () => {
+  const { df } = useEnvironment()
   const [onlyActive, setOnlyActive] = React.useState(true)
 
   const containersData = React.useMemo(() => {
-    if (!data) return []
-    return data.Containers.sort((a, b) => a?.Names[0].localeCompare(b?.Names[0]))
-  }, [data, onlyActive])
+    if (!df) return []
+    return df?.Containers?.sort((a, b) => a?.Names[0].localeCompare(b?.Names[0]))
+  }, [df, onlyActive])
 
   const imagesData = React.useMemo(() => {
-    if (!data) return []
+    if (!df) return []
 
-    let _data = data?.Images || []
+    let _data = df?.Images || []
     //_data = data.Images.sort((a, b) => a?.RepoTags[0].localeCompare(b?.RepoTags[0]))
 
     if (onlyActive) {
@@ -31,12 +33,12 @@ const DashboardOverview = ({ data }) => {
     }
 
     return _data
-  }, [data, onlyActive])
+  }, [df, onlyActive])
 
   const volumesData = React.useMemo(() => {
-    if (!data) return []
+    if (!df) return []
     let _data
-    _data = data.Volumes.sort((a, b) => a?.Name.localeCompare(b?.Name))
+    _data = df?.Volumes?.sort((a, b) => a?.Name.localeCompare(b?.Name))
 
     if (onlyActive) {
       _data = _data.filter((volume) => volume.UsageData.RefCount > 0)
@@ -46,7 +48,7 @@ const DashboardOverview = ({ data }) => {
     }
 
     return _data
-  }, [data, onlyActive])
+  }, [df, onlyActive])
 
   // React.useEffect(() => {
   //   fetchData()
@@ -219,7 +221,7 @@ const DashboardOverview = ({ data }) => {
     )
   }
 
-  if (!data) {
+  if (!df) {
     return <div>Loading...</div>
   }
 
@@ -234,15 +236,15 @@ const DashboardOverview = ({ data }) => {
         </FormGroup>
       </div>
       <h5>
-        <AppIcons.ContainerIcon /> Containers ({containersData.length}/{data?.Containers?.length})
+        <AppIcons.ContainerIcon /> Containers ({containersData?.length}/{df?.Containers?.length})
       </h5>
-      <ItemContainer>{containersData.map(renderContainer)}</ItemContainer>
+      <ItemContainer>{containersData?.map(renderContainer)}</ItemContainer>
       <h5>
-        <AppIcons.ImageIcon /> Images ({imagesData.length}/{data?.Images?.length})
+        <AppIcons.ImageIcon /> Images ({imagesData.length}/{df?.Images?.length})
       </h5>
       <ItemContainer>{imagesData.map(renderImage)}</ItemContainer>
       <h5>
-        <AppIcons.VolumeIcon /> Volumes ({volumesData.length}/{data?.Volumes?.length})
+        <AppIcons.VolumeIcon /> Volumes ({volumesData.length}/{df?.Volumes?.length})
       </h5>
       <ItemContainer>{volumesData.map(renderVolume)}</ItemContainer>
     </div>

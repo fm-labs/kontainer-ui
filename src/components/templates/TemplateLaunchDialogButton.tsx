@@ -2,7 +2,7 @@ import React from 'react'
 import BasicDialogButton from '../../elements/Dialog/BasicDialogButton.tsx'
 import { StackTemplate } from '../../types.ts'
 import DialogContent from '@mui/material/DialogContent'
-import StackFromTemplate from '../docker/Stacks/StackFromTemplate.tsx'
+import StackFromTemplate from '../docker/Stacks/components/StackFromTemplate.tsx'
 
 interface IStackTemplateLaunchProps {
   template: StackTemplate
@@ -10,7 +10,7 @@ interface IStackTemplateLaunchProps {
 
 const TemplateLaunchDialogButton = ({ template }: IStackTemplateLaunchProps) => {
   const formData = {
-    stackName: '',
+    stackName: template?.name || 'new-stack',
     templateContent: JSON.stringify(template, null, 2),
   }
 

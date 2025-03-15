@@ -30,6 +30,13 @@ export interface IDockerResourceAttrs {
   [key: string]: any
 }
 
+export type DockerEngineDfData = {
+  Containers?: IDockerResourceAttrs[]
+  Images?: IDockerResourceAttrs[]
+  Volumes?: IDockerResourceAttrs[]
+  Networks?: IDockerResourceAttrs[]
+}
+
 export interface IBackgroundTaskResponse<T = any> {
   task_id: string
   ref?: string

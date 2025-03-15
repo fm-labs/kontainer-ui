@@ -2,24 +2,26 @@ import React from 'react'
 import Grid from '@mui/material/Grid2'
 import AppIcons from '../../../elements/AppIcons.tsx'
 import { FormControlLabel, FormGroup, Switch } from '@mui/material'
-import ContainerBlock from './Blocks/ContainerBlock.tsx'
-import ImageBlock from './Blocks/ImageBlock.tsx'
-import VolumeBlock from './Blocks/VolumeBlock.tsx'
+import ContainerBlock from './components/Blocks/ContainerBlock.tsx'
+import ImageBlock from './components/Blocks/ImageBlock.tsx'
+import VolumeBlock from './components/Blocks/VolumeBlock.tsx'
+import { useEnvironment } from '~/helper/useEnvironmentContext.tsx'
 
-const DashboardOverview2 = ({ data }) => {
+const DashboardOverview2 = () => {
+  const { df } = useEnvironment()
   const [onlyActive, setOnlyActive] = React.useState(true)
 
   const containersData = React.useMemo(() => {
-    if (!data) return []
-    return data.Containers.sort((a, b) => a?.Names[0].localeCompare(b?.Names[0]))
-  }, [data, onlyActive])
+    if (!df) return []
+    return df?.Containers?.sort((a, b) => a?.Names[0].localeCompare(b?.Names[0]))
+  }, [df, onlyActive])
 
   const imagesData = React.useMemo(() => {
-    if (!data) return []
+    if (!df) return []
 
-    let _data = data?.Images || []
+    let _data = df?.Images || []
     //_data = data.Images.sort((a, b) => a?.RepoTags[0].localeCompare(b?.RepoTags[0]))
-
+    _data = _data || []
     if (onlyActive) {
       _data = _data.filter((image) => image.Containers > 0)
     } else {
@@ -28,13 +30,13 @@ const DashboardOverview2 = ({ data }) => {
     }
 
     return _data
-  }, [data, onlyActive])
+  }, [df, onlyActive])
 
   const volumesData = React.useMemo(() => {
-    if (!data) return []
+    if (!df) return []
     let _data
-    _data = data.Volumes.sort((a, b) => a?.Name.localeCompare(b?.Name))
-
+    _data = df?.Volumes?.sort((a, b) => a?.Name.localeCompare(b?.Name))
+    _data = _data || []
     if (onlyActive) {
       _data = _data.filter((volume) => volume.UsageData.RefCount > 0)
     } else {
@@ -43,7 +45,7 @@ const DashboardOverview2 = ({ data }) => {
     }
 
     return _data
-  }, [data, onlyActive])
+  }, [df, onlyActive])
 
   // React.useEffect(() => {
   //   fetchData()
@@ -75,7 +77,7 @@ const DashboardOverview2 = ({ data }) => {
   //   </div>
   // )
 
-  if (!data) {
+  if (!df) {
     return <div>Loading...</div>
   }
 
@@ -90,15 +92,13 @@ const DashboardOverview2 = ({ data }) => {
         </FormGroup>
       </div>
       <h5>
-        <AppIcons.ContainerIcon /> Containers ({containersData.length}/{data?.Containers?.length})
+        <AppIcons.ContainerIcon /> Containers ({containersData?.length}/{df?.Containers?.length})
       </h5>
       <ItemContainer>
-        {containersData.map((c, idx) => (
-          <ContainerBlock key={`Container-${idx}`} container={c} />
-        ))}
+        {containersData?.map((c, idx) => <ContainerBlock key={`Container-${idx}`} container={c} />)}
       </ItemContainer>
       <h5>
-        <AppIcons.ImageIcon /> Images ({imagesData.length}/{data?.Images?.length})
+        <AppIcons.ImageIcon /> Images ({imagesData.length}/{df?.Images?.length})
       </h5>
       <ItemContainer>
         {imagesData.map((i, idx) => (
@@ -106,7 +106,7 @@ const DashboardOverview2 = ({ data }) => {
         ))}
       </ItemContainer>
       <h5>
-        <AppIcons.VolumeIcon /> Volumes ({volumesData.length}/{data?.Volumes?.length})
+        <AppIcons.VolumeIcon /> Volumes ({volumesData.length}/{df?.Volumes?.length})
       </h5>
       <ItemContainer>
         {volumesData.map((v, idx) => (

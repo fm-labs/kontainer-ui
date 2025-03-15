@@ -9,9 +9,10 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 // import AppIcons from '../../elements/AppIcons.tsx'
 import Button from '@mui/material/Button'
 import TemplateLaunchDialogButton from './TemplateLaunchDialogButton.tsx'
+import { StackTemplate } from '../../types.ts'
 
 interface StackTemplatesViewProps {
-  templates: any[]
+  templates: StackTemplate[]
 }
 
 // const StackTemplateInfoDialog = ({ template }: any) => {
@@ -111,7 +112,7 @@ const StackTemplatesView = ({ templates }: StackTemplatesViewProps) => {
         {templates?.length > 0 &&
           templates?.map((template: any, idx: number) => (
             <Grid size={{ xs: 12, md: 6, lg: 4, xl: 3 }} key={`${template?.name}-${idx}`}>
-              <Card>
+              <Card elevation={3} sx={{ border: '1px solid #ccc' }}>
                 <CardHeader
                   avatar={
                     <Avatar
@@ -173,9 +174,9 @@ const StackTemplatesView = ({ templates }: StackTemplatesViewProps) => {
                     <BugReportIcon />
                   </IconButton>*/}
                   <>
-                    <Button variant={'outlined'} onClick={() => handleLaunchTemplate(template)}>
+                    {/*<Button variant={'outlined'} onClick={() => handleLaunchTemplate(template)}>
                       Launch
-                    </Button>
+                    </Button>*/}
                     <TemplateLaunchDialogButton template={template} />
                   </>
                 </CardActions>

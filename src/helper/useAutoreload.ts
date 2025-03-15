@@ -1,6 +1,6 @@
 import React from 'react'
 
-const useAutoreload = (callback: () => void | Promise<void>, interval: number = 15000) => {
+export const useAutoreload = (callback: () => void | Promise<void>, interval: number = 15000) => {
   const callbackRef = React.useRef(callback)
   callbackRef.current = callback
 
@@ -9,7 +9,7 @@ const useAutoreload = (callback: () => void | Promise<void>, interval: number = 
   const [_interval, _setInterval] = React.useState(interval)
 
   React.useEffect(() => {
-    //console.log('Autoreload:mount')
+    console.log('Autoreload:mount')
     const execCallback = async () => {
       //console.log('Autoreload:execCallback', _interval, Date.now() / 1000)
       let p = callbackRef.current()
@@ -39,7 +39,7 @@ const useAutoreload = (callback: () => void | Promise<void>, interval: number = 
     timerRef.current = setTimeout(execCallback, 1)
 
     return () => {
-      // console.log('Autoreload:unmount')
+      console.log('Autoreload:unmount')
       // Promise.reject(cb).catch((err) => {
       //   console.error('Autoreload:unmount error', err)
       // })
@@ -56,4 +56,4 @@ const useAutoreload = (callback: () => void | Promise<void>, interval: number = 
   }
 }
 
-export default useAutoreload
+//export default useAutoreload

@@ -60,7 +60,8 @@ const api = (env: HostEnvironment) => {
         console.error('401 Unauthorized')
         // @todo - handle 401 Unauthorized
         localStorage.removeItem(envId + '.authToken')
-        window.location.reload()
+        //window.location.reload()
+        //window.location.href = '/'
       }
 
       if (error?.code === 'ECONNABORTED') {

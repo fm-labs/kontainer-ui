@@ -1,5 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
+import dts from 'vite-plugin-dts'
+import tsconfigPaths from 'vite-tsconfig-paths'
 import { dependencies } from './package.json'
 import * as path from 'path'
 
@@ -19,16 +21,28 @@ function renderChunks(deps: Record<string, string>) {
 }
 
 export default defineConfig({
+  plugins: [react(), tsconfigPaths()],
+
+  base: './', // this is needed for the app to work in subdirectories
+
   resolve: {
     alias: {
       '~react-toastify': path.resolve(__dirname, 'node_modules/react-toastify'),
     },
   },
 
-  plugins: [react()],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler', // or "modern"
+      },
+    },
+  },
+
   build: {
-    sourcemap: true,
-    minify: false,
+    sourcemap: false, // only for debugging
+    minify: 'esbuild', // or "terser" (esbuild is faster)
+    cssCodeSplit: true, // separate css for better caching
     rollupOptions: {
       output: {
         manualChunks: {
