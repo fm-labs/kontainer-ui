@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactJson, { ReactJsonViewProps } from 'react-json-view'
+import ReactJson, { ReactJsonViewProps } from '@microlink/react-json-view'
 
 const JsonView = (props: ReactJsonViewProps) => {
   const defaultProps: ReactJsonViewProps = {
