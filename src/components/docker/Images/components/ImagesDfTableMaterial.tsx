@@ -4,10 +4,25 @@ import {
   useMaterialReactTable,
   type MRT_ColumnDef, //if using TypeScript (optional, but recommended)
 } from 'material-react-table'
-import { IDockerResourceAttrs } from '../../../types.ts'
+import { IDockerResourceAttrs } from '~/types.ts'
 import moment from 'moment'
+import BooleanChip from '~/elements/BooleanChip.tsx'
+import ImageId from '~/components/docker/Images/components/ImageId.tsx'
+import FileSize from '~/elements/FileSize.tsx'
 
-const ImagesTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
+interface ImagesTableProps {
+  data: IDockerResourceAttrs[]
+  onRowClick?: (row: IDockerResourceAttrs) => void
+}
+
+const ImagesDfTableMaterial = ({ data, onRowClick }: ImagesTableProps) => {
+  const handleRowClick = (row: IDockerResourceAttrs) => {
+    if (onRowClick) {
+      console.log('onRowClick', row)
+      onRowClick(row)
+    }
+  }
+
   const columns = React.useMemo<MRT_ColumnDef<any>[]>(
     () => [
       {
@@ -17,18 +32,12 @@ const ImagesTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
         enableHiding: false, //disable a feature for this column
         Cell: ({ cell }) => {
           const id = cell.getValue<string>()
-          return <div title={id}>{id.substring(0, 32)}</div>
-        },
-      },
-      {
-        accessorKey: '_InUse', //simple recommended way to define a column
-        header: 'In Use',
-        //muiTableHeadCellProps: { style: { color: 'green' } }, //custom props
-        enableHiding: true, //disable a feature for this column
-        grow: 0, //disable column resizing
-        Cell: ({ cell }) => {
-          const inUse = cell.getValue<boolean>()
-          return <div>{/*inUse ? 'in-use' : 'no'*/}?</div>
+          const row = cell.row.original
+          return (
+            <span onClick={() => handleRowClick(row)}>
+              <ImageId value={id} />
+            </span>
+          )
         },
       },
       {
@@ -46,24 +55,55 @@ const ImagesTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
         },
       },
       {
+        accessorKey: 'Containers', //simple recommended way to define a column
+        header: 'In Use',
+        //muiTableHeadCellProps: { style: { color: 'green' } }, //custom props
+        enableHiding: true, //disable a feature for this column
+        grow: 0, //disable column resizing
+        Cell: ({ cell }) => {
+          const numberOfContainers = cell.getValue<number>()
+          return <BooleanChip value={numberOfContainers > 0} trueLabel={'in use'} falseLabel={'unused'}></BooleanChip>
+        },
+      },
+      {
         accessorKey: 'Size', //simple recommended way to define a column
         header: 'Size',
         //muiTableHeadCellProps: { style: { color: 'green' } }, //custom props
         enableHiding: true, //disable a feature for this column
         Cell: ({ cell }) => {
           const size = cell.getValue<number>()
-          return <div>{(size / 1024 / 1024).toFixed(2)} MB</div>
+          //return <div style={{ textAlign: 'right' }}>{(size / 1024 / 1024).toFixed(2)} MB</div>
+          return (
+            <div style={{ textAlign: 'right' }}>
+              <FileSize bytes={size} />
+            </div>
+          )
+        },
+      },
+      {
+        accessorKey: 'SharedSize', //simple recommended way to define a column
+        header: 'Shared Size',
+        //muiTableHeadCellProps: { style: { color: 'green' } }, //custom props
+        enableHiding: true, //disable a feature for this column
+        Cell: ({ cell }) => {
+          const size = cell.getValue<number>()
+          //return <div style={{ textAlign: 'right' }}>{(size / 1024 / 1024).toFixed(2)} MB</div>
+          return (
+            <div style={{ textAlign: 'right' }}>
+              <FileSize bytes={size} />
+            </div>
+          )
         },
       },
       {
         accessorKey: 'Created',
         header: 'Created',
         Cell: ({ cell }) => {
-          const date = cell.getValue<string>()
-          if (!date) {
+          const timestamp = cell.getValue<number>()
+          if (!timestamp) {
             return '-'
           }
-          return moment(date).fromNow()
+          return <div style={{ textAlign: 'right' }}>{moment.unix(timestamp).fromNow()}</div>
         },
       },
     ],
@@ -100,4 +140,4 @@ const ImagesTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
   return <MaterialReactTable table={table} />
 }
 
-export default ImagesTableMaterial
+export default ImagesDfTableMaterial

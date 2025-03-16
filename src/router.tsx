@@ -116,16 +116,16 @@ const routes: RouteObject[] = [
                   {
                     path: 'images',
                     element: <ImagesPage />,
-                    loader: async (args) => {
-                      return getEnvApiFromLoaderArgs(args).getImages()
-                    },
+                    // loader: async (args) => {
+                    //   return getEnvApiFromLoaderArgs(args).getImages()
+                    // },
                   },
                   {
                     path: 'volumes',
                     element: <VolumesPage />,
-                    loader: async (args) => {
-                      return getEnvApiFromLoaderArgs(args).getVolumes()
-                    },
+                    // loader: async (args) => {
+                    //   return getEnvApiFromLoaderArgs(args).getVolumes()
+                    // },
                   },
                   {
                     path: 'networks',

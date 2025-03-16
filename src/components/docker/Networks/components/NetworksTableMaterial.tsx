@@ -4,16 +4,38 @@ import {
   useMaterialReactTable,
   type MRT_ColumnDef, //if using TypeScript (optional, but recommended)
 } from 'material-react-table'
-import { IDockerResourceAttrs } from '../../../../types.ts'
+import { IDockerResourceAttrs } from '~/types.ts'
 import moment from 'moment/moment'
 
-const NetworksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
+interface NetworksTableProps {
+  data: IDockerResourceAttrs[]
+  onRowClick?: (row: IDockerResourceAttrs) => void
+}
+
+const NetworksTableMaterial = ({ data, onRowClick }: NetworksTableProps) => {
+  const handleRowClick = (row: IDockerResourceAttrs) => {
+    if (onRowClick) {
+      console.log('onRowClick', row)
+      onRowClick(row)
+    }
+  }
+
   const columns = React.useMemo<MRT_ColumnDef<any>[]>(
     () => [
       {
         accessorKey: 'Name',
         header: 'Name',
         enableHiding: false, //disable a feature for this column
+        Cell: ({ cell, column }) => {
+          const name = cell.getValue<string>()
+          const row = cell.row.original
+          //return <div title={name}>{JSON.stringify(row, null, 2)}</div>
+          return (
+            <div title={name} onClick={() => handleRowClick(row)}>
+              {row.Name}
+            </div>
+          )
+        },
       },
       {
         accessorKey: 'Id',
@@ -78,7 +100,11 @@ const NetworksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
 
   //note: you can also pass table options as props directly to <MaterialReactTable /> instead of using useMaterialReactTable
   //but the useMaterialReactTable hook will be the most recommended way to define table options
-  return <MaterialReactTable table={table} />
+  return (
+    <>
+      <MaterialReactTable table={table} />
+    </>
+  )
 }
 
 export default NetworksTableMaterial

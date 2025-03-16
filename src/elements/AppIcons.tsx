@@ -85,6 +85,7 @@ const AppIcons = {
   LikedIcon: HiHeart,
   SettingsIcon: HiAdjustmentsHorizontal,
 
+  CloseIcon: HiXMark,
   ConnectedIcon: HiLink,
   DisconnectIcon: HiLinkSlash,
 }
