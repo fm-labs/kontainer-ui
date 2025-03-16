@@ -9,6 +9,7 @@ import Button from '@mui/material/Button'
 import { useNavigate } from 'react-router'
 import DashboardOverview2 from './DashboardOverview2.tsx'
 import DashboardOverviewStacked from '~/components/docker/Dashboard/DashboardOverviewStacked.tsx'
+import DockerEngineInfoWidget from '~/components/docker/Dashboard/components/DockerEngineInfoWidget.tsx'
 
 const DashboardPage = () => {
   const { env } = useEnvApi()
@@ -57,8 +58,8 @@ const DashboardPage = () => {
         <hr />
         <DashboardOverview2 />
         {/*<DashboardOverview data={data} />*/}
-        {/*<DashboardEngineInfoWidget />*/}
-        {/*<DashboardSystemInfoWidget />*/}
+        <DockerEngineInfoWidget />
+        {/*<SystemInfoWidget />*/}
       </div>
     </Container>
   )

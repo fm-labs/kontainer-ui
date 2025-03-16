@@ -39,10 +39,10 @@ const DockerEngineInfoWidget = () => {
 
   return (
     <div>
-      <h5>
+      {/*<h5>
         <AppIcons.EnvironmentIcon /> Summary
-      </h5>
-      {engineInfo && <DockerEngineInfoGrid engineInfo={engineInfo} />}
+      </h5>*/}
+      {/*engineInfo && <DockerEngineInfoGrid engineInfo={engineInfo} />*/}
 
       <h5>
         <AppIcons.DockerIcon /> Engine Info
