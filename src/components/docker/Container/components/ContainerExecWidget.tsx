@@ -1,6 +1,7 @@
 import React from 'react'
 import { useEnvApi } from '../../../../helper/useEnvApi.ts'
 import { toast } from 'react-toastify'
+import { Button } from '@mui/material'
 
 const ContainerExecCommandWidget = ({ container }) => {
   const [logs, setLogs] = React.useState<string[]>([])
@@ -17,25 +18,37 @@ const ContainerExecCommandWidget = ({ container }) => {
       return
     }
 
-    const p = api.execContainerCommand(container.Id, command).then((response) => {
-      setLogs(response.data)
-    })
-
-    await toast.promise(p, {
-      pending: 'Executing command',
-      success: 'Command executed',
-      error: 'Error executing command',
-    })
-  }, [container])
+    api
+      .execContainerCommand(container.Id, command)
+      .then((response) => {
+        setLogs(response.data)
+      })
+      .catch((error) => {
+        setLogs(['An error occured', error?.message || 'Unknown error'])
+      })
+  }, [container, command])
 
   return (
     <div>
-      <textarea value={command} onChange={(e) => setCommand(e.target.value)} cols={100} rows={3} />
-      <button onClick={execCommand}>Execute</button>
-
-      {logs.map((log, index) => (
-        <div key={index}>{log}</div>
-      ))}
+      <div>
+        {logs.map((log, index) => (
+          <div key={index}>{log}</div>
+        ))}
+      </div>
+      <div>
+        <textarea
+          style={{ maxWidth: '800px' }}
+          value={command}
+          onChange={(e) => setCommand(e.target.value)}
+          cols={100}
+          rows={3}
+        />
+      </div>
+      <div>
+        <Button onClick={execCommand} variant={'outlined'}>
+          Execute
+        </Button>
+      </div>
     </div>
   )
 }

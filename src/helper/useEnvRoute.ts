@@ -34,7 +34,7 @@ export const useEnvRoute = () => {
         return path
       }
 
-      return useHref(`/${envId}${path}`)
+      return `/${envId}${path}`
     },
     [envId],
   )

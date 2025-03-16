@@ -4,15 +4,20 @@ import Form from '@rjsf/mui'
 import validator from '@rjsf/validator-ajv8'
 
 interface JsonSchemaFormProps {
-  schemaUrl: string
+  schemaUrl?: string
+  schema?: RJSFSchema
+  onDataChange?: (data: any) => void
 }
 
 const JsonSchemaForm = (props: JsonSchemaFormProps) => {
-  const schemaUrl = props.schemaUrl
   const [jsonSchema, setJsonSchema] = React.useState<RJSFSchema>()
   const [data, setData] = React.useState<any>()
 
-  const fetchJsonSchema = async () => {
+  if (props?.schemaUrl && props?.schema) {
+    console.warn('JsonSchemaForm: both schemaUrl and schema are provided. schema will be used.')
+  }
+
+  const fetchJsonSchema = async (schemaUrl) => {
     const response = await fetch(schemaUrl)
     const jsonSchema = await response.json()
     console.log(jsonSchema)
@@ -20,8 +25,17 @@ const JsonSchemaForm = (props: JsonSchemaFormProps) => {
   }
 
   React.useEffect(() => {
-    fetchJsonSchema()
-  }, [])
+    if (props?.schemaUrl && props?.schema) {
+      console.warn('JsonSchemaForm: both schemaUrl and schema are provided. schema will be used.')
+      setJsonSchema(props.schema)
+    } else if (props?.schema) {
+      setJsonSchema(props.schema)
+    } else if (props.schemaUrl) {
+      fetchJsonSchema(props.schemaUrl)
+    } else {
+      console.error('JsonSchemaForm: no schema provided')
+    }
+  }, [props])
 
   React.useEffect(() => {
     console.log('JsonSchemaForm: data loaded', data)

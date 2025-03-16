@@ -7,8 +7,7 @@ import Heading from '../../elements/Heading.tsx'
 import Button from '@mui/material/Button'
 import { Card, CardActions, CardContent, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid2'
-import { Link } from 'react-router-dom'
-import { useAuth } from '../../helper/useAuth.tsx'
+import { Link, useHref } from 'react-router-dom'
 
 const EnvironmentsPage = () => {
   const { envs } = useEnvironments()
@@ -61,7 +60,7 @@ const EnvironmentsPage = () => {
                 </div>
               </CardContent>
               <CardActions>
-                <Button size='small' variant={'outlined'} href={`/${env.id}/connect`}>
+                <Button size='small' variant={'outlined'} href={useHref(`/${env.id}/connect`)}>
                   Connect
                 </Button>
                 {/*<Button size='small' variant={'outlined'} href={`/${env.id}/disconnect`}>

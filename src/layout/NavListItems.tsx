@@ -35,7 +35,7 @@ const NavListItems = ({ items }: NavListItemsProps) => {
           <ListItemButton
             key={index}
             onClick={() => handleClick(item)}
-            href={item.to}
+            href={href}
             target={item?.target}
             title={item.label}
             aria-label={item.label}

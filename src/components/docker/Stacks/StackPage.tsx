@@ -10,6 +10,7 @@ import Heading from '~/elements/Heading.tsx'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
 import StackWidget from '~/components/docker/Dashboard/components/StackWidget.tsx'
+import KeyValueTable from '~/elements/KeyValueTable.tsx'
 
 const StackPage = () => {
   const loaderData = useLoaderData() as any // IDockerComposeProject

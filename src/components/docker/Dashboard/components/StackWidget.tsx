@@ -12,6 +12,7 @@ const StackWidget = ({ stackName }: { stackName: string }) => {
 
   return (
     <div style={{ columns: 3, columnGap: '1rem', margin: '0.5rem 0' }}>
+      {containers?.length === 0 && <div>No active containers found</div>}
       {containers?.map((c, idx) => <ContainerBlock key={`Container-${idx}`} container={c} />)}
     </div>
   )
