@@ -9,6 +9,7 @@ import StackIconControls from '~/components/docker/Stacks/components/StackIconCo
 import Heading from '~/elements/Heading.tsx'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
+import StackWidget from '~/components/docker/Dashboard/components/StackWidget.tsx'
 
 const StackPage = () => {
   const loaderData = useLoaderData() as any // IDockerComposeProject
@@ -44,21 +45,20 @@ const StackPage = () => {
 
   const tabs: BasicTabItem[] = [
     {
+      label: 'Active Containers',
+      name: 'stack-active-containers',
+      children: (
+        <>
+          <StackWidget stackName={stackId}></StackWidget>
+        </>
+      ),
+    },
+    {
       label: 'Stack Info',
       name: 'stack-info',
       children: (
         <>
           <textarea style={{ width: '100%', height: '300px' }} defaultValue={JSON.stringify(data, null, 2)}></textarea>
-        </>
-      ),
-    },
-    {
-      label: 'Active Containers',
-      name: 'stack-active-containers',
-      children: (
-        <>
-          <h3>Active Containers</h3>
-          <div>[STACK CONTAINER WIDGET HERE]</div>
         </>
       ),
     },

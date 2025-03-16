@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import { Helmet } from 'react-helmet-async'
-import { useLoaderData } from 'react-router-dom'
+import { Link, useLoaderData } from 'react-router-dom'
 import Container from '@mui/material/Container'
 import Button, { ButtonProps } from '@mui/material/Button'
 import ReactJson from '@microlink/react-json-view'
@@ -17,24 +17,27 @@ import ContainerEnvVariablesTable from './components/ContainerEnvVariablesTable.
 import ContainerPathsTable from './components/ContainerPathsTable.tsx'
 import RoutedTabs, { RoutedTabItem } from '../../../elements/RoutedTabs.tsx'
 import AppIcons from '../../../elements/AppIcons.tsx'
-import { useEnvApi } from '../../../helper/useEnvApi.ts'
+import { useEnvApi } from '~/helper/useEnvApi.ts'
 import ContainerLogsWidget from './components/ContainerLogsWidget.tsx'
 import ContainerExecCommandWidget from './components/ContainerExecWidget.tsx'
+import ContainerIconControls from '~/components/docker/Container/components/ContainerIconControls.tsx'
+import { useEnvironment } from '~/helper/useEnvironmentContext.tsx'
 
 const ContainerPage = () => {
   const loaderData = useLoaderData() as any // IDockerComposeContainer
   const [data, setData] = React.useState(loaderData)
   const { api } = useEnvApi()
+  const { df, buildUrl } = useEnvironment()
 
-  const handleContainerStartClick = (id: string) => () => {
-    console.log('Starting container', id)
-    //api.startContainer()(id)
-  }
-
-  const handleContainerStopClick = (id: string) => () => {
-    console.log('Stopping container', id)
-    //api.stopContainer()(id)
-  }
+  // const handleContainerStartClick = (id: string) => () => {
+  //   console.log('Starting container', id)
+  //   //api.startContainer()(id)
+  // }
+  //
+  // const handleContainerStopClick = (id: string) => () => {
+  //   console.log('Stopping container', id)
+  //   //api.stopContainer()(id)
+  // }
 
   React.useEffect(() => {
     console.log('ContainerPage mounted')
@@ -133,6 +136,10 @@ const ContainerPage = () => {
         <Heading label={`Container ${data?.Id?.substring(0, 12)}`}>
           <div>
             <ContainerState state={data?.State} />{' '}
+            <ContainerIconControls containerId={data.Id} containerStatus={data?.State?.Status} />
+          </div>
+          {/*<div>
+
             {data?.State?.Status !== 'running' && (
               <Button {...buttonProps} onClick={handleContainerStartClick(data.Id)} startIcon={<AppIcons.StartIcon />}>
                 Start
@@ -151,11 +158,22 @@ const ContainerPage = () => {
             <Button {...buttonProps} color={'error'} startIcon={<AppIcons.DeleteIcon />}>
               Remove
             </Button>
-          </div>
+          </div>*/}
         </Heading>
       </Toolbar>
 
       <div className={'flex-grid'}>
+        {/*Image*/}
+        <div>
+          <div className={'info-label'}>Image</div>
+          <div>
+            <Link to={buildUrl(`/docker/images/${data.Image}`)}>
+              {data?.Config?.Image || data.Image.substring(0, 23)}
+            </Link>
+            <br />
+            {data?.Image.substring(0, 23)}
+          </div>
+        </div>
         {/*Platform*/}
         <div>
           <div className={'info-label'}>Platform</div>
@@ -165,15 +183,6 @@ const ContainerPage = () => {
         <div>
           <div className={'info-label'}>Runtime</div>
           <div>{data?.HostConfig?.Runtime}</div>
-        </div>
-        {/*Image*/}
-        <div>
-          <div className={'info-label'}>Image</div>
-          <div>
-            {data?.Config?.Image}
-            <br />
-            {data?.Image.substring(0, 23)}
-          </div>
         </div>
         <div>
           <div className={'info-label'}>Created</div>

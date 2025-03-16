@@ -27,6 +27,7 @@ import {
   HiOutlineCog,
   HiCog,
   HiOutlineSquares2X2,
+  HiOutlineTrash,
 } from 'react-icons/hi2'
 import { FaDocker, FaGauge, FaLayerGroup, FaNetworkWired, FaTag, FaTags, FaGear } from 'react-icons/fa6'
 import { FaHistory, FaHome, FaTimes, FaSyncAlt } from 'react-icons/fa'
@@ -69,7 +70,7 @@ const AppIcons = {
   StartIcon: HiOutlinePlay,
   PauseIcon: HiOutlinePause,
   StopIcon: HiOutlineStop,
-  DeleteIcon: HiTrash,
+  DeleteIcon: HiOutlineTrash,
   SyncIcon: HiArrowPath,
 
   // Misc

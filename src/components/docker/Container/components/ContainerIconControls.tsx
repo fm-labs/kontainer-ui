@@ -71,7 +71,7 @@ const ContainerIconControls = ({ containerId, containerStatus, ...props }: Conta
   }, [containerId, containerStatus, props])
 
   return (
-    <span>
+    <span style={{ display: 'inline-block', height: '22px' }}>
       {controls.map((control, idx) => {
         if (!control?.onClick) {
           return null
@@ -93,7 +93,8 @@ const ContainerIconControls = ({ containerId, containerStatus, ...props }: Conta
               console.log('Task completed')
             }}
           >
-            <control.icon />
+            {/*@ts-expect-error*/}
+            <control.icon style={{ fontSize: '16px' }} />
           </TaskIconButton>
         )
         // return (

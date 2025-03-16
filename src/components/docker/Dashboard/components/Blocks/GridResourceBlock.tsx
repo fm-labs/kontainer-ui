@@ -17,6 +17,7 @@ const GridResourceBlock = ({ children, color, ...props }) => {
           p: 0.5,
           height: '100%',
           breakInside: 'avoid-column',
+          marginBottom: '1rem',
         }}
       >
         {children}

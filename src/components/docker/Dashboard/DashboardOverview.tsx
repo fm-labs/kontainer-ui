@@ -127,7 +127,7 @@ const DashboardOverview = () => {
         </div>
         <div>
           <Link to={`containers/${container.Id}`}>
-            <ContainerFormatters.ContainerId value={container.Id} showLink={false} />
+            <ContainerFormatters.ContainerId value={container.Id} />
           </Link>
         </div>
         <div>

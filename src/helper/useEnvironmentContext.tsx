@@ -41,10 +41,9 @@ export const EnvironmentProvider: React.FC<{ children: ReactNode; initialState: 
     [environment],
   )
 
-  const context = { environment, setEnvironment, df, setDf, buildUrl }
-
   useAutoreload(fetchData)
 
+  const context = { environment, setEnvironment, df, setDf, buildUrl }
   return <EnvironmentContext.Provider value={context}>{children}</EnvironmentContext.Provider>
 }
 

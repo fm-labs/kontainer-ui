@@ -1,28 +1,22 @@
 import * as React from 'react'
-import { Link } from 'react-router-dom'
 
-export const ContainerId = (props: { value: string; showLink?: boolean; maxDigits?: number }) => {
-  const _showLink = props?.showLink || false
+export const ContainerId = (props: { value: string; maxDigits?: number }) => {
   const _maxDigits = props?.maxDigits || 12
-
-  if (_showLink) {
-    return <Link to={`/containers/${props.value}`}>{props.value.substring(0, _maxDigits)}</Link>
-  }
-
   return <span>{props.value.substring(0, _maxDigits)}</span>
 }
 
-export const ContainerName = (props: { value: string; showLink?: boolean }) => {
-  const _showLink = props?.showLink || false
-
-  if (_showLink) {
-    return <Link to={`containers/${props.value}`}>{props.value}</Link>
-  }
-
-  return <span>{props.value}</span>
+export const ContainerName = (props: { value: string }) => {
+  const value = props.value.startsWith('/') ? props.value.substring(1) : props.value
+  return <span>{value}</span>
+}
+export const ContainerImage = (props: { value: string; maxDigits?: number }) => {
+  const _maxDigits = props?.maxDigits || 12
+  const value = props.value.startsWith('sha') ? props.value.substring(7, 7 + _maxDigits) : props.value
+  return <span>{value}</span>
 }
 
 export default {
   ContainerId,
   ContainerName,
+  ContainerImage,
 }

@@ -22,7 +22,7 @@ const NavListItems = ({ items }: NavListItemsProps) => {
           <ListItemButton
             key={index}
             onClick={() => !item?.target && navigate(item.to)}
-            href={item?.target ? item.to : ''}
+            href={item?.target ? item.to : '#'}
             target={item?.target}
             title={item.label}
             aria-label={item.label}

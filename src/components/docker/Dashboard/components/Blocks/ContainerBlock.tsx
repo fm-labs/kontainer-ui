@@ -9,7 +9,7 @@ import GridResourceBlock from './GridResourceBlock.tsx'
 import { useEnvironment } from '~/helper/useEnvironmentContext.tsx'
 
 const ContainerBlock = ({ container }) => {
-  const { df } = useEnvironment()
+  const { df, buildUrl } = useEnvironment()
 
   let color = 'default'
   if (container.State === 'running') {
@@ -19,7 +19,7 @@ const ContainerBlock = ({ container }) => {
   }
 
   const containerName = (container.Names && container.Names[0]) || container.Id
-  const containerNameShort = (container.Names && container.Names[0]) || container.Id.substring(0, 12)
+  //const containerNameShort = (container.Names && container.Names[0]) || container.Id.substring(0, 12)
 
   return (
     <GridResourceBlock key={container.Id} color={color}>
@@ -33,20 +33,37 @@ const ContainerBlock = ({ container }) => {
         }}
         title={containerName}
       >
-        <AppIcons.ContainerIcon />{' '}
-        {/*<Link to={`/container/${container.Id}`}>{container.Names[0] || container.Id.substring(0, 32)}</Link>*/}
-        <ContainerFormatters.ContainerName value={containerNameShort} />
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div>
+            <AppIcons.ContainerIcon />{' '}
+            <Link to={buildUrl(`/docker/containers/${container.Id}`)}>
+              <ContainerFormatters.ContainerName value={containerName} />
+            </Link>
+          </div>
+          <div>
+            <ContainerIconControls
+              containerId={container.Id}
+              containerStatus={container?.State}
+              buttonProps={{
+                style: { fontSize: '0.8rem', padding: '0.1rem' },
+              }}
+            />
+          </div>
+        </div>
       </div>
+      {/*<div>
+        <Link to={buildUrl(`/docker/containers/${container.Id}`)}>
+          <ContainerFormatters.ContainerId value={container.Id} />
+        </Link>
+      </div>*/}
       <div>
-        <Link to={`containers/${container.Id}`}>
-          <ContainerFormatters.ContainerId value={container.Id} showLink={false} />
+        <AppIcons.ImageIcon />{' '}
+        <Link to={buildUrl(`/docker/images/${container.ImageID.substring(7)}`)}>
+          <ContainerFormatters.ContainerImage value={container.Image} />
         </Link>
       </div>
       <div>
-        <AppIcons.ImageIcon /> {container.Image}
-      </div>
-      <div>
-        {container?.Status} / <ContainerStatusText status={container?.State} />
+        <ContainerStatusText status={container?.State} /> / {container?.Status}
       </div>
       <div>
         <FileSizeFormatter value={container.SizeRootFs} /> / <FileSizeFormatter value={container.SizeRw} />
@@ -71,15 +88,6 @@ const ContainerBlock = ({ container }) => {
         >
           <AppIcons.LabelsIcon /> {Object.keys(container?.Labels).length}
         </span>
-      </div>
-      <div>
-        <ContainerIconControls
-          containerId={container}
-          containerStatus={container?.State}
-          buttonProps={{
-            style: { fontSize: '0.8rem', padding: '0.1rem' },
-          }}
-        />
       </div>
     </GridResourceBlock>
   )
