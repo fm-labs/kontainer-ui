@@ -1,5 +1,5 @@
 import React from 'react'
-import { createBrowserRouter, LoaderFunctionArgs, RouteObject } from 'react-router-dom'
+import { createHashRouter, createBrowserRouter, LoaderFunctionArgs, RouteObject } from 'react-router-dom'
 import ContainersPage from '~/components/docker/Container/Containers.page.tsx'
 import ContainerPage from '~/components/docker/Container/Container.page.tsx'
 import ContainerLaunchPage from '~/components/docker/Container/ContainerLaunch.page.tsx'
@@ -195,6 +195,6 @@ const routes: RouteObject[] = [
   },
 ]
 
-const router = createBrowserRouter(routes)
+const router = createHashRouter(routes)
 
 export default router

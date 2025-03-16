@@ -1,6 +1,6 @@
 import React from 'react'
 import { useLocation } from 'react-router'
-import { useMatches } from 'react-router-dom'
+import { useHref, useMatches } from 'react-router-dom'
 import useEnvironments from './useEnvironments.ts'
 
 export const useEnvRoute = () => {
@@ -34,7 +34,7 @@ export const useEnvRoute = () => {
         return path
       }
 
-      return `/${envId}${path}`
+      return useHref(`/${envId}${path}`)
     },
     [envId],
   )
