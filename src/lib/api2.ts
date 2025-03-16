@@ -254,6 +254,11 @@ const api = (env: HostEnvironment) => {
     return response.data
   }
 
+  const loginContainerRegistry = async (registryName: string, data: any): Promise<any> => {
+    const response = await apiHttp.post(`admin/registries/${registryName}/login`, data)
+    return response.data
+  }
+
   const listPrivateKeys = async (): Promise<string[]> => {
     const response = await apiHttp.get(`admin/keys`)
     return response.data
@@ -308,6 +313,7 @@ const api = (env: HostEnvironment) => {
     getContainerRegistries,
     updateContainerRegistry,
     deleteContainerRegistry,
+    loginContainerRegistry,
     listPrivateKeys,
     updatePrivateKey,
     deletePrivateKey,

@@ -2,6 +2,7 @@ import React from 'react'
 import Button, { ButtonProps } from '@mui/material/Button'
 import AlertDialog from '../Dialog/AlertDialog.tsx'
 import { DialogProps } from '@mui/material/Dialog'
+import AppIcons from '~/elements/AppIcons.tsx'
 
 interface DeleteButtonProps extends ButtonProps {
   onConfirm?: () => void
@@ -35,7 +36,13 @@ const DeleteButton = ({ onConfirm, onCancel, children, dialogProps, ...buttonPro
 
   return (
     <>
-      <Button variant='contained' color='error' {...buttonProps} onClick={() => setOpen(!open)}>
+      <Button
+        startIcon={<AppIcons.DeleteIcon />}
+        variant='contained'
+        color='error'
+        {...buttonProps}
+        onClick={() => setOpen(!open)}
+      >
         {children || 'Delete'}
       </Button>
       <AlertDialog
