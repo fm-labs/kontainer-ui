@@ -1,9 +1,10 @@
 import React from 'react'
-import { useEnvApi } from '~/helper/useEnvApi.ts'
-import { useAuth } from '~/helper/useAuth.tsx'
 import { useNavigate } from 'react-router'
 import Button from '@mui/material/Button'
 import AppIcons from '~/elements/AppIcons.tsx'
+import { useEnvApi } from '~/helper/useEnvApi.ts'
+import { useAuth } from '~/helper/useAuth.tsx'
+import { writeEnvAuthToken } from '~/lib/authStorage.ts'
 
 const DisconnectButton = () => {
   const { env } = useEnvApi()
@@ -12,9 +13,9 @@ const DisconnectButton = () => {
   const navigate = useNavigate()
 
   const handleDisconnectClick = () => {
-    logout().then(() => {
+    logout().finally(() => {
       console.log('Disconnected')
-      localStorage.removeItem(envId + '.authToken')
+      writeEnvAuthToken(envId, null)
       navigate('/')
     })
   }
@@ -24,7 +25,6 @@ const DisconnectButton = () => {
       <Button variant={'outlined'} onClick={handleDisconnectClick} startIcon={<AppIcons.DisconnectIcon />}>
         Disconnect
       </Button>
-      {/*<AutoreloadButton autoloader={autoloader} />*/}
     </React.Fragment>
   )
 }

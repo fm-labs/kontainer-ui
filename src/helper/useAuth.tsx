@@ -19,7 +19,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode; authProcessor: 
   children,
   authProcessor,
 }) => {
-  //const storedAuthToken = localStorage.getItem('authToken') || undefined
   const storedAuthToken = authProcessor.restoreAuthToken()
   const [authToken, setAuthToken] = React.useState<string | undefined>(storedAuthToken)
 
@@ -39,7 +38,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode; authProcessor: 
     const authToken = authResponse?.token
     console.log('AUTH: login success', authToken)
     setAuthToken(authToken)
-    //localStorage.setItem('authToken', authToken)
   }
 
   const logout = async () => {
@@ -51,7 +49,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode; authProcessor: 
       })
       .finally(() => {
         setAuthToken(undefined)
-        //localStorage.removeItem('authToken')
       })
   }
 

@@ -13,35 +13,6 @@ export const useEnvApi = () => {
     throw new Error('Failed to init env api: env not found')
   }
 
-  // const envId = envRoute?.env?.id
-  // const urlSchema = envRoute?.env?.useSSL ? 'https' : 'http'
-  // const hostname = envRoute?.env?.hostname || 'localhost'
-  // const agentPort = envRoute?.env?.agentPort || MASTER_AGENT_PORT
-  // const apiBaseUrl = `${urlSchema}://${hostname}:${agentPort}/api`
-  // //const authToken = localStorage.getItem(envId + '.authToken') || undefined
-
-  // const readEnvAuthToken = React.useCallback(() => {
-  //   return localStorage.getItem(envId + '.authToken') || undefined
-  // }, [envId])
-  //
-  // const saveEnvAuthToken = React.useCallback(
-  //   (token: string | undefined) => {
-  //     if (!token) {
-  //       return localStorage.removeItem(envId + '.authToken')
-  //     }
-  //     return localStorage.setItem(envId + '.authToken', token)
-  //   },
-  //   [envId],
-  // )
-
-  // const authToken = React.useMemo(() => {
-  //   return restoreEnvAuthToken()
-  // }, [restoreEnvAuthToken])
-
-  // const envApi = React.useMemo(() => {
-  //   return api(apiBaseUrl, authToken)
-  // }, [apiBaseUrl, authToken])
-
   const envApi = React.useMemo(() => {
     return api(env)
   }, [env])
@@ -49,7 +20,5 @@ export const useEnvApi = () => {
   return {
     env: env,
     api: envApi,
-    //readAuthToken: readEnvAuthToken,
-    //saveAuthToken: saveEnvAuthToken,
   }
 }

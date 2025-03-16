@@ -1,20 +1,18 @@
 import { useEnvApi } from './useEnvApi.ts'
 import * as React from 'react'
+import { readEnvAuthToken, writeEnvAuthToken } from '~/lib/authStorage.ts'
 
 export const useAuthApi = () => {
   const { api, env } = useEnvApi()
   const envId = env.id
 
   const readAuthToken = React.useCallback(() => {
-    return localStorage.getItem(envId + '.authToken') || undefined
+    return readEnvAuthToken(envId)
   }, [envId])
 
   const saveAuthToken = React.useCallback(
-    (token: string | undefined) => {
-      if (!token) {
-        return localStorage.removeItem(envId + '.authToken')
-      }
-      return localStorage.setItem(envId + '.authToken', token)
+    (token: string | null) => {
+      writeEnvAuthToken(envId, token)
     },
     [envId],
   )
@@ -32,7 +30,7 @@ export const useAuthApi = () => {
   const logout = async () => {
     console.log('AUTHAPIHELPER: logout')
     await api.postLogout()
-    saveAuthToken(undefined)
+    saveAuthToken(null)
   }
 
   return {

@@ -7,6 +7,7 @@ import {
   HostEnvironment,
 } from '../types.ts'
 import { MASTER_AGENT_PORT } from '../constants.ts'
+import { readEnvAuthToken, writeEnvAuthToken } from '~/lib/authStorage.ts'
 
 const api = (env: HostEnvironment) => {
   const envId = env?.id
@@ -37,7 +38,7 @@ const api = (env: HostEnvironment) => {
 
   apiHttp.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
-      const authToken = localStorage.getItem(envId + '.authToken') || undefined
+      const authToken = readEnvAuthToken(envId)
       if (authToken) {
         //config.headers['X-Api-Key'] = authToken
         config.headers['Authorization'] = `Bearer ${authToken}`
@@ -59,7 +60,7 @@ const api = (env: HostEnvironment) => {
       if (error?.response?.status === 401) {
         console.error('401 Unauthorized')
         // @todo - handle 401 Unauthorized
-        localStorage.removeItem(envId + '.authToken')
+        writeEnvAuthToken(envId, null)
         //window.location.reload()
         //window.location.href = '/'
       }
