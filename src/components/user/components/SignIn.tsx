@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography'
 import Stack from '@mui/material/Stack'
 import MuiCard from '@mui/material/Card'
 import { styled } from '@mui/material/styles'
-import ForgotPasswordDialog from './components/ForgotPasswordDialog.tsx'
+import ForgotPasswordDialog from '~/components/user/components/ForgotPasswordDialog.tsx'
 //import AppTheme from '../shared-theme/AppTheme';
 //import ColorModeSelect from '../shared-theme/ColorModeSelect';
 import AppTheme from '../../../layout/AppTheme.tsx'

@@ -1,7 +1,5 @@
 import { HostEnvironment } from './types.ts'
 
-export const MASTER_AGENT_API_BASEURL = import.meta.env.VITE_AGENT_API_BASEURL || 'http://localhost:5000/api'
-
 export const CURRENT_HOSTNAME = window.location.hostname
 export const CURRENT_PORT = window.location.port
 export const CURRENT_SCHEME = window.location.protocol

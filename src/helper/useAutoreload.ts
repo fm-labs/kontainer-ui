@@ -9,7 +9,7 @@ export const useAutoreload = (callback: () => void | Promise<void>, interval: nu
   const [_interval, _setInterval] = React.useState(interval)
 
   React.useEffect(() => {
-    console.log('Autoreload:mount')
+    //console.log('Autoreload:mount')
     const execCallback = async () => {
       //console.log('Autoreload:execCallback', _interval, Date.now() / 1000)
       let p = callbackRef.current()
@@ -36,10 +36,10 @@ export const useAutoreload = (callback: () => void | Promise<void>, interval: nu
     }
     //const cb = execCallback()
     // use a millisecond timeout to trick strict-mode not to double-execute the initial execCallback
-    timerRef.current = setTimeout(execCallback, 1)
+    timerRef.current = setTimeout(execCallback, 10)
 
     return () => {
-      console.log('Autoreload:unmount')
+      //console.log('Autoreload:unmount')
       // Promise.reject(cb).catch((err) => {
       //   console.error('Autoreload:unmount error', err)
       // })

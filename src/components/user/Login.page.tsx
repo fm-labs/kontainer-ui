@@ -1,5 +1,5 @@
 import React from 'react'
-import SignIn from '~/components/user/sign-in/SignIn.tsx'
+import SignIn from '~/components/user/components/SignIn.tsx'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router'
 import { Navigate } from 'react-router-dom'

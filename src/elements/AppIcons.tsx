@@ -1,4 +1,5 @@
 import {
+  HiAdjustmentsHorizontal,
   HiHeart,
   HiOutlineCube,
   HiOutlineCubeTransparent,
@@ -28,6 +29,8 @@ import {
   HiCog,
   HiOutlineSquares2X2,
   HiOutlineTrash,
+  HiLink,
+  HiLinkSlash,
 } from 'react-icons/hi2'
 import { FaDocker, FaGauge, FaLayerGroup, FaNetworkWired, FaTag, FaTags, FaGear } from 'react-icons/fa6'
 import { FaHistory, FaHome, FaTimes, FaSyncAlt } from 'react-icons/fa'
@@ -80,7 +83,10 @@ const AppIcons = {
   LabelsIcon: FaTags,
   LikeIcon: HiOutlineHeart,
   LikedIcon: HiHeart,
-  SettingsIcon: HiCog,
+  SettingsIcon: HiAdjustmentsHorizontal,
+
+  ConnectedIcon: HiLink,
+  DisconnectIcon: HiLinkSlash,
 }
 
 export default AppIcons
