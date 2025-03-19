@@ -22,8 +22,7 @@ const ContainerPorts = ({ ports }: { ports: any }) => {
   return (
     <div>
       {Object.keys(ports).map((port) => {
-        let hostSchema = 'http'
-        let hostIp = '0.0.0.0'
+        let hostIp = window.location.hostname
         let hostPort = port
 
         const portData = ports[port]
@@ -32,7 +31,8 @@ const ContainerPorts = ({ ports }: { ports: any }) => {
           hostPort = portData[0].HostPort || port
         }
 
-        if (hostPort.endsWith('443')) {
+        let hostSchema = 'http'
+        if (hostPort === '443') {
           hostSchema = 'https'
         }
 
