@@ -2,7 +2,7 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 import { EnvironmentProvider } from '../../helper/useEnvironmentContext.tsx'
 import { useEnvRoute } from '~/helper/useEnvRoute.ts'
-import { useAuthApi } from '~/helper/useAuthApi.ts'
+import { useEnvAuthApi } from '~/helper/useEnvAuthApi.ts'
 import { AuthProvider } from '../../helper/useAuth.tsx'
 
 const EnvironmentRouteWrapper = () => {
@@ -11,7 +11,7 @@ const EnvironmentRouteWrapper = () => {
     return <div>Not a valid environment</div>
   }
 
-  const authProcessor = useAuthApi()
+  const authProcessor = useEnvAuthApi()
 
   return (
     <EnvironmentProvider initialState={envRoute.env}>
