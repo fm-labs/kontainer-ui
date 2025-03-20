@@ -70,12 +70,24 @@ const appRepo = (envId: string, apiClient) => {
     return data
   }
 
+  const resetDb = async () => {
+    const db = await appDb.openAppDb(envId)
+    await db.clear('keyval').catch(() => {})
+    await db.clear('containers').catch(() => {})
+    await db.clear('stacks').catch(() => {})
+    db.deleteObjectStore('containers')
+    db.deleteObjectStore('stacks')
+    db.deleteObjectStore('keyval')
+    db.close()
+  }
+
   return {
     listEnvironments,
     listContainers,
     syncContainers,
     listStacks,
     syncStacks,
+    resetDb,
   }
 }
 
