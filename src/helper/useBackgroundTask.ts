@@ -1,7 +1,7 @@
 import { useEnvApi } from './useEnvApi.ts'
-import { IBackgroundTaskResponse } from '../types.ts'
+import { TaskStatusResponse } from '../types.ts'
 
-const useBackgroundTask = async (task: () => Promise<IBackgroundTaskResponse>) => {
+const useBackgroundTask = async (task: () => Promise<TaskStatusResponse>) => {
   const submissionResponse = await task()
   const taskId = submissionResponse.task_id
   if (!taskId) {

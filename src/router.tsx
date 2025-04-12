@@ -24,6 +24,7 @@ import appRepo from './lib/repo.ts'
 import { restoreEnvsFromLocalStorage } from './helper/useEnvironments.ts'
 import LogoutPage from '~/components/user/Logout.page.tsx'
 import { DEFAULT_ENVIRONMENT } from './constants.ts'
+import TaskManagerPage from '~/components/tasks/TaskManagerPage.tsx'
 
 const getEnvApiFromLoaderArgs = (args: LoaderFunctionArgs) => {
   //const { envs } = useEnvironments()
@@ -186,6 +187,11 @@ const routes: RouteObject[] = [
               {
                 path: 'settings',
                 element: <SettingsPage />,
+              },
+
+              {
+                path: 'tasks',
+                element: <TaskManagerPage />,
               },
             ],
           },

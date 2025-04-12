@@ -29,6 +29,13 @@ export const navItemsHost: INavigationItem[] = [
     label: 'Settings',
     to: '/settings',
   },
+
+  {
+    key: 'tasks',
+    icon: <AppIcons.SettingsIcon {...navIconProps} />,
+    label: 'Tasks',
+    to: '/tasks',
+  },
 ]
 
 export const navItemsDocker: INavigationItem[] = [

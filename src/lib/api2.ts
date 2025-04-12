@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 import {
-  IBackgroundTaskResponse,
+  TaskStatusResponse,
   IDockerContainer,
   IDockerResourceAttrs,
   ContainerRegistry,
@@ -93,7 +93,7 @@ const api = (env: HostEnvironment) => {
     return response.data
   }
 
-  const createStack = async (data: any): Promise<IBackgroundTaskResponse[]> => {
+  const createStack = async (data: any): Promise<TaskStatusResponse[]> => {
     const response = await apiHttp.post(`stacks/create`, data)
     return response.data
   }
@@ -104,7 +104,7 @@ const api = (env: HostEnvironment) => {
   }
 
   const _stackAction =
-    (stackId: string, action: string, config?: AxiosRequestConfig) => async (): Promise<IBackgroundTaskResponse> => {
+    (stackId: string, action: string, config?: AxiosRequestConfig) => async (): Promise<TaskStatusResponse> => {
       const response = await apiHttp.post(`stacks/${stackId}/${action}?async=1`, null, config)
       return response.data
     }
@@ -158,14 +158,14 @@ const api = (env: HostEnvironment) => {
 
   const _containerActionSync =
     (containerId: string, action: string, data: any, config?: AxiosRequestConfig) =>
-    async (): Promise<IBackgroundTaskResponse> => {
+    async (): Promise<TaskStatusResponse> => {
       const response = await apiHttp.post(`containers/${containerId}/${action}`, data, config)
       return response.data
     }
 
   const _containerActionAsync =
     (containerId: string, action: string, data: any, config?: AxiosRequestConfig) =>
-    async (): Promise<IBackgroundTaskResponse> => {
+    async (): Promise<TaskStatusResponse> => {
       const response = await apiHttp.post(`containers/${containerId}/${action}?async=1`, data, config)
       return response.data
     }
@@ -180,7 +180,7 @@ const api = (env: HostEnvironment) => {
 
   const removeContainer = (id: string) => _containerActionAsync(id, 'remove', null)()
 
-  const runContainer = async (runData: any): Promise<IBackgroundTaskResponse> => {
+  const runContainer = async (runData: any): Promise<TaskStatusResponse> => {
     const response = await apiHttp.post(`containers/run`, runData)
     return response.data
   }
@@ -210,12 +210,12 @@ const api = (env: HostEnvironment) => {
     return response.data
   }
 
-  const submitTask = async (task: any): Promise<IBackgroundTaskResponse> => {
+  const submitTask = async (task: any): Promise<TaskStatusResponse> => {
     const response = await apiHttp.post(`tasks`, task)
     return response.data
   }
 
-  const getTaskStatus = async (taskId: string): Promise<IBackgroundTaskResponse> => {
+  const getTaskStatus = async (taskId: string): Promise<TaskStatusResponse> => {
     const response = await apiHttp.get(`tasks/${taskId}/status`)
     return response.data
   }
@@ -230,12 +230,12 @@ const api = (env: HostEnvironment) => {
     return response.data
   }
 
-  const addTemplate = async (data: any): Promise<IBackgroundTaskResponse> => {
+  const addTemplate = async (data: any): Promise<TaskStatusResponse> => {
     const response = await apiHttp.post(`templates`, data)
     return response.data
   }
 
-  const launchPortainerTemplate = async (template: any): Promise<IBackgroundTaskResponse> => {
+  const launchPortainerTemplate = async (template: any): Promise<TaskStatusResponse> => {
     const response = await apiHttp.post(`portainer/templates/launch`, template)
     return response.data
   }

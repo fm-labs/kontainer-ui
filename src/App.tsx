@@ -4,6 +4,7 @@ import { RouterProvider } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { AppStoreProvider } from './helper/useAppStoreContext.tsx'
 import router from './router'
+import { TaskManagerProvider } from '~/components/tasks/TaskManagerContext.tsx'
 
 function App() {
   return (

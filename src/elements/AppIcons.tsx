@@ -32,7 +32,7 @@ import {
   HiLink,
   HiLinkSlash,
 } from 'react-icons/hi2'
-import { FaDocker, FaGauge, FaLayerGroup, FaNetworkWired, FaTag, FaTags, FaGear } from 'react-icons/fa6'
+import { FaDocker, FaGauge, FaLayerGroup, FaNetworkWired, FaTag, FaTags, FaGear, FaRotateLeft } from 'react-icons/fa6'
 import { FaHistory, FaHome, FaTimes, FaSyncAlt } from 'react-icons/fa'
 
 import MoreVertIcon from '@mui/icons-material/MoreVert'
@@ -71,6 +71,7 @@ const AppIcons = {
 
   // Actions
   StartIcon: HiOutlinePlay,
+  RestartIcon: FaRotateLeft,
   PauseIcon: HiOutlinePause,
   StopIcon: HiOutlineStop,
   DeleteIcon: HiOutlineTrash,

@@ -37,7 +37,7 @@ export type DockerEngineDfData = {
   Networks?: IDockerResourceAttrs[]
 }
 
-export interface IBackgroundTaskResponse<T = any> {
+export interface TaskStatusResponse<T = any> {
   task_id: string
   ref?: string
   status?: string
