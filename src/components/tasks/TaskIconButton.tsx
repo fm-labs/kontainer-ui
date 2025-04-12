@@ -1,7 +1,9 @@
 import React from 'react'
 import IconButton, { IconButtonProps } from '@mui/material/IconButton'
 import CircularProgress from '@mui/material/CircularProgress'
-import { useEnvApi } from '../../helper/useEnvApi.ts'
+import { useEnvApi } from '~/helper/useEnvApi.ts'
+import { useTaskManager } from '~/components/tasks/useTaskManager.ts'
+import { TaskStatusResponse } from '~/types.ts'
 
 interface TaskIconButtonProps extends IconButtonProps {
   promise: () => Promise<any>
@@ -13,6 +15,7 @@ const TaskIconButton = ({ promise, onSuccess, onFailure, children, ...iconButton
   const [loading, setLoading] = React.useState(false)
   const [result, setResult] = React.useState<any | null>(null)
   const [taskId, setTaskId] = React.useState<string | null>(null)
+  const { addTask, updateTask, removeTask } = useTaskManager()
 
   const { api } = useEnvApi()
 
@@ -30,6 +33,7 @@ const TaskIconButton = ({ promise, onSuccess, onFailure, children, ...iconButton
       .getTaskStatus(taskId)
       .then((statusData) => {
         console.log('Task status', taskId, statusData)
+        updateTask(taskId, statusData)
         if (statusData.status?.toLowerCase() === 'success') {
           console.log('Task done', taskId)
           setTaskId(null)
@@ -75,13 +79,14 @@ const TaskIconButton = ({ promise, onSuccess, onFailure, children, ...iconButton
     setResult(null)
 
     promise()
-      .then((result) => {
+      .then((result: TaskStatusResponse) => {
         console.log('Task submitted', result)
         const taskId = result?.task_id
         if (!taskId) {
           throw new Error('Task ID not found')
         }
         setTaskId(taskId)
+        addTask(result)
         //console.log('Task ID', taskId)
         return result
       })
