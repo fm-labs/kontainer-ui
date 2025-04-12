@@ -4,6 +4,7 @@ import { EnvironmentProvider } from '../../helper/useEnvironmentContext.tsx'
 import { useEnvRoute } from '~/helper/useEnvRoute.ts'
 import { useEnvAuthApi } from '~/helper/useEnvAuthApi.ts'
 import { AuthProvider } from '../../helper/useAuth.tsx'
+import { TaskManagerProvider } from '~/components/tasks/TaskManagerContext.tsx'
 
 const EnvironmentRouteWrapper = () => {
   const envRoute = useEnvRoute()
@@ -16,7 +17,9 @@ const EnvironmentRouteWrapper = () => {
   return (
     <EnvironmentProvider initialState={envRoute.env}>
       <AuthProvider authProcessor={authProcessor}>
-        <Outlet />
+        <TaskManagerProvider>
+          <Outlet />
+        </TaskManagerProvider>
       </AuthProvider>
     </EnvironmentProvider>
   )
