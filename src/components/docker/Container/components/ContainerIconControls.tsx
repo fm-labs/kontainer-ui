@@ -3,19 +3,20 @@ import { IconButtonProps } from '@mui/material/IconButton'
 import { useContainerHelper } from './useContainerHelper.ts'
 import AppIcons from '../../../../elements/AppIcons.tsx'
 import TaskIconButton from '../../../tasks/TaskIconButton.tsx'
-import { IBackgroundTaskResponse } from '../../../../types.ts'
+import { TaskStatusResponse } from '~/types.ts'
 
 type IconControlProps = {
   label: string
   icon: React.FC
   hidden?: boolean
-  onClick?: (containerId: string) => () => Promise<void | IBackgroundTaskResponse>
+  onClick?: (containerId: string) => () => Promise<void | TaskStatusResponse>
 }
 
 interface ContainerIconControlsProps {
   containerId: string
   containerStatus: string
   showStart?: boolean
+  showRestart?: boolean
   showPause?: boolean
   showStop?: boolean
   showRemove?: boolean
@@ -31,8 +32,13 @@ interface ContainerIconControlsProps {
 }
 
 const ContainerIconControls = ({ containerId, containerStatus, ...props }: ContainerIconControlsProps) => {
-  const { handleContainerStartClick, handleContainerPauseClick, handleContainerStopClick, handleContainerRemoveClick } =
-    useContainerHelper()
+  const {
+    handleContainerStartClick,
+    handleContainerRestartClick,
+    handleContainerPauseClick,
+    handleContainerStopClick,
+    handleContainerRemoveClick,
+  } = useContainerHelper()
 
   const iconButtonProps: IconButtonProps = { size: 'small', sx: { p: '0.1em' }, ...props.buttonProps }
 
@@ -57,6 +63,13 @@ const ContainerIconControls = ({ containerId, containerStatus, ...props }: Conta
         label: 'Stop',
         icon: AppIcons.StopIcon,
         onClick: handleContainerStopClick,
+      })
+    }
+    if (props.showRestart !== false) {
+      _controls.push({
+        label: 'Restart',
+        icon: AppIcons.RestartIcon,
+        onClick: handleContainerRestartClick,
       })
     }
     if (props.showRemove !== false) {

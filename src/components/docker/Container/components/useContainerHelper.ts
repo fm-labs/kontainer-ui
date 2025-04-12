@@ -1,5 +1,5 @@
-import { useErrorHandler } from '../../../../helper/useErrorHandler.ts'
-import { useEnvApi } from '../../../../helper/useEnvApi.ts'
+import { useErrorHandler } from '~/helper/useErrorHandler.ts'
+import { useEnvApi } from '~/helper/useEnvApi.ts'
 
 export const useContainerHelper = () => {
   const { api } = useEnvApi()
@@ -14,6 +14,17 @@ export const useContainerHelper = () => {
     //     error: 'Failed to start container',
     //   })
     return api.startContainer(id).catch(defaultErrorHandler)
+  }
+
+  const handleContainerRestartClick = (id: string) => () => {
+    console.log('Restarting container', id)
+    // return toast
+    //   .promise(api.restartContainer(id), {
+    //     pending: 'Starting container',
+    //     success: 'Container started',
+    //     error: 'Failed to start container',
+    //   })
+    return api.restartContainer(id).catch(defaultErrorHandler)
   }
 
   const handleContainerPauseClick = (id: string) => () => {
@@ -61,6 +72,7 @@ export const useContainerHelper = () => {
 
   return {
     handleContainerStartClick,
+    handleContainerRestartClick,
     handleContainerPauseClick,
     handleContainerStopClick,
     handleContainerRemoveClick,

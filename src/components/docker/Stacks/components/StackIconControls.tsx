@@ -1,22 +1,23 @@
 import React from 'react'
+import { toast } from 'react-toastify'
 import { IconButtonProps } from '@mui/material/IconButton'
 import { useStackHelper } from './useStackHelper.ts'
 import AppIcons from '../../../../elements/AppIcons.tsx'
 import TaskIconButton from '../../../tasks/TaskIconButton.tsx'
-import { IBackgroundTaskResponse } from '../../../../types.ts'
-import { toast } from 'react-toastify'
+import { TaskStatusResponse } from '~/types.ts'
 
 type IconControlProps = {
   label: string
   icon: React.FC
   hidden?: boolean
-  onClick?: (stackId: string) => () => Promise<void | IBackgroundTaskResponse>
+  onClick?: (stackId: string) => () => Promise<void | TaskStatusResponse>
 }
 
 interface StackIconControlsProps {
   stackId: string
   stackStatus?: string
   showStart?: boolean
+  showRestart?: boolean
   showStop?: boolean
   showDelete?: boolean
   showDestroy?: boolean
@@ -28,6 +29,7 @@ interface StackIconControlsProps {
 const StackIconControls = ({ stackId, stackStatus, ...props }: StackIconControlsProps) => {
   const {
     handleStackStartClick,
+    handleStackRestartClick,
     handleStackStopClick,
     handleStackDeleteClick,
     handleStackDestroyClick,
@@ -50,6 +52,13 @@ const StackIconControls = ({ stackId, stackStatus, ...props }: StackIconControls
         label: 'Start',
         icon: AppIcons.StartIcon,
         onClick: handleStackStartClick,
+      })
+    }
+    if (props.showRestart !== false) {
+      _controls.push({
+        label: 'Restart',
+        icon: AppIcons.RestartIcon,
+        onClick: handleStackRestartClick,
       })
     }
     if (props.showStop !== false) {
