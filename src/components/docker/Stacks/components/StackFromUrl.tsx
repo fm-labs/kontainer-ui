@@ -2,12 +2,12 @@ import React from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { toast } from 'react-toastify'
-import { useEnvApi } from '../../../../helper/useEnvApi.ts'
+import { useAgentDockerApi } from '../../../../helper/useAgentDockerApi.ts'
 
 const StackFromUrl = () => {
   const [stackName, setStackName] = React.useState('')
   const [composeUrl, setComposeUrl] = React.useState('')
-  const { api } = useEnvApi()
+  const api = useAgentDockerApi()
 
   const handleSubmitClick = () => {
     console.log('Submit clicked')

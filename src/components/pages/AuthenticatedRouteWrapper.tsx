@@ -39,9 +39,9 @@ const AuthenticatedRouteWrapper = () => {
   }
 
   return (
-    <Layout>
+    <>
       <Outlet />
-    </Layout>
+    </>
   )
 }
 

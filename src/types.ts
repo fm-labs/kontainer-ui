@@ -79,5 +79,9 @@ export type HostEnvironment = {
   hostname: string
   agentPort: number
   useSSL: boolean
-  authToken?: string
+}
+
+export type DockerHost = {
+  id: string
+  url: string
 }

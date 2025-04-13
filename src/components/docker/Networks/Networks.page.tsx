@@ -5,9 +5,22 @@ import { Helmet } from 'react-helmet-async'
 import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../../elements/Heading.tsx'
 import NetworksView from '~/components/docker/Networks/components/NetworksView.tsx'
+import { IDockerNetwork } from '~/types.ts'
+import { useAgentDockerApi } from '~/helper/useAgentDockerApi.ts'
 
 const NetworksPage = () => {
-  const data = useLoaderData() as any // IDockerNetwork[]
+  //const data = useLoaderData() as any // IDockerNetwork[]
+  const api = useAgentDockerApi()
+  const [data, setData] = React.useState<IDockerNetwork[]>([])
+
+  const fetchNetworks = React.useCallback(async () => {
+    const data = await api.getNetworks()
+    setData(data as IDockerNetwork[])
+  }, [api])
+
+  React.useEffect(() => {
+    fetchNetworks()
+  }, [fetchNetworks])
 
   return (
     <Container maxWidth={false}>

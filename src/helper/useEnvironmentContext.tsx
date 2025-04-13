@@ -1,49 +1,44 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react'
-import { DockerEngineDfData, HostEnvironment } from '../types.ts'
-import { useAutoreload } from '~/helper/useAutoreload.ts'
-import api from '~/lib/api2.ts'
+import React, { createContext, useContext, ReactNode } from 'react'
+import { DockerHost, HostEnvironment } from '../types.ts'
 
 interface EnvironmentContextProps {
   environment: HostEnvironment
-  setEnvironment: React.Dispatch<React.SetStateAction<HostEnvironment>>
-  df: DockerEngineDfData
-  setDf: React.Dispatch<React.SetStateAction<DockerEngineDfData>>
+  dockerHosts: DockerHost[]
   buildUrl: (path: string) => string
 }
 
 const EnvironmentContext = createContext<EnvironmentContextProps | undefined>(undefined)
 
-export const EnvironmentProvider: React.FC<{ children: ReactNode; initialState: HostEnvironment }> = ({
-  children,
-  initialState,
-}) => {
-  // const defaultState = {
-  //   hostname: 'localhost',
-  //   autoconnect: true,
-  // }
-  const [environment, setEnvironment] = useState<HostEnvironment>(initialState)
-  const [df, setDf] = useState<DockerEngineDfData>({})
-
-  const fetchData = React.useCallback(() => {
-    console.log('Fetching Engine df data...')
-    api(environment)
-      .getEngineDf()
-      .then((data) => {
-        //console.log('Engine df data loaded', data)
-        setDf(data)
-      })
-  }, [environment])
-
+export const EnvironmentProvider: React.FC<{ children: ReactNode; host: HostEnvironment }> = ({ children, host }) => {
   const buildUrl = React.useCallback(
     (path: string) => {
-      return `/${environment.id}${path}`
+      //return `/${host.id}${path}`
+      path = path.trim()
+      if (path.startsWith('/')) {
+        path = path.substring(1)
+      }
+      return `/${path}`
     },
-    [environment],
+    [host],
   )
 
-  useAutoreload(fetchData)
+  const fetchEnvDockerHosts = React.useCallback(async () => {
+    const envDataUrl = `/envs/${host.id}.json`
+    console.log('Fetching environment docker hosts from', envDataUrl)
 
-  const context = { environment, setEnvironment, df, setDf, buildUrl }
+    const response = await fetch(envDataUrl)
+    const json = await response.json()
+    const dockerHosts: DockerHost[] = json?.dockerHosts || []
+    console.log('Docker hosts:', dockerHosts)
+    setDockerHosts(dockerHosts)
+  }, [host])
+
+  React.useEffect(() => {
+    fetchEnvDockerHosts()
+  }, [fetchEnvDockerHosts])
+
+  const [dockerHosts, setDockerHosts] = React.useState<DockerHost[]>([])
+  const context = { environment: host, dockerHosts: dockerHosts, buildUrl }
   return <EnvironmentContext.Provider value={context}>{children}</EnvironmentContext.Provider>
 }
 

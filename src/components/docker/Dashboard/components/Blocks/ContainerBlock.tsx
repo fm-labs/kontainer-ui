@@ -6,10 +6,10 @@ import ContainerStatusText from '~/components/docker/Container/components/Contai
 import { FileSizeFormatter } from '~/elements/Formatters.tsx'
 import ContainerIconControls from '~/components/docker/Container/components/ContainerIconControls.tsx'
 import GridResourceBlock from './GridResourceBlock.tsx'
-import { useEnvironment } from '~/helper/useEnvironmentContext.tsx'
+import { useDockerContext } from '~/helper/useDockerContext.tsx'
 
 const ContainerBlock = ({ container }) => {
-  const { df, buildUrl } = useEnvironment()
+  const { df, buildUrl } = useDockerContext()
 
   let color = 'default'
   if (container.State === 'running') {

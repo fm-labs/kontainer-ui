@@ -1,8 +1,8 @@
 import { useErrorHandler } from '~/helper/useErrorHandler.ts'
-import { useEnvApi } from '~/helper/useEnvApi.ts'
+import { useAgentDockerApi } from '~/helper/useAgentDockerApi.ts'
 
 export const useStackHelper = () => {
-  const { api } = useEnvApi()
+  const api = useAgentDockerApi()
   const { defaultErrorHandler } = useErrorHandler()
 
   const handleStackStartClick = (id: string) => () => {

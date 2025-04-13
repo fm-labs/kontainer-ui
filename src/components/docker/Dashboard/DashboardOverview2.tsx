@@ -5,10 +5,10 @@ import { FormControlLabel, FormGroup, Switch } from '@mui/material'
 import ContainerBlock from './components/Blocks/ContainerBlock.tsx'
 import ImageBlock from './components/Blocks/ImageBlock.tsx'
 import VolumeBlock from './components/Blocks/VolumeBlock.tsx'
-import { useEnvironment } from '~/helper/useEnvironmentContext.tsx'
+import { useDockerContext } from '~/helper/useDockerContext.tsx'
 
 const DashboardOverview2 = () => {
-  const { df } = useEnvironment()
+  const { df } = useDockerContext()
   const [onlyActive, setOnlyActive] = React.useState(true)
 
   const containersData = React.useMemo(() => {

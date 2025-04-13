@@ -1,9 +1,9 @@
 import React from 'react'
-import { useEnvApi } from '../../../../helper/useEnvApi.ts'
+import { useAgentDockerApi } from '../../../../helper/useAgentDockerApi.ts'
 
 const ContainerLogsWidget = ({ container }) => {
   const [logs, setLogs] = React.useState<string[]>([])
-  const { api } = useEnvApi()
+  const api = useAgentDockerApi()
 
   const fetchLogs = React.useCallback(async () => {
     api.getContainerLogs(container.Id).then((data) => {

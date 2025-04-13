@@ -2,7 +2,7 @@ import React from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { toast } from 'react-toastify'
-import { useEnvApi } from '../../../../helper/useEnvApi.ts'
+import { useAgentDockerApi } from '../../../../helper/useAgentDockerApi.ts'
 
 const exampleTemplateContent = ` 
   {
@@ -30,7 +30,7 @@ interface StackFromTemplateProps {
 const StackFromTemplate = ({ initialData }: StackFromTemplateProps) => {
   const [stackName, setTemplateName] = React.useState(initialData?.stackName || '')
   const [templateContent, setTemplateContent] = React.useState(initialData?.templateContent || '')
-  const { api } = useEnvApi()
+  const api = useAgentDockerApi()
 
   const handleSubmitClick = () => {
     console.log('Submit clicked')

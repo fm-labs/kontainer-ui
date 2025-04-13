@@ -1,5 +1,5 @@
 import React from 'react'
-import { useEnvironment } from '~/helper/useEnvironmentContext.tsx'
+import { useDockerContext } from '~/helper/useDockerContext.tsx'
 import VolumesDfTableMaterial from '~/components/docker/Volumes/components/VolumesDfTableMaterial.tsx'
 import { IDockerResourceAttrs } from '~/types.ts'
 import { Button, Drawer } from '@mui/material'
@@ -36,7 +36,7 @@ const VolumeDetailsDrawer = ({
 }
 
 const VolumesDfView = () => {
-  const { df } = useEnvironment()
+  const { df } = useDockerContext()
   const [selectedVolume, setSelectedVolume] = React.useState<IDockerResourceAttrs | null>(null)
   const toggleDrawer = (open) => setSelectedVolume(open ? selectedVolume : null)
 

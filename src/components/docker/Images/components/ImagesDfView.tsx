@@ -1,5 +1,5 @@
 import React from 'react'
-import { useEnvironment } from '~/helper/useEnvironmentContext.tsx'
+import { useDockerContext } from '~/helper/useDockerContext.tsx'
 import ImagesDfTableMaterial from '~/components/docker/Images/components/ImagesDfTableMaterial.tsx'
 import { IDockerResourceAttrs } from '~/types.ts'
 import { Button, Drawer } from '@mui/material'
@@ -36,7 +36,7 @@ const ImageDetailsDrawer = ({
 }
 
 const ImagesDfView = () => {
-  const { df } = useEnvironment()
+  const { df } = useDockerContext()
   const [selectedImage, setSelectedImage] = React.useState<IDockerResourceAttrs | null>(null)
   const toggleDrawer = (open) => setSelectedImage(open ? selectedImage : null)
 

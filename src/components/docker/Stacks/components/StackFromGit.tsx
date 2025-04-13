@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { toast } from 'react-toastify'
 import Typography from '@mui/material/Typography'
-import { useEnvApi } from '../../../../helper/useEnvApi.ts'
+import { useAgentDockerApi } from '../../../../helper/useAgentDockerApi.ts'
 
 const StackFromGit = () => {
   const [stackName, setStackName] = React.useState('my-repo-stack')
@@ -12,7 +12,7 @@ const StackFromGit = () => {
   const [composeFileName, setComposeFileName] = React.useState('')
   const [sshKeyId, setSshKeyId] = React.useState('')
 
-  const { api } = useEnvApi()
+  const api = useAgentDockerApi()
 
   const handleSubmitClick = () => {
     console.log('Submit clicked')

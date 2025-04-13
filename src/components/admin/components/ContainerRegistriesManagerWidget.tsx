@@ -1,6 +1,6 @@
 import React from 'react'
 import { Paper, Typography } from '@mui/material'
-import { useEnvApi } from '~/helper/useEnvApi.ts'
+import useAgentApi from '~/helper/useAgentApi.ts'
 import { ContainerRegistry } from '~/types.ts'
 import BasicDialogButton from '../../../elements/Dialog/BasicDialogButton.tsx'
 import ContainerRegistryForm from './ContainerRegistryForm.tsx'
@@ -11,7 +11,7 @@ import Button from '@mui/material/Button'
 
 const ContainerRegistriesManagerWidget = () => {
   const [registries, setRegistries] = React.useState<ContainerRegistry[]>([])
-  const { api } = useEnvApi()
+  const api = useAgentApi()
 
   const fetchRegistries = React.useCallback(async () => {
     const response = await api.getContainerRegistries()

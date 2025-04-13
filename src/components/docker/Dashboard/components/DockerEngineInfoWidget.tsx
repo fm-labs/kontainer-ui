@@ -4,12 +4,12 @@ import KeyValueGrid from '../../../../elements/KeyValueGrid.tsx'
 import { Paper } from '@mui/material'
 import AppIcons from '../../../../elements/AppIcons.tsx'
 import JsonView from '../../../../elements/JsonView.tsx'
-import { useEnvApi } from '~/helper/useEnvApi.ts'
+import { useAgentDockerApi } from '~/helper/useAgentDockerApi.ts'
 import { useAutoreload } from '~/helper/useAutoreload.ts'
 
 const DockerEngineInfoWidget = () => {
   const [engineInfo, setEngineInfo] = React.useState<any>(null)
-  const { api } = useEnvApi()
+  const api = useAgentDockerApi()
 
   const kvInfo = React.useMemo(() => {
     if (!engineInfo) return []

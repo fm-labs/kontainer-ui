@@ -1,4 +1,4 @@
-import { HostEnvironment } from './types.ts'
+import { DockerHost, HostEnvironment } from './types.ts'
 
 export const CURRENT_HOSTNAME = window.location.hostname
 export const CURRENT_PORT = window.location.port
@@ -31,9 +31,19 @@ export const PORTAINER_TEMPLATE_URLS = [
   },
 ]
 export const DEFAULT_ENVIRONMENT: HostEnvironment = {
-  id: '0',
+  id: 'env0',
   label: MASTER_AGENT_LABEL,
   hostname: MASTER_AGENT_HOST,
   agentPort: MASTER_AGENT_PORT,
   useSSL: MASTER_AGENT_SSL,
+}
+
+// export const DEFAULT_DOCKERHOST: DockerHost = {
+//   id: '0',
+//   url: 'unix:///var/run/docker.sock',
+// }
+
+export const DEFAULT_DOCKERHOST: DockerHost = {
+  id: 'srv03',
+  url: 'ssh://srv03.fmhub',
 }

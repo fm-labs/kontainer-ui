@@ -1,5 +1,5 @@
-import { useEnvApi } from './useEnvApi.ts'
 import { TaskStatusResponse } from '../types.ts'
+import useAgentApi from '~/helper/useAgentApi.ts'
 
 const useBackgroundTask = async (task: () => Promise<TaskStatusResponse>) => {
   const submissionResponse = await task()
@@ -8,7 +8,7 @@ const useBackgroundTask = async (task: () => Promise<TaskStatusResponse>) => {
     return Promise.reject('Task submission failed')
   }
 
-  const { api } = useEnvApi()
+  const api = useAgentApi()
   return async () => {
     return await api.getTaskStatus(taskId)
   }

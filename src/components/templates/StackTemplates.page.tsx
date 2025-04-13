@@ -2,7 +2,7 @@ import React from 'react'
 import StackTemplatesView from './StackTemplatesView.tsx'
 import Container from '@mui/material/Container'
 import { useLoaderData } from 'react-router-dom'
-import { useEnvApi } from '../../helper/useEnvApi.ts'
+import useAgentApi from '../../helper/useAgentApi.ts'
 import { Helmet } from 'react-helmet-async'
 import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../elements/Heading.tsx'
@@ -14,7 +14,7 @@ const StackTemplatesPage = () => {
   const templates = useLoaderData() as any[]
   const [selectedTemplateName, setSelectedTemplateName] = React.useState('')
   const [templateData, setTemplateData] = React.useState([])
-  const { api } = useEnvApi()
+  const api = useAgentApi()
 
   // sort templateDate by template_id
   const sortedTemplates = React.useMemo(() => {

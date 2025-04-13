@@ -1,9 +1,9 @@
 import React from 'react'
-import { useLoaderData } from 'react-router-dom'
+import { useLoaderData, useParams } from 'react-router-dom'
 import Container from '@mui/material/Container'
 import Button from '@mui/material/Button'
 import AppIcons from '../../../elements/AppIcons.tsx'
-import { useEnvApi } from '~/helper/useEnvApi.ts'
+import { useAgentDockerApi } from '~/helper/useAgentDockerApi.ts'
 import BasicTabs, { BasicTabItem } from '~/elements/BasicTabs.tsx'
 import StackIconControls from '~/components/docker/Stacks/components/StackIconControls.tsx'
 import Heading from '~/elements/Heading.tsx'
@@ -13,11 +13,15 @@ import StackWidget from '~/components/docker/Dashboard/components/StackWidget.ts
 import KeyValueTable from '~/elements/KeyValueTable.tsx'
 
 const StackPage = () => {
-  const loaderData = useLoaderData() as any // IDockerComposeProject
-  const stackId = loaderData.name
+  //const loaderData = useLoaderData() as any // IDockerComposeProject
+  //const stackId = loaderData.name
+  const { stackId } = useParams<{ stackId: string }>()
+  if (!stackId) {
+    throw new Error('Stack ID is required')
+  }
 
-  const [data, setData] = React.useState(loaderData)
-  const { api } = useEnvApi()
+  const [data, setData] = React.useState<any>()
+  const api = useAgentDockerApi()
 
   const handleProjectStartClick = (id: string) => () => {
     console.log('Starting project', id)
@@ -29,20 +33,24 @@ const StackPage = () => {
     //api.stopProject()(id)
   }
 
+  const fetchProject = React.useCallback(async () => {
+    const data = await api.getStack(stackId)
+    setData(data)
+  }, [api, stackId])
+
   React.useEffect(() => {
     console.log('ProjectPage mounted')
-    const timer = setInterval(() => {
-      console.log('Refreshing projects')
-      api.getStack(data.name).then((data) => {
-        console.log('Project refreshed', data)
-        setData(data)
-      })
-    }, 10000)
+    fetchProject()
+    const timer = setInterval(fetchProject, 10000)
     return () => {
       console.log('ProjectPage unmounted')
       clearInterval(timer)
     }
   }, [])
+
+  if (!data) {
+    return <div>Loading...</div>
+  }
 
   const tabs: BasicTabItem[] = [
     {

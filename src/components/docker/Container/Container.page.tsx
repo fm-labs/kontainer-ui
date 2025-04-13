@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import { Helmet } from 'react-helmet-async'
-import { Link, useLoaderData } from 'react-router-dom'
+import { Link, useLoaderData, useParams } from 'react-router-dom'
 import Container from '@mui/material/Container'
 import Button, { ButtonProps } from '@mui/material/Button'
 import ReactJson from '@microlink/react-json-view'
@@ -17,17 +17,23 @@ import ContainerEnvVariablesTable from './components/ContainerEnvVariablesTable.
 import ContainerPathsTable from './components/ContainerPathsTable.tsx'
 import RoutedTabs, { RoutedTabItem } from '../../../elements/RoutedTabs.tsx'
 import AppIcons from '../../../elements/AppIcons.tsx'
-import { useEnvApi } from '~/helper/useEnvApi.ts'
+import { useAgentDockerApi } from '~/helper/useAgentDockerApi.ts'
 import ContainerLogsWidget from './components/ContainerLogsWidget.tsx'
 import ContainerExecCommandWidget from './components/ContainerExecWidget.tsx'
 import ContainerIconControls from '~/components/docker/Container/components/ContainerIconControls.tsx'
-import { useEnvironment } from '~/helper/useEnvironmentContext.tsx'
+import { useDockerContext } from '~/helper/useDockerContext.tsx'
 
 const ContainerPage = () => {
-  const loaderData = useLoaderData() as any // IDockerComposeContainer
-  const [data, setData] = React.useState(loaderData)
-  const { api } = useEnvApi()
-  const { df, buildUrl } = useEnvironment()
+  const api = useAgentDockerApi()
+  const { df, buildUrl } = useDockerContext()
+  const [data, setData] = React.useState<any>()
+
+  //const loaderData = useLoaderData() as any // IDockerComposeContainer
+  const { containerId } = useParams<{ containerId: string }>()
+
+  if (!containerId) {
+    throw new Error('Container ID is required')
+  }
 
   // const handleContainerStartClick = (id: string) => () => {
   //   console.log('Starting container', id)
@@ -39,20 +45,24 @@ const ContainerPage = () => {
   //   //api.stopContainer()(id)
   // }
 
+  const fetchContainer = React.useCallback(async () => {
+    const data = await api.getContainer(containerId)
+    setData(data)
+  }, [api, containerId])
+
   React.useEffect(() => {
     console.log('ContainerPage mounted')
-    const timer = setInterval(() => {
-      console.log('Refreshing containers')
-      api.getContainer(data.Id).then((data) => {
-        console.log('Container refreshed', data)
-        setData(data)
-      })
-    }, 5000)
+    fetchContainer()
+    const timer = setInterval(fetchContainer, 30000)
     return () => {
       console.log('ContainerPage unmounted')
       clearInterval(timer)
     }
   }, [])
+
+  if (!data) {
+    return <div>Loading...</div>
+  }
 
   const tabs: RoutedTabItem[] = [
     // {

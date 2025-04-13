@@ -3,8 +3,8 @@ const buildStorageKey = (envId: string) => {
   return `kstack.${host}.${envId}.at`
 }
 
-export const writeEnvAuthToken = (envId, token: string | null) => {
-  const key = buildStorageKey(envId)
+export const storeAuthToken = (scope, token: string | null) => {
+  const key = buildStorageKey(scope)
   if (token === null) {
     localStorage.removeItem(key)
     return
@@ -12,6 +12,6 @@ export const writeEnvAuthToken = (envId, token: string | null) => {
   localStorage.setItem(key, token)
 }
 
-export const readEnvAuthToken = (envId) => {
-  return localStorage.getItem(buildStorageKey(envId))
+export const readAuthToken = (scope) => {
+  return localStorage.getItem(buildStorageKey(scope))
 }

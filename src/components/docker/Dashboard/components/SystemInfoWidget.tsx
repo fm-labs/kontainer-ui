@@ -2,11 +2,11 @@ import React from 'react'
 import JsonView from '../../../../elements/JsonView.tsx'
 import { Paper } from '@mui/material'
 import AppIcons from '../../../../elements/AppIcons.tsx'
-import { useEnvApi } from '~/helper/useEnvApi.ts'
+import { useAgentDockerApi } from '~/helper/useAgentDockerApi.ts'
 
 const SystemInfoWidget = () => {
   const [systemInfo, setSystemInfo] = React.useState<any>(null)
-  const { api } = useEnvApi()
+  const api = useAgentDockerApi()
 
   const fetchSystemInfo = React.useCallback(() => {
     api.getSystemInfo().then((data) => {

@@ -9,7 +9,7 @@ import LayoutDrawer from './LayoutDrawer.tsx'
 import AppTheme from './AppTheme.tsx'
 
 export default function Layout({ children }: PropsWithChildren<any>) {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(true)
   const toggleDrawer = () => {
     setOpen(!open)
   }

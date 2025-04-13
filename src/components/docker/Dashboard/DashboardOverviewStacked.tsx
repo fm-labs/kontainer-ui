@@ -2,13 +2,13 @@ import React from 'react'
 import AppIcons from '../../../elements/AppIcons.tsx'
 import Box from '@mui/material/Box'
 import StackWidget from '~/components/docker/Dashboard/components/StackWidget.tsx'
-import { useEnvironment } from '~/helper/useEnvironmentContext.tsx'
+import { useDockerContext } from '~/helper/useDockerContext.tsx'
 import { Link } from 'react-router-dom'
 import Heading from '~/elements/Heading.tsx'
 import StackIconControls from '~/components/docker/Stacks/components/StackIconControls.tsx'
 
 const DashboardOverviewStacked = () => {
-  const { df, buildUrl } = useEnvironment()
+  const { df, buildUrl } = useDockerContext()
 
   const stackIds = React.useMemo(() => {
     if (!df) return []

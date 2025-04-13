@@ -6,19 +6,25 @@ import { Helmet } from 'react-helmet-async'
 import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../../elements/Heading.tsx'
 import StacksCreateButton from './components/StacksCreate.button.tsx'
-import { useEnvApi } from '~/helper/useEnvApi.ts'
+import { useAgentDockerApi } from '~/helper/useAgentDockerApi.ts'
 import { useAutoreload } from '~/helper/useAutoreload.ts'
-import { useEnvRepo } from '~/helper/useEnvRepo.ts'
+import { useAppRepo } from '~/helper/useAppRepo.ts'
 import AutoreloadButton from '../../../elements/Autoreload/AutoreloadButton.tsx'
 
 const StacksPage = () => {
-  const loaderData = useLoaderData() as any // IDockerStack[]
-  const [data, setData] = React.useState(loaderData)
-  const { api } = useEnvApi()
-  const repo = useEnvRepo()
+  //const loaderData = useLoaderData() as any // IDockerStack[]
+  const [data, setData] = React.useState<any[]>([])
+  const api = useAgentDockerApi()
+  const repo = useAppRepo()
+
+  const syncStacks = async () => {
+    const data = await api.getStacks()
+    await repo.updateStacks(data)
+    return data
+  }
 
   const fetchStacks = React.useCallback(async () => {
-    repo.syncStacks().then((data) => {
+    syncStacks().then((data) => {
       setData(data)
     })
   }, [api])

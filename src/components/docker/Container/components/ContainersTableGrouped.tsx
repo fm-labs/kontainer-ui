@@ -4,15 +4,15 @@ import moment from 'moment/moment'
 import Table from '@mui/material/Table'
 import { TableCell, TableRow } from '@mui/material'
 import { IDockerResourceAttrs } from '~/types.ts'
-import { useEnvRoute } from '~/helper/useEnvRoute.ts'
 import ContainerPorts from './ContainerPorts.tsx'
 import ContainerState from './ContainerState.tsx'
 import ContainerIconControls from './ContainerIconControls.tsx'
 import ContainerId from './ContainerId.tsx'
 import StackIconControls from '../../Stacks/components/StackIconControls.tsx'
+import { useDockerContext } from '~/helper/useDockerContext.tsx'
 
 const ContainersTableGrouped = ({ data }: { data: IDockerResourceAttrs[] }) => {
-  const { buildEnvUrl } = useEnvRoute()
+  const { buildUrl } = useDockerContext()
 
   const groupedData = React.useMemo(() => {
     if (!data) {
@@ -71,7 +71,7 @@ const ContainersTableGrouped = ({ data }: { data: IDockerResourceAttrs[] }) => {
                 const name = row?.Name.substring(1).replace(`${composeProject}-`, '')
                 const labels = row?.Config?.Labels
                 const hasProtectedLabel = labels?.['kstack.protected'] === 'true'
-                const url = buildEnvUrl(`/docker/containers/${row?.Id}`)
+                const url = buildUrl(`/containers/${row?.Id}`)
 
                 return (
                   <tr key={row.Id}>

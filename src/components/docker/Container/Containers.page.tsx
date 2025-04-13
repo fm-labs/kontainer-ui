@@ -1,32 +1,37 @@
 import React from 'react'
+import { Helmet } from 'react-helmet-async'
 import { useLoaderData } from 'react-router-dom'
-import Container from '@mui/material/Container'
-import { IDockerResourceAttrs } from '../../../types.ts'
+import { FormControlLabel, FormGroup, Switch, Container } from '@mui/material'
+import { IDockerResourceAttrs } from '~/types.ts'
 import ContainersTableGrouped from './components/ContainersTableGrouped.tsx'
 import ContainerCreateButton from './components/ContainerCreate.button.tsx'
 import ContainersTableMaterial from './components/ContainersTableMaterial.tsx'
-import { FormControlLabel, FormGroup, Switch } from '@mui/material'
 import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../../elements/Heading.tsx'
-import { Helmet } from 'react-helmet-async'
-import { useEnvApi } from '../../../helper/useEnvApi.ts'
-import { useAutoreload } from '../../../helper/useAutoreload.ts'
+import { useAgentDockerApi } from '~/helper/useAgentDockerApi.ts'
+import { useAutoreload } from '~/helper/useAutoreload.ts'
+import { useAppRepo } from '~/helper/useAppRepo.ts'
 import AutoreloadButton from '../../../elements/Autoreload/AutoreloadButton.tsx'
-import { useEnvRepo } from '../../../helper/useEnvRepo.ts'
 
 const ContainersPage = () => {
   const loaderData = useLoaderData() as IDockerResourceAttrs[]
   const [data, setData] = React.useState(loaderData)
   const [showGrouped, setShowGrouped] = React.useState(true)
-  const { api } = useEnvApi()
-  const repo = useEnvRepo()
+  const api = useAgentDockerApi()
+  const repo = useAppRepo()
 
   const handleSwitchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setShowGrouped(e.target.checked)
   }
 
+  const syncContainers = async () => {
+    const data = await api.getContainers()
+    await repo.updateContainers(data)
+    return data
+  }
+
   const fetchContainers = React.useCallback(async () => {
-    repo.syncContainers().then((data) => {
+    syncContainers().then((data) => {
       setData(data)
     })
   }, [api])

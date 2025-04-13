@@ -1,11 +1,11 @@
 import React from 'react'
-import { useEnvApi } from '../../../../helper/useEnvApi.ts'
+import { useAgentDockerApi } from '../../../../helper/useAgentDockerApi.ts'
 import { toast } from 'react-toastify'
 import { Button } from '@mui/material'
 
 const ContainerExecCommandWidget = ({ container }) => {
   const [logs, setLogs] = React.useState<string[]>([])
-  const { api } = useEnvApi()
+  const api = useAgentDockerApi()
   const [command, setCommand] = React.useState('whoami')
 
   const execCommand = React.useCallback(async () => {

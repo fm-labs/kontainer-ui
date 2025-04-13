@@ -6,13 +6,13 @@ import Heading from '../../../elements/Heading.tsx'
 import EventsTableMaterial from './components/EventsTableMaterial.tsx'
 import { toast } from 'react-toastify'
 import { useLoaderData } from 'react-router-dom'
-import { useEnvApi } from '../../../helper/useEnvApi.ts'
+import { useAgentDockerApi } from '../../../helper/useAgentDockerApi.ts'
 
 const EventsPage = () => {
   const data = useLoaderData() as any
   const [events, setEvents] = React.useState<any[]>(data || [])
   const [lastEventTime, setLastEventTime] = React.useState<number>(Math.floor(Date.now() / 1000))
-  const { api } = useEnvApi()
+  const api = useAgentDockerApi()
 
   const fetchEvents = React.useCallback(async () => {
     //console.log('fetching events')

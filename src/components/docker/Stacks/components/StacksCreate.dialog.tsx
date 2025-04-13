@@ -10,12 +10,12 @@ import StackFromScratch from './StackFromScratch.tsx'
 import StackFromGit from './StackFromGit.tsx'
 import StackFromPortainerTemplate from './StackFromPortainerTemplate.tsx'
 import { toast } from 'react-toastify'
-import { useEnvApi } from '../../../../helper/useEnvApi.ts'
+import { useAgentDockerApi } from '../../../../helper/useAgentDockerApi.ts'
 import BasicTabs, { BasicTabItem } from '../../../../elements/BasicTabs.tsx'
 import StackFromTemplate from './StackFromTemplate.tsx'
 
 export default function CreateStacksDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const { api } = useEnvApi()
+  const api = useAgentDockerApi()
 
   const onSubmit = (formData: FormData) => {
     console.log('Create stack SUBMIT', formData)

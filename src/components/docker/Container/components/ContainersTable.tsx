@@ -5,10 +5,10 @@ import moment from 'moment/moment'
 import Button from '@mui/material/Button'
 import ContainerPorts from './ContainerPorts.tsx'
 import AppIcons from '../../../../elements/AppIcons.tsx'
-import { useEnvApi } from '../../../../helper/useEnvApi.ts'
+import { useAgentDockerApi } from '../../../../helper/useAgentDockerApi.ts'
 
 const ContainersTable = ({ data }) => {
-  const { api } = useEnvApi()
+  const api = useAgentDockerApi()
 
   const handleContainerStartClick = (id: string) => () => {
     console.log('Starting container', id)

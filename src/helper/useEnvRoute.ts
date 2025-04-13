@@ -1,12 +1,12 @@
 import React from 'react'
 import { useLocation } from 'react-router'
-import { useHref, useMatches } from 'react-router-dom'
+import { useMatches } from 'react-router-dom'
 import useEnvironments from './useEnvironments.ts'
 
 export const useEnvRoute = () => {
   const location = useLocation()
   const matches = useMatches()
-  const { envs } = useEnvironments()
+  const { dockerHosts } = useEnvironments()
   //console.log('useHostRoute', location, matches)
 
   const getEnvIdFromRoute = () => {
@@ -19,25 +19,25 @@ export const useEnvRoute = () => {
   }
 
   const getEnvFromEnvId = () => {
-    if (!envs) {
+    if (!dockerHosts) {
       return
     }
-    return envs.find((env) => env.id === envId)
+    return dockerHosts.find((env) => env.id === envId)
   }
 
   const envId = React.useMemo(() => getEnvIdFromRoute(), [matches])
   const env = React.useMemo(() => getEnvFromEnvId(), [matches, envId])
 
-  const buildEnvUrl = React.useCallback(
-    (path: string) => {
-      if (!envId) {
-        return path
-      }
-
-      return `/${envId}${path}`
-    },
-    [envId],
-  )
+  // const buildEnvUrl = React.useCallback(
+  //   (path: string) => {
+  //     if (!envId) {
+  //       return path
+  //     }
+  //
+  //     return `/${envId}${path}`
+  //   },
+  //   [envId],
+  // )
 
   return {
     location,
@@ -45,6 +45,5 @@ export const useEnvRoute = () => {
     env: env,
     envId: envId,
     isEnvRoute: !!envId,
-    buildEnvUrl: buildEnvUrl,
   }
 }

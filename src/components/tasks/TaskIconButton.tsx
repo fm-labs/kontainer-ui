@@ -1,7 +1,7 @@
 import React from 'react'
 import IconButton, { IconButtonProps } from '@mui/material/IconButton'
 import CircularProgress from '@mui/material/CircularProgress'
-import { useEnvApi } from '~/helper/useEnvApi.ts'
+import useAgentApi from '~/helper/useAgentApi.ts'
 import { useTaskManager } from '~/components/tasks/useTaskManager.ts'
 import { TaskStatusResponse } from '~/types.ts'
 
@@ -17,7 +17,7 @@ const TaskIconButton = ({ promise, onSuccess, onFailure, children, ...iconButton
   const [taskId, setTaskId] = React.useState<string | null>(null)
   const { addTask, updateTask, removeTask } = useTaskManager()
 
-  const { api } = useEnvApi()
+  const api = useAgentApi()
 
   const handleClick = () => {
     setLoading(true)

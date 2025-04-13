@@ -2,14 +2,14 @@ import React from 'react'
 import { MaterialReactTable, useMaterialReactTable, type MRT_ColumnDef } from 'material-react-table'
 import { IDockerResourceAttrs } from '../../../../types.ts'
 import { Link } from 'react-router-dom'
-import { useEnvApi } from '../../../../helper/useEnvApi.ts'
+import { useAgentDockerApi } from '../../../../helper/useAgentDockerApi.ts'
 import StackIconControls from './StackIconControls.tsx'
 import { useErrorHandler } from '../../../../helper/useErrorHandler.ts'
 import AppIcons from '../../../../elements/AppIcons.tsx'
 import IconButton from '@mui/material/IconButton'
 
 const StacksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
-  const { api } = useEnvApi()
+  const api = useAgentDockerApi()
   // const defaultErrorHandler = (error: any) => {
   //   toast.error(error?.message || 'An Error occurred')
   // }

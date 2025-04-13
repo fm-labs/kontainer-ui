@@ -2,6 +2,7 @@
 bak/
 build/
 dist/
+public/envs/
 public/schema/dev/
 public/stack-templates.json
 .env

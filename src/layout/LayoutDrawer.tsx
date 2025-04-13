@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
@@ -16,7 +16,9 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 // import { useLocation, useNavigate } from 'react-router'
 // import { useMatches } from 'react-router-dom'
 // import Box from '@mui/material/Box'
-import { useEnvRoute } from '../helper/useEnvRoute.ts'
+import { useEnvironment } from '~/helper/useEnvironmentContext.tsx'
+import { useDockerContext } from '~/helper/useDockerContext.tsx'
+import { useNavigate } from 'react-router'
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
   '& .MuiDrawer-paper': {
@@ -49,36 +51,51 @@ interface DeveloperLayoutDrawerProps {
 }
 
 const LayoutDrawer = (props: DeveloperLayoutDrawerProps) => {
-  //const availableHosts = getHosts()
-  //const [selectedHost, setSelectedHost] = React.useState<string>(availableHosts[0].hostname) // host id
-  //const navigate = useNavigate()
-  const envRoute = useEnvRoute()
+  const { dockerHosts } = useEnvironment()
+  const navigate = useNavigate()
+  const { buildUrl } = useEnvironment()
+  const dockerContext = useDockerContext()
+
+  const [selectedHost, setSelectedHost] = React.useState<string>(dockerContext?.dockerHost?.id) // host id
 
   const envRouted = (items) => {
     return items.map((item) => {
       return {
         ...item,
-        to: envRoute.buildEnvUrl(item.to),
+        to: buildUrl(item.to),
       }
     })
   }
 
-  // const handleHostChange = (e: SelectChangeEvent) => {
-  //   setSelectedHost(e.target.value)
-  //   console.log('HOST CHANGED', e.target.value)
-  //
-  //   const host = availableHosts.find((h) => h.hostname === e.target.value)
-  //   if (!host) {
-  //     console.error('Host not found', e.target.value)
-  //     return
-  //   }
-  //
-  //   // set in session storage
-  //   //const baseUrl = `http://${host.ip}:5000/api/`
-  //   //sessionStorage.setItem('AGENT_API_BASEURL', baseUrl)
-  //   const redirectUrl = `/${host.hostname}/`
-  //   navigate(redirectUrl)
-  // }
+  const dockerContextRouted = (items) => {
+    if (!dockerContext) {
+      console.error('Docker context not found')
+      return items
+    }
+    return items.map((item) => {
+      return {
+        ...item,
+        to: dockerContext.buildUrl(`${item.to}`),
+      }
+    })
+  }
+
+  const handleDockerHostChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedHost(e.target.value)
+    console.log('HOST CHANGED', e.target.value)
+
+    const host = dockerHosts.find((h) => h.id === e.target.value)
+    if (!host) {
+      console.error('Host not found', e.target.value)
+      return
+    }
+
+    // set in session storage
+    //const baseUrl = `http://${host.ip}:5000/api/`
+    //sessionStorage.setItem('AGENT_API_BASEURL', baseUrl)
+    const redirectUrl = `/docker/${host.id}/`
+    navigate(redirectUrl)
+  }
 
   return (
     <Drawer variant='permanent' open={props?.open}>
@@ -96,13 +113,14 @@ const LayoutDrawer = (props: DeveloperLayoutDrawerProps) => {
         </span>*/}
         {props?.open && (
           <>
-            {/*<select value={selectedHost} onChange={handleHostChange}>
-              {availableHosts.map((host) => (
+            <div>{selectedHost}</div>
+            <select value={selectedHost} onChange={handleDockerHostChange}>
+              {dockerHosts.map((host) => (
                 <option key={host.id} value={host.id}>
-                  {host.name}
+                  {host.id}
                 </option>
               ))}
-            </select>*/}
+            </select>
           </>
         )}
         <IconButton onClick={props?.toggleDrawer}>{props.open ? <ChevronLeftIcon /> : <ChevronRightIcon />}</IconButton>
@@ -120,7 +138,7 @@ const LayoutDrawer = (props: DeveloperLayoutDrawerProps) => {
       <List component='nav'>
         {/*<NavListItems items={navItemsMain} />*/}
         {/*<Divider sx={{ my: 1 }} />*/}
-        <NavListItems items={envRouted(navItemsDocker)} />
+        {dockerContext && <NavListItems items={dockerContextRouted(navItemsDocker)} />}
         <Divider sx={{ my: 1 }} />
         <NavListItems items={envRouted(navItemsHost)} />
         <Divider sx={{ my: 1 }} />

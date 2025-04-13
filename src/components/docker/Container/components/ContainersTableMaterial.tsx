@@ -1,16 +1,16 @@
 import React from 'react'
 import { MaterialReactTable, useMaterialReactTable, type MRT_ColumnDef } from 'material-react-table'
-import { IDockerResourceAttrs } from '../../../../types.ts'
+import { IDockerResourceAttrs } from '~/types.ts'
 import moment from 'moment/moment'
 import ContainerPorts from './ContainerPorts.tsx'
 import ContainerState from './ContainerState.tsx'
 import { Link } from 'react-router-dom'
 import ContainerIconControls from './ContainerIconControls.tsx'
 import ContainerId from './ContainerId.tsx'
-import { useEnvRoute } from '../../../../helper/useEnvRoute.ts'
+import { useDockerContext } from '~/helper/useDockerContext.tsx'
 
 const ContainersTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
-  const { buildEnvUrl } = useEnvRoute()
+  const { buildUrl } = useDockerContext()
 
   // const {
   //   handleContainerStartClick,
@@ -24,7 +24,7 @@ const ContainersTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => 
   //   handleContainerExecClick,
   // } = useContainer()
 
-  // const { api } = useEnvApi()
+  // const { api } = useDockerApi()
   // const { defaultErrorHandler } = useErrorHandler()
 
   // const handleContainerStartClick = (id: string) => () => {
@@ -81,7 +81,7 @@ const ContainersTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => 
         Cell: ({ cell }) => {
           const name = cell.getValue<string>()
           const id = cell.row.original?.Id
-          const url = buildEnvUrl(`/docker/containers/${id}`)
+          const url = buildUrl(`/containers/${id}`)
           return (
             <Link to={url} title={name}>
               {name.substring(1)}

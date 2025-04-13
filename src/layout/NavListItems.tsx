@@ -5,7 +5,6 @@ import ListItemButton from '@mui/material/ListItemButton'
 import { useNavigate } from 'react-router'
 import { INavigationItem } from './navigation.types.ts'
 import { useHref } from 'react-router-dom'
-import { useEnvironment } from '~/helper/useEnvironmentContext.tsx'
 
 interface NavListItemsProps {
   items: INavigationItem[]
@@ -13,10 +12,8 @@ interface NavListItemsProps {
 
 const NavListItems = ({ items }: NavListItemsProps) => {
   const navigate = useNavigate()
-  const { buildUrl } = useEnvironment()
 
-  const handleClick = (item: INavigationItem) => {
-    const href = useHref(item.to)
+  const handleClick = (item: INavigationItem, href: string) => {
     if (item.target) {
       window.open(href, item.target)
       return false
@@ -34,7 +31,7 @@ const NavListItems = ({ items }: NavListItemsProps) => {
         return (
           <ListItemButton
             key={index}
-            onClick={() => handleClick(item)}
+            onClick={() => handleClick(item, href)}
             href={href}
             target={item?.target}
             title={item.label}

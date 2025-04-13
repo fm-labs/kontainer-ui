@@ -8,10 +8,10 @@ import { Link } from 'react-router-dom'
 import ContainerFormatters from '~/components/docker/Container/components/ContainerFormatters.tsx'
 import ContainerStatusText from '~/components/docker/Container/components/ContainerStatusText.tsx'
 import ContainerIconControls from '~/components/docker/Container/components/ContainerIconControls.tsx'
-import { useEnvironment } from '~/helper/useEnvironmentContext.tsx'
+import { useDockerContext } from '~/helper/useDockerContext.tsx'
 
 const DashboardOverview = () => {
-  const { df } = useEnvironment()
+  const { df } = useDockerContext()
   const [onlyActive, setOnlyActive] = React.useState(true)
 
   const containersData = React.useMemo(() => {
