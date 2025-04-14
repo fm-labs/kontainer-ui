@@ -21,6 +21,11 @@ const agentInternalApi = (agentHttp) => {
     return response.data
   }
 
+  const connectToDockerHost = async (dockerHostId: string): Promise<any> => {
+    const response = await agentHttp.post(`environments/${dockerHostId}/connect`)
+    return response.data
+  }
+
   const submitTask = async (task: any): Promise<TaskStatusResponse> => {
     const response = await agentHttp.post(`tasks`, task)
     return response.data
@@ -90,6 +95,7 @@ const agentInternalApi = (agentHttp) => {
     postLogin,
     postLogout,
     getEnvironments,
+    connectToDockerHost,
     submitTask,
     getTaskStatus,
     listTemplates,
