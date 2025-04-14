@@ -32,9 +32,9 @@ const EnvironmentDockerHostsPage = () => {
             <Card sx={{ minWidth: 275, mb: 3, p: 1 }}>
               <CardContent>
                 <Typography variant='h5' component='div'>
-                  {dockerHost.label}
+                  {dockerHost.id}
                 </Typography>
-                <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>{dockerHost.id}</Typography>
+                <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>{dockerHost.host}</Typography>
                 <div>
                   <Link to={`/docker/${dockerHost.id}`}>Dashboard</Link> |{' '}
                   <Link to={`/docker/${dockerHost.id}/containers`}>Containers</Link> |{' '}

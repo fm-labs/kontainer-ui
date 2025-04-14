@@ -46,10 +46,10 @@ const routes: RouteObject[] = [
       //   //   return api(AGENT_API_BASEURL).getEnvironments()
       //   // },
       // },
-      {
-        index: true,
-        element: <EnvironmentDockerHostsPage />,
-      },
+      // {
+      //   index: true,
+      //   element: <EnvironmentDockerHostsPage />,
+      // },
       {
         path: 'connect',
         element: <LoginPage />,
@@ -62,6 +62,10 @@ const routes: RouteObject[] = [
       {
         element: <AuthenticatedRouteWrapper />,
         children: [
+          {
+            index: true,
+            element: <EnvironmentDockerHostsPage />,
+          },
           {
             path: 'docker',
             element: <DockerContextRouteWrapper />,

@@ -16,7 +16,7 @@ const agentInternalApi = (agentHttp) => {
     return response.data
   }
 
-  const getEnvironments = async (): Promise<IDockerContainer[]> => {
+  const getEnvironments = async (): Promise<any[]> => {
     const response = await agentHttp.get(`environments`)
     return response.data
   }

@@ -1,5 +1,7 @@
 import React, { createContext, useContext, ReactNode } from 'react'
 import { DockerHost, HostEnvironment } from '../types.ts'
+import useAgentApi from '~/helper/useAgentApi.ts'
+import { agentInternalApiForEnv } from '~/lib/agentInternalApi.ts'
 
 interface EnvironmentContextProps {
   environment: HostEnvironment
@@ -23,12 +25,14 @@ export const EnvironmentProvider: React.FC<{ children: ReactNode; host: HostEnvi
   )
 
   const fetchEnvDockerHosts = React.useCallback(async () => {
-    const envDataUrl = `/envs/${host.id}.json`
-    console.log('Fetching environment docker hosts from', envDataUrl)
+    const api = agentInternalApiForEnv(host)
+    const dockerHosts = await api.getEnvironments()
 
-    const response = await fetch(envDataUrl)
-    const json = await response.json()
-    const dockerHosts: DockerHost[] = json?.dockerHosts || []
+    // const envDataUrl = `//${host.hostname}:${host.agentPort}/api/environments`
+    // console.log('Fetching environment docker hosts from', envDataUrl)
+    // const response = await fetch(envDataUrl)
+    // const json = await response.json()
+    // const dockerHosts: DockerHost[] = json?.dockerHosts || []
     console.log('Docker hosts:', dockerHosts)
     setDockerHosts(dockerHosts)
   }, [host])

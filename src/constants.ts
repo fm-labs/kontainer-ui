@@ -45,5 +45,5 @@ export const DEFAULT_ENVIRONMENT: HostEnvironment = {
 
 export const DEFAULT_DOCKERHOST: DockerHost = {
   id: 'srv03',
-  url: 'ssh://srv03.fmhub',
+  host: 'ssh://srv03.fmhub',
 }

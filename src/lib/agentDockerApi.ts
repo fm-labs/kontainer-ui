@@ -7,7 +7,7 @@ export const agentDockerApiForEnv = (env: HostEnvironment, dockerHost: DockerHos
   agentHttp.interceptors.request.use((config) => {
     if (dockerHost) {
       config.headers['X-Docker-Context'] = dockerHost.id
-      config.headers['X-Docker-Host'] = dockerHost.url
+      config.headers['X-Docker-Host'] = dockerHost.host
     }
     return config
   })

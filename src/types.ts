@@ -83,5 +83,5 @@ export type HostEnvironment = {
 
 export type DockerHost = {
   id: string
-  url: string
+  host: string
 }

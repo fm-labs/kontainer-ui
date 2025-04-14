@@ -33,21 +33,12 @@ const DockerBreadcrumbs = () => {
   return (
     <div>
       <Breadcrumbs maxItems={5} aria-label='breadcrumb'>
+        <Link underline='hover' color='inherit' href='#'>
+          All Environments
+        </Link>
         <Typography sx={{ color: 'text.primary' }}>
           <SiDocker /> {dockerHost.id}
         </Typography>
-        <Link underline='hover' color='inherit' href='#'>
-          Stacks
-        </Link>
-        <Link underline='hover' color='inherit' href='#'>
-          Container
-        </Link>
-        <Link underline='hover' color='inherit' href='#'>
-          c-asdfasdfasdf
-        </Link>
-        <Link underline='hover' color='inherit' href='#'>
-          Logs
-        </Link>
       </Breadcrumbs>
     </div>
   )
