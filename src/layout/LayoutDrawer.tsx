@@ -19,6 +19,9 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import { useEnvironment } from '~/helper/useEnvironmentContext.tsx'
 import { useDockerContext } from '~/helper/useDockerContext.tsx'
 import { useNavigate } from 'react-router'
+import DropdownNav from '~/layout/DropdownNav.tsx'
+import { Button } from '@mui/material'
+import DropdownTriggerButton from '~/layout/DropdownTriggerButton.tsx'
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
   '& .MuiDrawer-paper': {
@@ -55,6 +58,9 @@ const LayoutDrawer = (props: DeveloperLayoutDrawerProps) => {
   const navigate = useNavigate()
   const { buildUrl } = useEnvironment()
   const dockerContext = useDockerContext()
+
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const dropdownOpen = Boolean(anchorEl)
 
   const [selectedHost, setSelectedHost] = React.useState<string>(dockerContext?.dockerHost?.id) // host id
 
@@ -113,14 +119,19 @@ const LayoutDrawer = (props: DeveloperLayoutDrawerProps) => {
         </span>*/}
         {props?.open && (
           <>
-            <div>{selectedHost}</div>
+            <>
+              <DropdownTriggerButton onClick={(event) => setAnchorEl(event.currentTarget)} />
+              <DropdownNav anchorEl={anchorEl} open={dropdownOpen} onClose={() => setAnchorEl(null)} />
+            </>
+
+            {/*<div>{selectedHost}</div>
             <select value={selectedHost} onChange={handleDockerHostChange}>
               {dockerHosts.map((host) => (
                 <option key={host.id} value={host.id}>
                   {host.id}
                 </option>
               ))}
-            </select>
+            </select>*/}
           </>
         )}
         <IconButton onClick={props?.toggleDrawer}>{props.open ? <ChevronLeftIcon /> : <ChevronRightIcon />}</IconButton>
