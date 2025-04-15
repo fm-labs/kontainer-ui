@@ -15,7 +15,7 @@ import React from 'react'
  *    "Mounts": [
  *      {
  *        "Type": "volume",
- *        "Source": "kontainer-agent_kontainer_agent_data",
+ *        "Source": "kontainer-core_kontainer_agent_data",
  *        "Target": "/app/data",
  *        "VolumeOptions": {}
  *      }

@@ -1,6 +1,6 @@
 # kontainer-ui
 
-Web UI for [kontainer-agent](https://github.com/fm-labs/kontainer-agent). 
+Web UI for [kontainer-core](https://github.com/fm-labs/kontainer-core). 
 Built with React, Typescript, and Vite.
 
 ## Available commands

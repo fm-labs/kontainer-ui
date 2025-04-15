@@ -4,11 +4,11 @@ import React from 'react'
  * ContainerNetworks
  *
  * "Networks": {
- *      "kontainer-agent_default": {
+ *      "kontainer-core_default": {
  *        "IPAMConfig": null,
  *        "Links": null,
  *        "Aliases": [
- *          "kontainer-agent-agent-1",
+ *          "kontainer-core-agent-1",
  *          "agent"
  *        ],
  *        "MacAddress": "02:42:ac:14:00:02",
@@ -22,7 +22,7 @@ import React from 'react'
  *        "GlobalIPv6Address": "",
  *        "GlobalIPv6PrefixLen": 0,
  *        "DNSNames": [
- *          "kontainer-agent-agent-1",
+ *          "kontainer-core-agent-1",
  *          "agent",
  *          "97c75d7851b1"
  *        ]
