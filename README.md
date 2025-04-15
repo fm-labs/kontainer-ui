@@ -1,6 +1,6 @@
-# kstack-ui
+# kontainer-ui
 
-Web UI for [kstack-agent](https://github.com/fm-labs/kstack-agent). 
+Web UI for [kontainer-agent](https://github.com/fm-labs/kontainer-agent). 
 Built with React, Typescript, and Vite.
 
 ## Available commands
@@ -33,7 +33,7 @@ Build the project for production.
 Build the Docker image.
 
 ```bash
-docker build . -t kstack-ui
+docker build . -t kontainer-ui
 ```
 
 Run the Docker container locally.
@@ -45,5 +45,5 @@ Run the Docker container locally.
 docker run \
   --rm \
   --publish 5080:80 \
-  kstack-ui
+  kontainer-ui
 ```

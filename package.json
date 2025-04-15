@@ -1,5 +1,5 @@
 {
-  "name": "kstack-ui",
+  "name": "kontainer-ui",
   "version": "0.8.1",
   "private": true,
   "type": "module",
@@ -28,8 +28,8 @@
     "react-toastify": "^11.0.5"
   },
   "devDependencies": {
-    "@testing-library/react": "^16.2.0",
     "@testing-library/dom": "^10.0.0",
+    "@testing-library/react": "^16.2.0",
     "@types/node": "^22.13.10",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
@@ -60,7 +60,7 @@
     "lint:dump": "eslint src/ --max-warnings 0 --format=checkstyle > eslint-report.xml",
     "preview": "vite preview",
     "serve": "serve dist",
-    "docker:build": "docker build -t kstack-ui .",
-    "docker:run": "yarn run docker:build && docker run -it --rm -p 5080:80 kstack-ui"
+    "docker:build": "docker build -t kontainer-ui .",
+    "docker:run": "yarn run docker:build && docker run -it --rm -p 5080:80 kontainer-ui"
   }
 }

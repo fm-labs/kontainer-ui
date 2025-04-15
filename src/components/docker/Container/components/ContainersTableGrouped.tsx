@@ -70,7 +70,7 @@ const ContainersTableGrouped = ({ data }: { data: IDockerResourceAttrs[] }) => {
               {rows.map((row: any) => {
                 const name = row?.Name.substring(1).replace(`${composeProject}-`, '')
                 const labels = row?.Config?.Labels
-                const hasProtectedLabel = labels?.['kstack.protected'] === 'true'
+                const hasProtectedLabel = labels?.['kontainer.protected'] === 'true'
                 const url = buildUrl(`/containers/${row?.Id}`)
 
                 return (

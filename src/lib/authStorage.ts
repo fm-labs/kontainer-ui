@@ -1,6 +1,6 @@
 const buildStorageKey = (envId: string) => {
   const host = window.location.host.replace(':', '.')
-  return `kstack.${host}.${envId}.at`
+  return `kontainer.${host}.${envId}.at`
 }
 
 export const storeAuthToken = (scope, token: string | null) => {

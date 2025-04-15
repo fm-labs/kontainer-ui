@@ -7,7 +7,7 @@ import { useAgentDockerApi } from '../../../../helper/useAgentDockerApi.ts'
 
 const StackFromGit = () => {
   const [stackName, setStackName] = React.useState('my-repo-stack')
-  const [repoUrl, setRepoUrl] = React.useState('https://github.com/fm-labs/kstack-templates.git')
+  const [repoUrl, setRepoUrl] = React.useState('https://github.com/fm-labs/kontainer-templates.git')
   const [repoBasePath, setRepoBasePath] = React.useState('docker/nginx')
   const [composeFileName, setComposeFileName] = React.useState('')
   const [sshKeyId, setSshKeyId] = React.useState('')

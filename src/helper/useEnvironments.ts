@@ -3,11 +3,11 @@ import { DEFAULT_ENVIRONMENT } from '../constants.ts'
 import { HostEnvironment } from '../types.ts'
 
 // export const saveEnvsInLocalStorage = (envs: HostEnvironment[]) => {
-//   localStorage.setItem('kstack.environments', JSON.stringify(envs))
+//   localStorage.setItem('kontainer.environments', JSON.stringify(envs))
 // }
 //
 // export const restoreEnvsFromLocalStorage = () => {
-//   const envs = localStorage.getItem('kstack.environments')
+//   const envs = localStorage.getItem('kontainer.environments')
 //   if (!envs) return
 //   return JSON.parse(envs)
 // }

@@ -5,6 +5,7 @@ dist/
 public/envs/
 public/schema/dev/
 public/stack-templates.json
+public/*.html
 .env
 .env.local
 

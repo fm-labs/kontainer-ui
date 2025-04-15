@@ -6,7 +6,7 @@ import { useAgentDockerApi } from '../../../../helper/useAgentDockerApi.ts'
 
 const StackFromTemplateRepo = () => {
   const [stackName, setStackName] = React.useState('my-nginx-stack')
-  const [templateRepo, setTemplateRepo] = React.useState('fm-labs/kstack-templates')
+  const [templateRepo, setTemplateRepo] = React.useState('fm-labs/kontainer-templates')
   const [templateName, setTemplateName] = React.useState('nginx')
   const api = useAgentDockerApi()
 

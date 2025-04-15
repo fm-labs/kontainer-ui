@@ -6,7 +6,7 @@ on:
       - "v*-release"
 
 env:
-  REPO_NAME: kstack-ui
+  REPO_NAME: kontainer-ui
 
 jobs:
   publish:

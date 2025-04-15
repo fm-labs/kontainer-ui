@@ -1,5 +1,5 @@
 {
-  "$id": "https://schema.kloudia.io/kstack/settings.schema.json",
+  "$id": "https://schema.kloudia.io/kontainer/settings.schema.json",
   "title": "Settings",
   "description": "Settings for the Kstack agent",
   "type": "object",

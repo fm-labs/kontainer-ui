@@ -1,8 +1,8 @@
 #!/bin/bash
 
-docker build -t kstack-ui:dev -f ./Dockerfile --progress=plain . && \
+docker build -t kontainer-ui:dev -f ./Dockerfile --progress=plain . && \
 
 docker run -it --rm \
-  --name kstack-ui-dev \
+  --name kontainer-ui-dev \
   -p 3080:80 \
-  kstack-ui:dev $@
+  kontainer-ui:dev $@

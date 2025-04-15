@@ -12,7 +12,7 @@ export const MASTER_AGENT_SSL = !!import.meta.env.VITE_MASTER_AGENT_SSL || CURRE
 export const STACK_TEMPLATE_URLS = [
   {
     label: 'Official templates',
-    url: 'https://raw.githubusercontent.com/fm-labs/kstack-templates/refs/heads/main/templates.json',
+    url: 'https://raw.githubusercontent.com/fm-labs/kontainer-templates/refs/heads/main/templates.json',
   },
 ]
 

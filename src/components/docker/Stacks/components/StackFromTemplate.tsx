@@ -12,7 +12,7 @@ const exampleTemplateContent = `
     "repository": {
       "private": false,
       "type": "git",
-      "url": "https://github.com/fm-labs/kstack-templates.git",
+      "url": "https://github.com/fm-labs/kontainer-templates.git",
       "ref": "/ref/heads/main"
     },
     "base_path": "docker/nginx",

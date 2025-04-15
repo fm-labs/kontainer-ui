@@ -17,7 +17,7 @@ export default function Layout({ children }: PropsWithChildren<any>) {
   return (
     <AppTheme>
       <Helmet>
-        <title>kstack</title>
+        <title>kontainer</title>
       </Helmet>
       <LocalizationProvider dateAdapter={AdapterMoment}>
         <CssBaseline />
