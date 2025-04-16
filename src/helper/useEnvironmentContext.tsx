@@ -1,6 +1,5 @@
 import React, { createContext, useContext, ReactNode } from 'react'
 import { DockerHost, HostEnvironment } from '../types.ts'
-import useAgentApi from '~/helper/useAgentApi.ts'
 import { agentInternalApiForEnv } from '~/lib/agentInternalApi.ts'
 
 interface EnvironmentContextProps {

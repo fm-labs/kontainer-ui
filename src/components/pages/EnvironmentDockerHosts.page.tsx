@@ -1,25 +1,27 @@
 import React from 'react'
 import Container from '@mui/material/Container'
-import useEnvironments from '../../helper/useEnvironments.ts'
 import { Helmet } from 'react-helmet-async'
 import Toolbar from '@mui/material/Toolbar'
 import Heading from '../../elements/Heading.tsx'
 import Button from '@mui/material/Button'
 import { Card, CardActions, CardContent, Chip, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid2'
-import { Link, useHref } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useEnvironment } from '~/helper/useEnvironmentContext.tsx'
 import useAgentApi from '~/helper/useAgentApi.ts'
 import { DockerHost } from '~/types.ts'
+import { agentDockerApiForEnv } from '~/lib/agentDockerApi.ts'
+import Box from '@mui/material/Box'
 
-const DockerHostCard = ({ dockerHost }: { dockerHost: DockerHost }) => {
+const DockerHostCard = ({ environment, dockerHost }: { environment: any; dockerHost: DockerHost }) => {
   const api = useAgentApi()
+  const dockerApi = agentDockerApiForEnv(environment, dockerHost)
 
   const [connectionStatus, setConnectionStatus] = React.useState<any>(null)
   const [clientInfo, setClientInfo] = React.useState<any>(null)
   const [df, setDf] = React.useState<any>(null)
 
-  const [autoConnect, setAutoConnect] = React.useState(false)
+  const [autoConnect, setAutoConnect] = React.useState(true)
   const AUTO_CONNECT_TIMEOUT = 2000
 
   const handleConnect = async () => {
@@ -35,6 +37,10 @@ const DockerHostCard = ({ dockerHost }: { dockerHost: DockerHost }) => {
     }
     setClientInfo(response)
     setConnectionStatus(response ? 'connected' : 'disconnected')
+
+    const dfResponse = await dockerApi.getEngineDf()
+    console.log('Engine df response:', dfResponse)
+    setDf(dfResponse)
   }
 
   const renderConnectionStatus = () => {
@@ -57,7 +63,22 @@ const DockerHostCard = ({ dockerHost }: { dockerHost: DockerHost }) => {
         label = 'Not Connected'
         color = 'warning'
     }
-    return <Chip color={color} label={label}></Chip>
+    return <Chip size={'small'} color={color} label={label}></Chip>
+  }
+
+  const renderLinks = () => {
+    if (!df) {
+      return null
+    }
+
+    return (
+      <Box sx={{ mt: 1 }}>
+        <Link to={`/docker/${dockerHost.id}`}>Dashboard</Link> |{' '}
+        <Link to={`/docker/${dockerHost.id}/containers`}>Containers ({df?.Containers?.length})</Link> |{' '}
+        <Link to={`/docker/${dockerHost.id}/images`}>Images ({df?.Images?.length})</Link> |{' '}
+        <Link to={`/docker/${dockerHost.id}/volumes`}>Volumes ({df?.Volumes?.length})</Link>
+      </Box>
+    )
   }
 
   // Auto-connect logic
@@ -78,21 +99,17 @@ const DockerHostCard = ({ dockerHost }: { dockerHost: DockerHost }) => {
       <CardContent>
         <Typography variant='h5' component='div'>
           {dockerHost.id}
-          {renderConnectionStatus()}
         </Typography>
         <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>{dockerHost.host}</Typography>
-        <div>
-          <Link to={`/docker/${dockerHost.id}`}>Dashboard</Link> |{' '}
-          <Link to={`/docker/${dockerHost.id}/containers`}>Containers</Link> |{' '}
-          <Link to={`/docker/${dockerHost.id}/images`}>Images</Link> |{' '}
-          <Link to={`/docker/${dockerHost.id}/volumes`}>Volumes</Link> |{' '}
-          <Link to={`/docker/${dockerHost.id}/stacks`}>Stacks</Link>
-        </div>
+        {renderConnectionStatus()}
+        {renderLinks()}
       </CardContent>
       <CardActions>
-        <Button size='small' variant={'outlined'} onClick={() => handleConnect()}>
-          Connect
-        </Button>
+        {connectionStatus !== 'connected' && (
+          <Button size='small' variant={'outlined'} onClick={() => handleConnect()}>
+            Connect
+          </Button>
+        )}
         {/*<Button size='small' variant={'outlined'} href={`/${env.id}/disconnect`}>
                   Disconnect
                 </Button>*/}
@@ -103,15 +120,14 @@ const DockerHostCard = ({ dockerHost }: { dockerHost: DockerHost }) => {
 
 const EnvironmentDockerHostsPage = () => {
   const { environment, dockerHosts } = useEnvironment()
-  const api = useAgentApi()
 
   return (
-    <Container maxWidth={'md'} sx={{ mt: 3 }}>
+    <Container maxWidth={false} sx={{ mt: 2 }}>
       <Helmet>
         <title>Connect</title>
       </Helmet>
       <Toolbar disableGutters>
-        <Heading label={'Connect to Docker Host'}>
+        <Heading label={'Kontainer'}>
           <div>
             Environment: {environment.label} ({environment.hostname})
           </div>
@@ -120,8 +136,8 @@ const EnvironmentDockerHostsPage = () => {
 
       <Grid container spacing={2}>
         {dockerHosts.map((dockerHost: any) => (
-          <Grid key={dockerHost.id} size={6}>
-            <DockerHostCard dockerHost={dockerHost} />
+          <Grid key={dockerHost.id} size={3}>
+            <DockerHostCard environment={environment} dockerHost={dockerHost} />
           </Grid>
         ))}
       </Grid>
