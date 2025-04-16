@@ -20,6 +20,7 @@ const DockerHostCard = ({ environment, dockerHost }: { environment: any; dockerH
   const [connectionStatus, setConnectionStatus] = React.useState<any>(null)
   const [clientInfo, setClientInfo] = React.useState<any>(null)
   const [df, setDf] = React.useState<any>(null)
+  const [error, setError] = React.useState<any>(null)
 
   const [autoConnect, setAutoConnect] = React.useState(true)
   const AUTO_CONNECT_TIMEOUT = 2000
@@ -27,8 +28,9 @@ const DockerHostCard = ({ environment, dockerHost }: { environment: any; dockerH
   const handleConnect = async () => {
     // Implement the connect logic here
     console.log('Connecting to Docker Host:', dockerHost.id)
-    const response = await api.connectToDockerHost(dockerHost.id).catch(() => {
-      setConnectionStatus(null)
+    const response = await api.connectToDockerHost(dockerHost.id).catch((err) => {
+      setConnectionStatus('error')
+      setError(err?.response?.data?.error || err?.message || 'Error connecting to Docker host')
       setClientInfo(null)
     })
     console.log('Connection response:', response)
@@ -37,6 +39,7 @@ const DockerHostCard = ({ environment, dockerHost }: { environment: any; dockerH
     }
     setClientInfo(response)
     setConnectionStatus(response ? 'connected' : 'disconnected')
+    setError(null)
 
     const dfResponse = await dockerApi.getEngineDf()
     console.log('Engine df response:', dfResponse)
@@ -81,6 +84,14 @@ const DockerHostCard = ({ environment, dockerHost }: { environment: any; dockerH
     )
   }
 
+  const renderError = () => {
+    if (!error) {
+      return null
+    }
+
+    return <div>{error}</div>
+  }
+
   // Auto-connect logic
   React.useEffect(() => {
     let timer
@@ -103,6 +114,7 @@ const DockerHostCard = ({ environment, dockerHost }: { environment: any; dockerH
         <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>{dockerHost.host}</Typography>
         {renderConnectionStatus()}
         {renderLinks()}
+        {renderError()}
       </CardContent>
       <CardActions>
         {connectionStatus !== 'connected' && (
