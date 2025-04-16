@@ -1,9 +1,9 @@
 import { DockerHost, HostEnvironment, IDockerContainer, IDockerResourceAttrs, TaskStatusResponse } from '~/types.ts'
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
-import { buildAgentHttp } from '~/lib/agentHttp.ts'
+import { kontainerApiHttp } from '~/lib/kontainerApiHttp.ts'
 
 export const agentDockerApiForEnv = (env: HostEnvironment, dockerHost: DockerHost) => {
-  const agentHttp = buildAgentHttp(env)
+  const agentHttp = kontainerApiHttp(env)
   agentHttp.interceptors.request.use((config) => {
     if (dockerHost) {
       config.headers['X-Docker-Context'] = dockerHost.id

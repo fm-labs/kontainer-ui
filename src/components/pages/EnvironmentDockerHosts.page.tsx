@@ -8,13 +8,14 @@ import { Card, CardActions, CardContent, Chip, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid2'
 import { Link } from 'react-router-dom'
 import { useEnvironment } from '~/helper/useEnvironmentContext.tsx'
-import useAgentApi from '~/helper/useAgentApi.ts'
+import useKontainerApi from '~/helper/useKontainerApi.ts'
 import { DockerHost } from '~/types.ts'
 import { agentDockerApiForEnv } from '~/lib/agentDockerApi.ts'
 import Box from '@mui/material/Box'
+import KontainerLabel from '~/layout/KontainerLabel.tsx'
 
 const DockerHostCard = ({ environment, dockerHost }: { environment: any; dockerHost: DockerHost }) => {
-  const api = useAgentApi()
+  const api = useKontainerApi()
   const dockerApi = agentDockerApiForEnv(environment, dockerHost)
 
   const [connectionStatus, setConnectionStatus] = React.useState<any>(null)
@@ -135,11 +136,8 @@ const EnvironmentDockerHostsPage = () => {
 
   return (
     <Container maxWidth={false} sx={{ mt: 2 }}>
-      <Helmet>
-        <title>Connect</title>
-      </Helmet>
       <Toolbar disableGutters>
-        <Heading label={'Kontainer'}>
+        <Heading label={<KontainerLabel />}>
           <div>
             Environment: {environment.label} ({environment.hostname})
           </div>

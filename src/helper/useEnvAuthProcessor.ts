@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { readAuthToken, storeAuthToken } from '~/lib/authStorage.ts'
-import useAgentApi from '~/helper/useAgentApi.ts'
+import useKontainerApi from '~/helper/useKontainerApi.ts'
 
-export const useAgentAuthProcessor = () => {
-  const api = useAgentApi()
+export const useEnvAuthProcessor = () => {
+  const api = useKontainerApi()
 
   const authScope = 'env0' // TODO: useEnvironmentContext to get the current environment
   const storedAuthToken = readAuthToken(authScope)

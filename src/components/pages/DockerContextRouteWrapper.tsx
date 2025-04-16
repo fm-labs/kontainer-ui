@@ -7,6 +7,7 @@ import Toolbar from '@mui/material/Toolbar'
 import { Breadcrumbs, Typography } from '@mui/material'
 import Link from '@mui/material/Link'
 import { SiDocker } from 'react-icons/si'
+import KontainerLabel from '~/layout/KontainerLabel.tsx'
 
 const DockerBreadcrumbs = () => {
   const matches = useMatches()
@@ -33,6 +34,9 @@ const DockerBreadcrumbs = () => {
   return (
     <div>
       <Breadcrumbs maxItems={5} aria-label='breadcrumb'>
+        <Link underline='hover' color='inherit' href='#'>
+          <KontainerLabel />
+        </Link>
         <Link underline='hover' color='inherit' href='#'>
           All Environments
         </Link>

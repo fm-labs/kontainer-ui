@@ -1,11 +1,11 @@
 import React from 'react'
 import { useTaskManager } from '~/components/tasks/useTaskManager.ts'
 import { TaskStatusResponse } from '~/types.ts'
-import useAgentApi from '~/helper/useAgentApi.ts'
+import useKontainerApi from '~/helper/useKontainerApi.ts'
 
 const TaskItem = ({ task: initialTask }) => {
   const { updateTask, removeTask } = useTaskManager()
-  const api = useAgentApi()
+  const api = useKontainerApi()
 
   const [task, setTask] = React.useState<TaskStatusResponse>(initialTask)
 

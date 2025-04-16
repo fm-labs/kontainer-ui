@@ -23,12 +23,12 @@ import LogoutPage from '~/components/user/Logout.page.tsx'
 import TaskManagerPage from '~/components/tasks/TaskManagerPage.tsx'
 import DockerContextRouteWrapper from '~/components/pages/DockerContextRouteWrapper.tsx'
 import LayoutRouteWrapper from '~/components/pages/LayoutRouteWrapper.tsx'
-import { agentInternalApiForEnv } from '~/lib/agentInternalApi.ts'
+import { kontainerApiForEnv } from '~/lib/kontainerApi.ts'
 import { DEFAULT_ENVIRONMENT } from '~/constants.ts'
 import EnvironmentDockerHostsPage from '~/components/pages/EnvironmentDockerHosts.page.tsx'
 
 const getInternalApiFromLoaderArgs = (args: LoaderFunctionArgs) => {
-  return agentInternalApiForEnv(DEFAULT_ENVIRONMENT)
+  return kontainerApiForEnv(DEFAULT_ENVIRONMENT)
 }
 
 const routes: RouteObject[] = [

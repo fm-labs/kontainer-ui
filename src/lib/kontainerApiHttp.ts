@@ -3,7 +3,7 @@ import { readAuthToken, storeAuthToken } from '~/lib/authStorage.ts'
 import { HostEnvironment } from '~/types.ts'
 import { MASTER_AGENT_PORT } from '~/constants.ts'
 
-export const buildAgentHttp = (env: HostEnvironment) => {
+export const kontainerApiHttp = (env: HostEnvironment) => {
   const envId = 'env0' // env?.id
   const urlSchema = env?.useSSL ? 'https' : 'http'
   const hostname = env?.hostname || 'localhost'

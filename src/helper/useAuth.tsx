@@ -1,4 +1,5 @@
 import React from 'react'
+import { checkJwtTokenIsValid } from '~/helper/useJwt.tsx'
 
 interface AuthProcessor {
   login: (data: FormData) => Promise<{ token: string }>
@@ -28,6 +29,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode; authProcessor: 
     // console.log('AUTH: logout')
     await authProcessor.logout()
   }
+
+  React.useEffect(() => {
+    const checkAuthToken = () => {
+      const token = authProcessor.authToken
+      if (!token || !checkJwtTokenIsValid(token)) {
+        logout().finally(() => window.location.reload())
+      }
+    }
+
+    const interval = setInterval(() => {
+      console.log('AUTH: checking auth token')
+      checkAuthToken()
+    }, 15000) // Check every minute
+
+    return () => clearInterval(interval) // Cleanup on unmount
+  }, [authProcessor])
 
   const authToken = authProcessor.authToken
   const authContext = { login: login, logout: logout, authToken: authToken, isAuthenticated: !!authToken }

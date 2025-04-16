@@ -1,5 +1,8 @@
 import * as React from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
+import CssBaseline from '@mui/material/CssBaseline'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 // import { inputsCustomizations } from './customizations/inputs';
 // import { dataDisplayCustomizations } from './customizations/dataDisplay';
 // import { feedbackCustomizations } from './customizations/feedback';
@@ -68,8 +71,36 @@ export default function AppTheme(props: AppThemeProps) {
     //   },
     // })
 
-    return createTheme({})
+    return createTheme({
+      spacing: 8, // recommended spacing 8px (https://mui.com/material-ui/customization/spacing/)
+      typography: {
+        fontSize: 12,
+        fontFamily: [
+          'Poppins',
+          'Oswald',
+          'Lato',
+          'Railway',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'Roboto',
+          '"Helvetica Neue"',
+          'Arial',
+          'sans-serif',
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
+          '"Segoe UI Symbol"',
+        ].join(','),
+      },
+    })
   }, [])
 
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>
+  return (
+    <ThemeProvider theme={theme}>
+      <LocalizationProvider dateAdapter={AdapterMoment}>
+        <CssBaseline />
+        {children}
+      </LocalizationProvider>
+    </ThemeProvider>
+  )
 }

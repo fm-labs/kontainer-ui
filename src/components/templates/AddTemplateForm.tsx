@@ -2,13 +2,13 @@ import React from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { toast } from 'react-toastify'
-import useAgentApi from '../../helper/useAgentApi.ts'
+import useKontainerApi from '../../helper/useKontainerApi.ts'
 
 const AddTemplateForm = () => {
   const defaultValue = `[]`
   const [templateId, setTemplateId] = React.useState('')
   const [templateContents, setTemplateContents] = React.useState(defaultValue)
-  const api = useAgentApi()
+  const api = useKontainerApi()
 
   const handleSubmitClick = () => {
     console.log('Submit clicked')

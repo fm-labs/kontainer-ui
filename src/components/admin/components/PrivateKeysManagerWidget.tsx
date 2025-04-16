@@ -1,6 +1,6 @@
 import React from 'react'
 import { Paper } from '@mui/material'
-import useAgentApi from '../../../helper/useAgentApi.ts'
+import useKontainerApi from '../../../helper/useKontainerApi.ts'
 import BasicDialogButton from '../../../elements/Dialog/BasicDialogButton.tsx'
 import PrivateKeyForm from './PrivateKeyForm.tsx'
 import DeleteButton from '../../../elements/DeleteButton/DeleteButton.tsx'
@@ -9,7 +9,7 @@ import { toast } from 'react-toastify'
 
 const PrivateKeysManagerWidget = () => {
   const [pkeys, setPkeys] = React.useState<string[]>([])
-  const api = useAgentApi()
+  const api = useKontainerApi()
 
   const fetchKeys = React.useCallback(async () => {
     const response = await api.listPrivateKeys()

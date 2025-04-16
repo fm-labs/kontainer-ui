@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAgentAuthProcessor } from '~/helper/useAgentAuthProcessor.ts'
+import { useEnvAuthProcessor } from '~/helper/useEnvAuthProcessor.ts'
 import { AuthProvider } from '~/helper/useAuth.tsx'
 import { useEnvironment } from '~/helper/useEnvironmentContext.tsx'
 
@@ -9,6 +9,6 @@ export const EnvAuthProvider = ({ children }: { children: React.ReactNode }) => 
     throw new Error('EnvAuthProvider must be used within an EnvironmentProvider')
   }
 
-  const authProcessor = useAgentAuthProcessor()
+  const authProcessor = useEnvAuthProcessor()
   return <AuthProvider authProcessor={authProcessor}>{children}</AuthProvider>
 }

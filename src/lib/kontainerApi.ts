@@ -1,11 +1,11 @@
-import { buildAgentHttp } from '~/lib/agentHttp.ts'
-import { ContainerRegistry, IDockerContainer, TaskStatusResponse } from '~/types.ts'
+import { kontainerApiHttp } from '~/lib/kontainerApiHttp.ts'
+import { ContainerRegistry, TaskStatusResponse } from '~/types.ts'
 
-export const agentInternalApiForEnv = (env) => {
-  return agentInternalApi(buildAgentHttp(env))
+export const kontainerApiForEnv = (env) => {
+  return kontainerApi(kontainerApiHttp(env))
 }
 
-const agentInternalApi = (agentHttp) => {
+const kontainerApi = (agentHttp) => {
   const postLogin = async (data: FormData): Promise<{ access_token: string }> => {
     const response = await agentHttp.post(`auth/login`, data)
     return response.data
@@ -112,4 +112,4 @@ const agentInternalApi = (agentHttp) => {
   }
 }
 
-export default agentInternalApi
+export default kontainerApi
