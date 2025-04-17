@@ -1,27 +1,19 @@
-import React, { ChangeEvent } from 'react'
+import React from 'react'
+import { styled } from '@mui/material/styles'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import Divider from '@mui/material/Divider'
 import List from '@mui/material/List'
-import { styled } from '@mui/material/styles'
 import MuiDrawer from '@mui/material/Drawer'
-import { MUI_DRAWER_WIDTH, MUI_DRAWER_WIDTH_DOCKED } from './layout.constants.ts'
-import NavListItems from './NavListItems.tsx'
-import { navItemsDocker, navItemsHost, navItemsMain } from './navigation.tsx'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-// import Typography from '@mui/material/Typography'
-// import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
-// import { FaServer } from 'react-icons/fa6'
-// import { useLocation, useNavigate } from 'react-router'
-// import { useMatches } from 'react-router-dom'
-// import Box from '@mui/material/Box'
 import { useEnvironment } from '~/helper/useEnvironmentContext.tsx'
 import { useDockerContext } from '~/helper/useDockerContext.tsx'
-import { useNavigate } from 'react-router'
 import DropdownNav from '~/layout/DropdownNav.tsx'
-import { Button } from '@mui/material'
 import DropdownTriggerButton from '~/layout/DropdownTriggerButton.tsx'
+import NavListItems from './NavListItems.tsx'
+import { navItemsDocker, navItemsHost } from './navigation.tsx'
+import { MUI_DRAWER_WIDTH, MUI_DRAWER_WIDTH_DOCKED } from './layout.constants.ts'
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
   '& .MuiDrawer-paper': {
@@ -54,15 +46,11 @@ interface DeveloperLayoutDrawerProps {
 }
 
 const LayoutDrawer = (props: DeveloperLayoutDrawerProps) => {
-  const { dockerHosts } = useEnvironment()
-  const navigate = useNavigate()
   const { buildUrl } = useEnvironment()
   const dockerContext = useDockerContext()
 
   const [anchorEl, setAnchorEl] = React.useState(null)
   const dropdownOpen = Boolean(anchorEl)
-
-  const [selectedHost, setSelectedHost] = React.useState<string>(dockerContext?.dockerHost?.id) // host id
 
   const envRouted = (items) => {
     return items.map((item) => {
@@ -84,23 +72,6 @@ const LayoutDrawer = (props: DeveloperLayoutDrawerProps) => {
         to: dockerContext.buildUrl(`${item.to}`),
       }
     })
-  }
-
-  const handleDockerHostChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedHost(e.target.value)
-    console.log('HOST CHANGED', e.target.value)
-
-    const host = dockerHosts.find((h) => h.id === e.target.value)
-    if (!host) {
-      console.error('Host not found', e.target.value)
-      return
-    }
-
-    // set in session storage
-    //const baseUrl = `http://${host.ip}:5000/api/`
-    //sessionStorage.setItem('AGENT_API_BASEURL', baseUrl)
-    const redirectUrl = `/docker/${host.id}/`
-    navigate(redirectUrl)
   }
 
   return (

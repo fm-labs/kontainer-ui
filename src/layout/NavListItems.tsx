@@ -23,28 +23,30 @@ const NavListItems = ({ items }: NavListItemsProps) => {
 
   return (
     <>
-      {items.map((item, index) => {
-        const Icon = item.icon as React.ReactElement
-        const href = useHref(item.to)
-        // if item.target is set, it will open the link in a new tab
-        // otherwise it will use the navigate function from react-router
-        return (
-          <ListItemButton
-            key={index}
-            onClick={() => handleClick(item, href)}
-            href={href}
-            target={item?.target}
-            title={item.label}
-            aria-label={item.label}
-          >
-            <ListItemIcon>{Icon}</ListItemIcon>
-            <ListItemText
-              slotProps={{ primary: { fontSize: '0.9rem' } }}
-              primary={item.label} /*secondary={resolvedPath}*/
-            />
-          </ListItemButton>
-        )
-      })}
+      {items
+        .filter((item) => (item?.visible ? item.visible() : true))
+        .map((item, index) => {
+          const Icon = item.icon as React.ReactElement
+          const href = useHref(item.to)
+          // if item.target is set, it will open the link in a new tab
+          // otherwise it will use the navigate function from react-router
+          return (
+            <ListItemButton
+              key={index}
+              onClick={() => handleClick(item, href)}
+              href={href}
+              target={item?.target}
+              title={item.label}
+              aria-label={item.label}
+            >
+              <ListItemIcon>{Icon}</ListItemIcon>
+              <ListItemText
+                slotProps={{ primary: { fontSize: '0.9rem' } }}
+                primary={item.label} /*secondary={resolvedPath}*/
+              />
+            </ListItemButton>
+          )
+        })}
     </>
   )
 }

@@ -1,12 +1,7 @@
 import * as React from 'react'
-import CssBaseline from '@mui/material/CssBaseline'
-import { LocalizationProvider } from '@mui/x-date-pickers'
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import Box from '@mui/material/Box'
 import { PropsWithChildren } from 'react'
-import { Helmet } from 'react-helmet-async'
 import LayoutDrawer from './LayoutDrawer.tsx'
-import AppTheme from './AppTheme.tsx'
 import LayoutFooter from '~/layout/LayoutFooter.tsx'
 
 export default function Layout({ children }: PropsWithChildren<any>) {

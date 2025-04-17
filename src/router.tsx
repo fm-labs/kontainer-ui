@@ -1,5 +1,5 @@
 import React from 'react'
-import { createHashRouter, LoaderFunctionArgs, RouteObject, Navigate } from 'react-router-dom'
+import { createHashRouter, LoaderFunctionArgs, RouteObject } from 'react-router-dom'
 import ContainersPage from '~/components/docker/Container/Containers.page.tsx'
 import ContainerPage from '~/components/docker/Container/Container.page.tsx'
 import ContainerLaunchPage from '~/components/docker/Container/ContainerLaunch.page.tsx'
@@ -18,16 +18,14 @@ import AuthenticatedRouteWrapper from '~/components/pages/AuthenticatedRouteWrap
 import EnvironmentRouteWrapper from '~/components/pages/EnvironmentRouteWrapper.tsx'
 import RoutingErrorBoundary from '~/components/pages/RoutingErrorBoundary.tsx'
 import PageNotFound from '~/components/pages/PageNotFound.tsx'
-import appRepo from './lib/appRepo.ts'
 import LogoutPage from '~/components/user/Logout.page.tsx'
 import TaskManagerPage from '~/components/tasks/TaskManagerPage.tsx'
 import DockerContextRouteWrapper from '~/components/pages/DockerContextRouteWrapper.tsx'
-import LayoutRouteWrapper from '~/components/pages/LayoutRouteWrapper.tsx'
 import { kontainerApiForEnv } from '~/lib/kontainerApi.ts'
-import { DEFAULT_ENVIRONMENT } from '~/constants.ts'
 import EnvironmentDockerHostsPage from '~/components/pages/EnvironmentDockerHosts.page.tsx'
+import { DEFAULT_ENVIRONMENT } from '~/constants.ts'
 
-const getInternalApiFromLoaderArgs = (args: LoaderFunctionArgs) => {
+const getKontainerApiFromLoaderArgs = (args: LoaderFunctionArgs) => {
   return kontainerApiForEnv(DEFAULT_ENVIRONMENT)
 }
 
@@ -78,11 +76,11 @@ const routes: RouteObject[] = [
                   {
                     path: 'containers',
                     element: <ContainersPage />,
-                    loader: async (args) => {
-                      //const api = getDockerApiFromLoaderArgs(args)
-                      //return api.getContainers()
-                      return appRepo(args.params.envId!).listContainers()
-                    },
+                    // loader: async (args) => {
+                    //   //const api = getDockerApiFromLoaderArgs(args)
+                    //   //return api.getContainers()
+                    //   return appRepo(args.params.envId!).listContainers()
+                    // },
                   },
                   {
                     path: 'containers/create',
@@ -160,7 +158,7 @@ const routes: RouteObject[] = [
             path: 'templates',
             element: <StackTemplatesPage />,
             loader: async (args) => {
-              return getInternalApiFromLoaderArgs(args).listTemplates()
+              return getKontainerApiFromLoaderArgs(args).listTemplates()
             },
           },
           {

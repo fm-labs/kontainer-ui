@@ -1,6 +1,7 @@
 import React from 'react'
 import { INavigationItem } from './navigation.types.ts'
 import AppIcons from '../elements/AppIcons.tsx'
+import { KONTAINER_FEATURE_SETTINGS, KONTAINER_FEATURE_TASKMANAGER, KONTAINER_FEATURE_TEMPLATES } from '~/constants.ts'
 
 const navIconProps = {
   size: 24,
@@ -21,6 +22,7 @@ export const navItemsHost: INavigationItem[] = [
     icon: <AppIcons.TemplateIcon {...navIconProps} />,
     label: 'Templates',
     to: '/templates',
+    visible: () => KONTAINER_FEATURE_TEMPLATES,
   },
 
   {
@@ -28,6 +30,7 @@ export const navItemsHost: INavigationItem[] = [
     icon: <AppIcons.SettingsIcon {...navIconProps} />,
     label: 'Settings',
     to: '/settings',
+    visible: () => KONTAINER_FEATURE_SETTINGS,
   },
 
   {
@@ -35,6 +38,7 @@ export const navItemsHost: INavigationItem[] = [
     icon: <AppIcons.SettingsIcon {...navIconProps} />,
     label: 'Tasks',
     to: '/tasks',
+    visible: () => KONTAINER_FEATURE_TASKMANAGER,
   },
 ]
 

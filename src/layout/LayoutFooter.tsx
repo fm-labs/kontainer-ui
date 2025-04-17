@@ -25,8 +25,8 @@ const LayoutFooter = () => {
           )}
         </div>
         <div style={{ textAlign: 'center', padding: '1rem' }}>
-          &copy; {new Date().getFullYear()} Kontainer. All rights reserved. Made with &hearts; by the <KontainerLabel />{' '}
-          team.
+          &copy; {new Date().getFullYear()} <KontainerLabel />. All rights reserved. Made with &hearts; by the{' '}
+          <KontainerLabel /> team.
         </div>
       </footer>
     </div>

@@ -1,13 +1,15 @@
-import { DockerHost, HostEnvironment } from './types.ts'
+import { HostEnvironment } from './types.ts'
 
-export const CURRENT_HOSTNAME = window.location.hostname
-export const CURRENT_PORT = window.location.port
-export const CURRENT_SCHEME = window.location.protocol
+export const KONTAINER_FEATURE_TEMPLATES = !!import.meta.env.VITE_KONTAINER_FEATURE_TEMPLATES || false
+export const KONTAINER_FEATURE_TASKMANAGER = !!import.meta.env.VITE_KONTAINER_FEATURE_TASKMANAGER || false
+export const KONTAINER_FEATURE_SETTINGS = !!import.meta.env.VITE_KONTAINER_FEATURE_SETTINGS || false
+export const KONTAINER_FEATURE_REGISTRIES = !!import.meta.env.VITE_KONTAINER_FEATURE_REGISTRIES || false
+export const KONTAINER_FEATURE_KEYS = !!import.meta.env.VITE_KONTAINER_FEATURE_KEYS || false
 
-export const MASTER_AGENT_LABEL = import.meta.env.VITE_MASTER_AGENT_LABEL || 'Default'
-export const MASTER_AGENT_HOST = import.meta.env.VITE_MASTER_AGENT_HOST || CURRENT_HOSTNAME
-export const MASTER_AGENT_PORT = import.meta.env.VITE_MASTER_AGENT_PORT || CURRENT_PORT
-export const MASTER_AGENT_SSL = !!import.meta.env.VITE_MASTER_AGENT_SSL || CURRENT_SCHEME === 'https:'
+export const KONTAINER_API_LABEL = import.meta.env.VITE_KONTAINER_API_LABEL || 'Default'
+export const KONTAINER_API_HOST = import.meta.env.VITE_KONTAINER_API_HOST || window.location.hostname
+export const KONTAINER_API_PORT = import.meta.env.VITE_KONTAINER_API_PORT || window.location.port
+export const KONTAINER_API_SSL = !!import.meta.env.VITE_KONTAINER_API_SSL || window.location.protocol === 'https:'
 
 export const STACK_TEMPLATE_URLS = [
   {
@@ -30,20 +32,11 @@ export const PORTAINER_TEMPLATE_URLS = [
     url: 'https://raw.githubusercontent.com/Lissy93/portainer-templates/refs/heads/main/templates.json',
   },
 ]
+
 export const DEFAULT_ENVIRONMENT: HostEnvironment = {
   id: 'env0',
-  label: MASTER_AGENT_LABEL,
-  hostname: MASTER_AGENT_HOST,
-  agentPort: MASTER_AGENT_PORT,
-  useSSL: MASTER_AGENT_SSL,
-}
-
-// export const DEFAULT_DOCKERHOST: DockerHost = {
-//   id: '0',
-//   url: 'unix:///var/run/docker.sock',
-// }
-
-export const DEFAULT_DOCKERHOST: DockerHost = {
-  id: 'srv03',
-  host: 'ssh://srv03.fmhub',
+  label: KONTAINER_API_LABEL,
+  hostname: KONTAINER_API_HOST,
+  agentPort: KONTAINER_API_PORT,
+  useSSL: KONTAINER_API_SSL,
 }

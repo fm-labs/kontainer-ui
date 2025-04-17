@@ -11,6 +11,7 @@ import {
   HiTrash,
   HiMap,
   HiArrowPath,
+  HiArrowPathRoundedSquare,
   HiMiniPuzzlePiece,
   HiPuzzlePiece,
   HiWrench,
@@ -71,11 +72,11 @@ const AppIcons = {
 
   // Actions
   StartIcon: HiOutlinePlay,
-  RestartIcon: FaRotateLeft,
+  RestartIcon: HiArrowPath,
   PauseIcon: HiOutlinePause,
   StopIcon: HiOutlineStop,
   DeleteIcon: HiOutlineTrash,
-  SyncIcon: HiArrowPath,
+  SyncIcon: HiArrowPathRoundedSquare,
 
   // Misc
   BugIcon: BugReportIcon,

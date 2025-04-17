@@ -2,7 +2,6 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 import { useAuth } from '../../helper/useAuth.tsx'
 import ConnectLayout from '../../layout/ConnectLayout.tsx'
-import Layout from '../../layout/Layout.tsx'
 import LoginPage from '~/components/user/Login.page.tsx'
 
 const AuthenticatedRouteWrapper = () => {

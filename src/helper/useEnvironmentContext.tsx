@@ -1,10 +1,10 @@
 import React, { createContext, useContext, ReactNode } from 'react'
 import { DockerHost, HostEnvironment } from '../types.ts'
-import { kontainerApiForEnv } from '~/lib/kontainerApi.ts'
 
 interface EnvironmentContextProps {
   environment: HostEnvironment
   dockerHosts: DockerHost[]
+  setDockerHosts: (dockerHosts: DockerHost[]) => void
   buildUrl: (path: string) => string
 }
 
@@ -23,25 +23,8 @@ export const EnvironmentProvider: React.FC<{ children: ReactNode; host: HostEnvi
     [host],
   )
 
-  const fetchEnvDockerHosts = React.useCallback(async () => {
-    const api = kontainerApiForEnv(host)
-    const dockerHosts = await api.getEnvironments()
-
-    // const envDataUrl = `//${host.hostname}:${host.agentPort}/api/environments`
-    // console.log('Fetching environment docker hosts from', envDataUrl)
-    // const response = await fetch(envDataUrl)
-    // const json = await response.json()
-    // const dockerHosts: DockerHost[] = json?.dockerHosts || []
-    console.log('Docker hosts:', dockerHosts)
-    setDockerHosts(dockerHosts)
-  }, [host])
-
-  React.useEffect(() => {
-    fetchEnvDockerHosts()
-  }, [fetchEnvDockerHosts])
-
   const [dockerHosts, setDockerHosts] = React.useState<DockerHost[]>([])
-  const context = { environment: host, dockerHosts: dockerHosts, buildUrl }
+  const context = { environment: host, dockerHosts, setDockerHosts, buildUrl }
   return <EnvironmentContext.Provider value={context}>{children}</EnvironmentContext.Provider>
 }
 

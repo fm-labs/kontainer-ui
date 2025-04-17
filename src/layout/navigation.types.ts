@@ -4,4 +4,5 @@ export interface INavigationItem {
   to: string
   target?: string
   icon?: React.ReactElement /* | React.ElementType */
+  visible?: () => boolean
 }

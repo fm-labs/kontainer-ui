@@ -11,7 +11,7 @@ import KontainerLabel from '~/layout/KontainerLabel.tsx'
 
 const DockerBreadcrumbs = () => {
   const matches = useMatches()
-  const { environment, dockerHosts } = useEnvironment()
+  const { dockerHosts } = useEnvironment()
 
   if (!matches || matches.length <= 1) {
     return
@@ -25,7 +25,10 @@ const DockerBreadcrumbs = () => {
     return <div>Docker context not found</div>
   }
 
-  const dockerHost = dockerHosts.find((host) => host.id === contextId)
+  const dockerHost = React.useMemo(() => {
+    return dockerHosts.find((host) => host.id === contextId)
+  }, [dockerHosts])
+
   if (!dockerHost) {
     console.error('Docker host not found')
     return <div>Docker host not found</div>
