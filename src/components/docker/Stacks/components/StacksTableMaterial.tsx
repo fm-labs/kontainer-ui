@@ -7,6 +7,8 @@ import StackIconControls from './StackIconControls.tsx'
 import { useErrorHandler } from '../../../../helper/useErrorHandler.ts'
 import AppIcons from '../../../../elements/AppIcons.tsx'
 import IconButton from '@mui/material/IconButton'
+import StackStatusChip from '~/components/docker/Stacks/components/StackStatusChip.tsx'
+import StackManagedChip from './StackManagedChip.tsx'
 
 const StacksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
   const api = useAgentDockerApi()
@@ -72,24 +74,24 @@ const StacksTableMaterial = ({ data }: { data: IDockerResourceAttrs[] }) => {
         header: 'Managed',
         Cell: ({ cell }) => {
           const managed = cell.getValue<boolean>()
-          return <div>{managed ? 'Yes' : 'No'}</div>
+          return <StackManagedChip value={managed} />
         },
       },
       {
         accessorKey: 'status',
         header: 'Status',
-        // Cell: ({ cell }) => {
-        //   const running = cell.getValue<boolean>()
-        //   return <div>{running ? 'Yes' : 'No'}</div>
-        // },
+        Cell: ({ cell }) => {
+          const status = cell.getValue<string>()
+          return <StackStatusChip value={status} />
+        },
       },
       {
         accessorKey: 'containers',
         header: 'Containers',
         Cell: ({ cell }) => {
           const containers = cell.getValue<any[]>()
-          if (!containers) {
-            return <div>0/0</div>
+          if (!containers || containers.length === 0) {
+            return <div>-</div>
           }
 
           const running = containers.filter((c) => c?.State?.Status === 'running').length

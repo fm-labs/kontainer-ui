@@ -39,8 +39,7 @@ const StacksPage = () => {
       <Toolbar disableGutters>
         <Heading label={'Stacks'}>
           <div>
-            <AutoreloadButton autoloader={autoloader} />
-            <StacksCreateButton />
+            <AutoreloadButton autoloader={autoloader} /> <StacksCreateButton />
           </div>
         </Heading>
       </Toolbar>
