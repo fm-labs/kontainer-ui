@@ -40,8 +40,10 @@ const agentDockerApi = (agentHttp) => {
     return response.data
   }
 
-  const getContainerLogs = async (id: string): Promise<string[]> => {
-    const response = await agentHttp.get(`docker/containers/${id}/logs`)
+  const getContainerLogs = async (id: string, since?: number, until?: number): Promise<string[]> => {
+    const sinceVal = since ? since : ''
+    const untilVal = until ? until : ''
+    const response = await agentHttp.get(`docker/containers/${id}/logs?since=${sinceVal}&until=${untilVal}`)
     return response.data
   }
 

@@ -13,6 +13,8 @@ export const kontainerApiHttp = (env: HostEnvironment) => {
     throw new Error('API base URL is required')
   }
 
+  console.log('baseUrl:', baseUrl)
+
   const agentHttp = axios.create({
     baseURL: baseUrl,
     // `withCredentials` indicates whether or not cross-site Access-Control requests
