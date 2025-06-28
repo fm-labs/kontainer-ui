@@ -4,8 +4,8 @@ import Box from '@mui/material/Box'
 import StackWidget from '~/components/docker/Dashboard/components/StackWidget.tsx'
 import { useDockerContext } from '~/helper/useDockerContext.tsx'
 import { Link } from 'react-router-dom'
-import Heading from '~/elements/Heading.tsx'
 import StackIconControls from '~/components/docker/Stacks/components/StackIconControls.tsx'
+import { Typography } from '@mui/material'
 
 const DashboardOverviewStacked = () => {
   const { df, buildUrl } = useDockerContext()
@@ -31,10 +31,20 @@ const DashboardOverviewStacked = () => {
       <Box>
         {stackIds.map((stackId, idx) => (
           <Box key={stackId} sx={{ mb: 3 }}>
-            <div>
-              <AppIcons.StackIcon /> <Link to={buildUrl(`/docker/stacks/${stackId}`)}>{stackId}</Link> stack{' '}
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'flex-start',
+                justifyContent: 'flex-start',
+                verticalAlign: 'middle',
+              }}
+            >
+              <Typography variant='h5' color='textSecondary' sx={{ mr: 1 }}>
+                <AppIcons.StackIcon /> <Link to={buildUrl(`/stacks/${stackId}`)}>{stackId}</Link>
+              </Typography>
               <StackIconControls stackId={stackId} />
-            </div>
+            </Box>
             <StackWidget stackName={stackId} />
           </Box>
         ))}

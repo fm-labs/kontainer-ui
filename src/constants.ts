@@ -9,7 +9,7 @@ export const KONTAINER_FEATURE_KEYS = !!import.meta.env.VITE_KONTAINER_FEATURE_K
 export const KONTAINER_API_LABEL = import.meta.env.VITE_KONTAINER_API_LABEL || 'Default'
 export const KONTAINER_API_HOST = import.meta.env.VITE_KONTAINER_API_HOST || window.location.hostname
 export const KONTAINER_API_PORT = import.meta.env.VITE_KONTAINER_API_PORT || window.location.port
-export const KONTAINER_API_SSL = !!import.meta.env.VITE_KONTAINER_API_SSL || window.location.protocol === 'https:'
+export const KONTAINER_API_SSL = import.meta.env.VITE_KONTAINER_API_SSL === 'true'
 
 export const STACK_TEMPLATE_URLS = [
   {

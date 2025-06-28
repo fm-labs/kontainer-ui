@@ -1,10 +1,11 @@
 import React from 'react'
 import AppIcons from '../../../../../elements/AppIcons.tsx'
 import { Link } from 'react-router-dom'
-import { FileSizeFormatter } from '../../../../../elements/Formatters.tsx'
+import { FileSizeFormatter } from '~/elements/Formatters.tsx'
 import GridResourceBlock from './GridResourceBlock.tsx'
+import { IDockerResourceAttrs } from '~/types.ts'
 
-const ImageBlock = ({ image }) => {
+const ImageBlock = ({ image }: { image: IDockerResourceAttrs }) => {
   let color = 'default'
   if (image.Containers > 0) {
     color = 'success'

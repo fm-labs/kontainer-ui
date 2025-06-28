@@ -36,7 +36,7 @@ const StackIconControls = ({ stackId, stackStatus, ...props }: StackIconControls
     handleStackSyncClick,
   } = useStackHelper()
 
-  const iconButtonProps: IconButtonProps = { size: 'small', sx: { p: '0.1em' }, ...props.buttonProps }
+  const iconButtonProps: IconButtonProps = { size: 'medium', sx: { p: '0.1em' }, ...props.buttonProps }
 
   const controls = React.useMemo(() => {
     const _controls: IconControlProps[] = []

@@ -36,7 +36,7 @@ const ContainerBlock = ({ container }) => {
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div>
             <AppIcons.ContainerIcon />{' '}
-            <Link to={buildUrl(`/docker/containers/${container.Id}`)}>
+            <Link to={buildUrl(`/containers/${container.Id}`)}>
               <ContainerFormatters.ContainerName value={containerName} />
             </Link>
           </div>
@@ -58,7 +58,7 @@ const ContainerBlock = ({ container }) => {
       </div>*/}
       <div>
         <AppIcons.ImageIcon />{' '}
-        <Link to={buildUrl(`/docker/images/${container.ImageID.substring(7)}`)}>
+        <Link to={buildUrl(`/images/${container.ImageID.substring(7)}`)}>
           <ContainerFormatters.ContainerImage value={container.Image} />
         </Link>
       </div>
