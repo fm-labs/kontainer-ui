@@ -1,15 +1,15 @@
 import { HostEnvironment } from './types.ts'
 
-export const KONTAINER_FEATURE_TEMPLATES = !!import.meta.env.VITE_KONTAINER_FEATURE_TEMPLATES || false
-export const KONTAINER_FEATURE_TASKMANAGER = !!import.meta.env.VITE_KONTAINER_FEATURE_TASKMANAGER || false
-export const KONTAINER_FEATURE_SETTINGS = !!import.meta.env.VITE_KONTAINER_FEATURE_SETTINGS || false
-export const KONTAINER_FEATURE_REGISTRIES = !!import.meta.env.VITE_KONTAINER_FEATURE_REGISTRIES || false
-export const KONTAINER_FEATURE_KEYS = !!import.meta.env.VITE_KONTAINER_FEATURE_KEYS || false
+export const KONTAINER_FEATURE_TEMPLATES = !!parseInt(import.meta.env.VITE_KONTAINER_FEATURE_TEMPLATES || '0')
+export const KONTAINER_FEATURE_TASKMANAGER = !!parseInt(import.meta.env.VITE_KONTAINER_FEATURE_TASKMANAGER || '0')
+export const KONTAINER_FEATURE_SETTINGS = !!parseInt(import.meta.env.VITE_KONTAINER_FEATURE_SETTINGS || '0')
+export const KONTAINER_FEATURE_REGISTRIES = !!parseInt(import.meta.env.VITE_KONTAINER_FEATURE_REGISTRIES || '0')
+export const KONTAINER_FEATURE_KEYS = !!parseInt(import.meta.env.VITE_KONTAINER_FEATURE_KEYS || '0')
 
 export const KONTAINER_API_LABEL = import.meta.env.VITE_KONTAINER_API_LABEL || 'Default'
 export const KONTAINER_API_HOST = import.meta.env.VITE_KONTAINER_API_HOST || window.location.hostname
 export const KONTAINER_API_PORT = import.meta.env.VITE_KONTAINER_API_PORT || window.location.port
-export const KONTAINER_API_SSL = import.meta.env.VITE_KONTAINER_API_SSL === 'true'
+export const KONTAINER_API_SSL = !!parseInt(import.meta.env.VITE_KONTAINER_API_SSL || '0')
 
 export const STACK_TEMPLATE_URLS = [
   {
