@@ -6,10 +6,8 @@ export const KONTAINER_FEATURE_SETTINGS = !!parseInt(import.meta.env.VITE_KONTAI
 export const KONTAINER_FEATURE_REGISTRIES = !!parseInt(import.meta.env.VITE_KONTAINER_FEATURE_REGISTRIES || '0')
 export const KONTAINER_FEATURE_KEYS = !!parseInt(import.meta.env.VITE_KONTAINER_FEATURE_KEYS || '0')
 
-export const KONTAINER_API_LABEL = import.meta.env.VITE_KONTAINER_API_LABEL || 'Default'
-export const KONTAINER_API_HOST = import.meta.env.VITE_KONTAINER_API_HOST || window.location.hostname
-export const KONTAINER_API_PORT = import.meta.env.VITE_KONTAINER_API_PORT || window.location.port
-export const KONTAINER_API_SSL = !!parseInt(import.meta.env.VITE_KONTAINER_API_SSL || '0')
+export const KONTAINER_API_LABEL = import.meta.env.VITE_KONTAINER_API_LABEL || 'Local'
+export const KONTAINER_API_BASEURL = import.meta.env.VITE_KONTAINER_API_BASEURL || '/api'
 
 export const STACK_TEMPLATE_URLS = [
   {
@@ -36,7 +34,5 @@ export const PORTAINER_TEMPLATE_URLS = [
 export const DEFAULT_ENVIRONMENT: HostEnvironment = {
   id: 'env0',
   label: KONTAINER_API_LABEL,
-  hostname: KONTAINER_API_HOST,
-  agentPort: KONTAINER_API_PORT,
-  useSSL: KONTAINER_API_SSL,
+  apiBaseUrl: KONTAINER_API_BASEURL,
 }

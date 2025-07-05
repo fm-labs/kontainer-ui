@@ -73,12 +73,11 @@ export type StackTemplate = {
   //networks: string[]
   //services: any
 }
+
 export type HostEnvironment = {
   id: string
   label: string
-  hostname: string
-  agentPort: number
-  useSSL: boolean
+  apiBaseUrl: string
 }
 
 export type DockerHost = {

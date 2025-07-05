@@ -4,11 +4,12 @@ import { HostEnvironment } from '~/types.ts'
 
 export const kontainerApiHttp = (env: HostEnvironment) => {
   const envId = env.id
-  const urlSchema = env.useSSL ? 'https' : 'http'
-  const hostname = env.hostname
-  const agentPort = env.agentPort
-  const baseUrl = `${urlSchema}://${hostname}:${agentPort}/api`
+  //const urlSchema = env.useSSL ? 'https' : 'http'
+  //const hostname = env.hostname
+  //const agentPort = env.agentPort
+  //const baseUrl = `${urlSchema}://${hostname}:${agentPort}/api`
 
+  const baseUrl = env.apiBaseUrl
   if (!baseUrl) {
     throw new Error('API base URL is required')
   }

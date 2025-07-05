@@ -138,7 +138,7 @@ const EnvironmentDockerHostsPage = () => {
       <Toolbar disableGutters>
         <Heading label={<KontainerLabel />}>
           <div>
-            Environment: {environment.label} ({environment.hostname})
+            Environment: {environment.label} ({environment.apiBaseUrl})
           </div>
         </Heading>
       </Toolbar>
